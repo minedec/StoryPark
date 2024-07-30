@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SketchPad from './SketchPad.jsx';
 import './util.js'
 import { generateStory, updateStory, sendAudioFile, getText2Voice, getVoice2Text, playSound } from './util.js';
@@ -12,7 +12,7 @@ export default function StoryPage() {
     backgroundColor: 'transparent',
     backgroundImage: 'url(./background1.png)',
     backgroundSize: 'cover',
-    minHeight: '85vh',
+    minHeight: '80vh',
     maxWidth: '100vw',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -98,65 +98,75 @@ export default function StoryPage() {
   const handleStoryInteract = async () => {
     if(window.StoryState.chapterIndex === 1) {
       console.log('这是故事1的场景1');
-      const response = await generateStory('hello');
-      console.log(response);
-      const audioUrl = await getText2Voice(response.story + response.interact);
-      console.log('audioUrl '+ audioUrl);
-      if (audioUrl) {
-        playSound(audioUrl);
-      }
+      // const response = await generateStory('hello');
+      // console.log(response);
+      // const audioUrl = await getText2Voice(response.story + response.interact);
+      // console.log('audioUrl '+ audioUrl);
+      // if (audioUrl) {
+      //   playSound(audioUrl);
+      // }
       window.isSpeakDown = false;
       window.isSketchDown = false;
     } else if (window.StoryState.chapterIndex === 2) {
       if(!window.isSpeakDown || !window.isSketchDown) return;
       console.log('这是故事1的场景2');
       console.log('此处生成故事并播放，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
-      const response = await generateStory(userm._userm);
-      console.log(response);
-      const audioUrl = await getText2Voice(response.story + response.interact);
-      console.log('audioUrl '+ audioUrl);
-      if (audioUrl) {
-        playSound(audioUrl);
-      }
+      // const response = await generateStory(userm._userm);
+      // console.log(response);
+      // const audioUrl = await getText2Voice(response.story + response.interact);
+      // console.log('audioUrl '+ audioUrl);
+      // if (audioUrl) {
+      //   playSound(audioUrl);
+      // }
       window.isSpeakDown = false;
       window.isSketchDown = false;
     } else if(window.StoryState.chapterIndex === 3) {
       if(!window.isSpeakDown || !window.isSketchDown) return;
       console.log('这是故事1的场景3');
       console.log('此处生成故事结尾并播放到问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
-      const response = await generateStory(userm._userm);
-      console.log(response);
-      const audioUrl = await getText2Voice(response.story + response.Q1);
-      console.log('audioUrl '+ audioUrl);
-      if (audioUrl) {
-        playSound(audioUrl);
-      }
+      // const response = await generateStory(userm._userm);
+      // console.log(response);
+      // const audioUrl = await getText2Voice(response.story + response.Q1);
+      // console.log('audioUrl '+ audioUrl);
+      // if (audioUrl) {
+      //   playSound(audioUrl);
+      // }
       window.isSpeakDown = false;
       window.isSketchDown = false;
     } else if(window.StoryState.chapterIndex >= 4) {
       if(window.StoryState.chapterIndex == 6) {
-        console.log('这是故事1的场景4');
+        console.log('这是故事1的场景6');
         console.log('此处生成问题反馈并播放下一个问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
         updateStory(window.StoryState.storyIndex, 4);
-        const response = await generateStory(userm._userm);
-        console.log(response);
-        const audioUrl = await getText2Voice(response.guidance);
-        console.log('audioUrl '+ audioUrl);
-        if (audioUrl) {
-          playSound(audioUrl);
-        }
+        // const response = await generateStory(userm._userm);
+        // console.log(response);
+        // const audioUrl = await getText2Voice(response.guidance);
+        // console.log('audioUrl '+ audioUrl);
+        // if (audioUrl) {
+        //   playSound(audioUrl);
+        // }
+        // story end
+        console.log('这是故事收尾');
+        updateStory(window.StoryState.storyIndex, 5);
+        // response = await generateStory(userm._userm);
+        // console.log(response);
+        // audioUrl = await getText2Voice(response.guidance);
+        // console.log('audioUrl '+ audioUrl);
+        // if (audioUrl) {
+        //   playSound(audioUrl);
+        // }
         return;
       }
       console.log('这是故事1的场景4');
       console.log('此处生成问题反馈并播放下一个问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       updateStory(window.StoryState.storyIndex, 4);
-      const response = await generateStory(userm._userm);
-      console.log(response);
-      const audioUrl = await getText2Voice(response.guidance + response.interact);
-      console.log('audioUrl '+ audioUrl);
-      if (audioUrl) {
-        playSound(audioUrl);
-      }
+      // const response = await generateStory(userm._userm);
+      // console.log(response);
+      // const audioUrl = await getText2Voice(response.guidance + response.interact);
+      // console.log('audioUrl '+ audioUrl);
+      // if (audioUrl) {
+      //   playSound(audioUrl);
+      // }
     }
   };
 
@@ -171,13 +181,10 @@ export default function StoryPage() {
 
     // 添加事件监听器
     window.addEventListener('storyStateChange', handleStoryStateChange);
-
-    // 清理函数，移除事件监听器
-    // return () => {
-    //   window.removeEventListener('storyStateChange', handleStoryStateChange);
-    // };
     initFunction();
   }, []);
+
+  
   
 
   const storyStateChange = () => {
@@ -193,8 +200,15 @@ export default function StoryPage() {
 
 
   //button func
+  const sketchPadRef = useRef(null);
   const [showSketchPad, setShowSketchPad] = useState(false);
   const [sketchButtonStyle, setSketchButtonStyle] = useState(SketchButtonStyle);
+
+  useEffect(() => {
+    if (!showSketchPad && sketchPadRef.current) {
+      sketchPadRef.current.clearSketchPad();
+    }
+  }, [showSketchPad]);
 
   const handleSketchButtonClick = () => {
     window.isSketch = !window.isSketch;
@@ -291,9 +305,10 @@ export default function StoryPage() {
         
         <Col md={9} lg={9}>
           <div id="storyBackground" style={DivBak}>
-          {/* {showSketchPad && <SketchPad />} */}
-            {/* <SketchPad /> */}
-            {/* <SketchPad style={{ display: 'none'}} /> */}
+            {/* <SketchPad visiable={showSketchPad} ref={sketchPadRef}/> */}
+            {showSketchPad ? (
+                <SketchPad ref={sketchPadRef} />
+              ) : null}
           </div>
         </Col>
         

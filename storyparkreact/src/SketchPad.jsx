@@ -1,6 +1,6 @@
 import Sketch  from "react-p5";
 import * as ms from '@magenta/sketch';
-import React, {useRef} from "react";
+import React, {useRef, useImperativeHandle, forwardRef} from "react";
 import './SketchPad.css'
 
 // global setting
@@ -180,15 +180,29 @@ let img;
 
 // SketchPad component
 
-export default function SketchPad() {
+export default forwardRef(function SketchPad({ visiable }, ref) {
 
     const p5Ref = useRef(null);
 
     function isInBounds() {
+      console.log('mouseX:'+p5Ref.current.mouseX)
+      console.log('mouseY:'+p5Ref.current.mouseY)
+      console.log(p5Ref.current.width)
+      console.log(p5Ref.current.height)
       return p5Ref.current.mouseX >= 0 && p5Ref.current.mouseY >= 0 && p5Ref.current.mouseX < p5Ref.current.width && p5Ref.current.mouseY < p5Ref.current.height;
     }
 
+    useImperativeHandle(ref, () => ({
+      clearSketchPad,
+    }));
+
     // helper function
+    function clearSketchPad() {
+      console.log('bbbbbb');
+      // setup(p5Ref.current);
+      // restart(p5Ref.current);
+    }
+
     function retryMagic(p) {
       console.log('retry magic')
       p5Ref.current.stroke('white');
@@ -314,7 +328,10 @@ export default function SketchPad() {
         btnSave.addEventListener('click', () => {
           p5Ref.current.saveCanvas('magic-sketchpad', 'jpg');
         });
-        };
+        console.log('setup p5'+p5Ref.current);
+        console.log(p5Ref.current.width)
+        console.log(p5Ref.current.height)
+    };
 
     const changeColor = (event) => {
       const btn = event.target;
@@ -372,7 +389,13 @@ export default function SketchPad() {
     };
 
     const mouseDragged = (p5) => {
-        if (!splashIsOpen && !modelIsActive && isInBounds()) {
+      console.log('enter drag');
+      console.log('splash'+splashIsOpen);
+      console.log('modelisactive'+modelIsActive);
+      console.log('isinbound'+isInBounds())
+      console.log('p5'+p5Ref.current);
+        if (!splashIsOpen && !modelIsActive && isInBounds() && visiable) {
+          console.log('start drag');
             const dx0 = p5Ref.current.mouseX - x;
             const dy0 = p5Ref.current.mouseY - y;
             if (dx0 * dx0 + dy0 * dy0 > epsilon * epsilon) {
@@ -409,7 +432,9 @@ export default function SketchPad() {
 
     };
 
-    return (<>
+    return (
+    <div style={{display: (visiable?'':'none')}}>
+    <>
       <Sketch setup={setup} draw={draw} mouseReleased={mouseReleased} mousePressed={mousePressed} mouseDragged={mouseDragged} ref={p5Ref}/>
         <div className="wrapper top">
             <div className="controls">
@@ -428,7 +453,8 @@ export default function SketchPad() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" /></svg>
                 </button>
             </div>
-        </div><div className="wrapper">
+        </div>
+        <div className="wrapper">
             <div id="colorsContainer">
                 <button data-index="0" style={{backgroundColor: "rgb(0, 0, 0)"}} className="active" onClick={changeColor}></button>
                 <button data-index="1" style={{backgroundColor: "rgb(244, 67, 54)"}} onClick={changeColor}></button>
@@ -449,8 +475,12 @@ export default function SketchPad() {
                 <button data-index="16" style={{backgroundColor: "rgb(121, 85, 72)"}} onClick={changeColor}></button>
                 <button data-index="17" style={{backgroundColor: "rgb(158, 158, 158)"}} onClick={changeColor}></button>
             </div>
-        </div><div id="sketch" ></div></>);
+        </div>
+        <div id="sketch" ></div>
+        </>
+        </div>
+      );
 
-};
+});
 
 
