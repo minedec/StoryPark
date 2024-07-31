@@ -8,6 +8,7 @@ const api_call = {
     'voiceToText':'voice2text',
     'textToVoice':'text2voice',
     'restart':'restart_new_story',
+    'extractKeyword':'extract_keyword',
 }
 
 async function postJsonData(url, jsonData) {
@@ -77,6 +78,8 @@ export async function generateStory(message) {
     });
     console.log(jsonString);
     const data = await postJsonData(server_url+api_call['generateStory'], jsonString);
+    data.replace('“','\"');
+    data.replace('”','\"');
     return JSON.parse(data);
 }
 
@@ -104,4 +107,14 @@ export function playSound(audioUrl) {
 export function restartNewStory() {
     var jsonString = JSON.stringify({});
     return postJsonData(server_url+api_call['restart'], jsonString)
+}
+
+export async function extractKeyword(message) {
+    var jsonString = JSON.stringify({
+        message:message,
+    });
+    console.log(jsonString);
+    const data = await postJsonData(server_url+api_call['extractKeyword'], jsonString);
+    console.log(data);
+    return data;
 }

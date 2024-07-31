@@ -2,6 +2,7 @@ import Sketch  from "react-p5";
 import * as ms from '@magenta/sketch';
 import React, {useRef, useImperativeHandle, forwardRef} from "react";
 import './SketchPad.css'
+import {p5RefGlobal, sketchObj} from './App.js'
 
 // global setting
 const BASE_URL =
@@ -178,53 +179,50 @@ let splashIsOpen = false;
 
 let img;
 
+
 // SketchPad component
 
 export default forwardRef(function SketchPad({ visiable }, ref) {
-
     const p5Ref = useRef(null);
 
     function isInBounds() {
-      console.log('mouseX:'+p5Ref.current.mouseX)
-      console.log('mouseY:'+p5Ref.current.mouseY)
-      console.log(p5Ref.current.width)
-      console.log(p5Ref.current.height)
-      return p5Ref.current.mouseX >= 0 && p5Ref.current.mouseY >= 0 && p5Ref.current.mouseX < p5Ref.current.width && p5Ref.current.mouseY < p5Ref.current.height;
+      return p5RefGlobal._p5Ref.mouseX >= 0 && p5RefGlobal._p5Ref.mouseY >= 0 && p5RefGlobal._p5Ref.mouseX < p5RefGlobal._p5Ref.width && p5RefGlobal._p5Ref.mouseY < p5RefGlobal._p5Ref.height;
     }
 
     useImperativeHandle(ref, () => ({
-      clearSketchPad,
+      saveSketchPad: (saveImgPath) => {
+        console.log('save iamge'+saveImgPath);
+        // p5RefGlobal._p5Ref.saveCanvas(saveImgPath, 'png');
+      },
     }));
 
     // helper function
-    function clearSketchPad() {
-      console.log('bbbbbb');
-      // setup(p5Ref.current);
-      // restart(p5Ref.current);
+    function saveSketchPad(saveImgPath) {
+      
     }
 
     function retryMagic(p) {
       console.log('retry magic')
-      p5Ref.current.stroke('white');
-      // p5Ref.current.stroke(255,255,255,0);
-      p5Ref.current.strokeWeight(3);
+      p5RefGlobal._p5Ref.stroke('white');
+      // p5RefGlobal._p5Ref.stroke(255,255,255,0);
+      p5RefGlobal._p5Ref.strokeWeight(3);
 
       // Undo the previous line the model drew.
       for (let i = 0; i < lastModelDrawing.length; i++) {
-        p5Ref.current.line(...lastModelDrawing[i]);
+        p5RefGlobal._p5Ref.line(...lastModelDrawing[i]);
       }
 
       // Undo the previous human drawn.
       for (let i = 0; i < lastHumanDrawing.length; i++) {
-        p5Ref.current.line(...lastHumanDrawing[i]);
+        p5RefGlobal._p5Ref.line(...lastHumanDrawing[i]);
       }
 
-      p5Ref.current.strokeWeight(3.0);
-      p5Ref.current.stroke(currentColor);
+      p5RefGlobal._p5Ref.strokeWeight(3.0);
+      p5RefGlobal._p5Ref.stroke(currentColor);
 
       // Redraw the human drawing.
       for (let i = 0; i < lastHumanDrawing.length; i++) {
-        p5Ref.current.line(...lastHumanDrawing[i]);
+        p5RefGlobal._p5Ref.line(...lastHumanDrawing[i]);
       }
 
       // Start again.
@@ -232,15 +230,15 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
     }
 
     function restart(p) {
-      // p5Ref.current.background(255, 255, 255);
-      p5Ref.current.clear();
-      // p5Ref.current.image(img, 0, 0, p5Ref.current.width, p5Ref.current.height);
+      // p5RefGlobal._p5Ref.background(255, 255, 255);
+      p5RefGlobal._p5Ref.clear();
+      // p5RefGlobal._p5Ref.image(img, 0, 0, p5RefGlobal._p5Ref.width, p5RefGlobal._p5Ref.height);
       // 图片的宽和高选一个小的作为定值
-      p5Ref.current.strokeWeight(3.0);
+      p5RefGlobal._p5Ref.strokeWeight(3.0);
 
       // Start drawing in the middle-ish of the screen
-      startX = x = p5Ref.current.width / 2.0;
-      startY = y = p5Ref.current.height / 3.0;
+      startX = x = p5RefGlobal._p5Ref.width / 2.0;
+      startY = y = p5RefGlobal._p5Ref.height / 3.0;
 
       // Reset the user drawing state.
       userPen = 1;
@@ -314,11 +312,13 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
         console.log("Canvas created!"); // 添加这行日志以确认是否创建了画布
         console.log(screenWidth, screenHeight);
         p5.frameRate(50);
-        initModel(22);
-        p5Ref.current = p5;
+        const modelIndex = availableModels.indexOf(sketchObj._sketchObj.sketch_object);
+        initModel(modelIndex);
+        p5RefGlobal._p5Ref = p5;
+        p5RefGlobal._p5Ref = p5;
         const selectModels = document.getElementById('selectModels');
         selectModels.innerHTML = availableModels.map(m => `<option>${m}</option>`).join('');
-        selectModels.selectedIndex = 22; 
+        selectModels.selectedIndex = modelIndex;
         selectModels.addEventListener('change', () => initModel(selectModels.selectedIndex));
         const btnClear = document.getElementById('btnClear');
         btnClear.addEventListener('click', restart);
@@ -326,11 +326,8 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
         btnRetry.addEventListener('click', retryMagic);
         const btnSave = document.getElementById('btnSave');
         btnSave.addEventListener('click', () => {
-          p5Ref.current.saveCanvas('magic-sketchpad', 'jpg');
+          p5RefGlobal._p5Ref.saveCanvas('magic-sketchpad', 'png');
         });
-        console.log('setup p5'+p5Ref.current);
-        console.log(p5Ref.current.width)
-        console.log(p5Ref.current.height)
     };
 
     const changeColor = (event) => {
@@ -359,7 +356,7 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
         } else {
         // Only draw on the paper if the pen is still touching the paper.
         if (previousPen[PEN.DOWN] === 1) {
-            p5Ref.current.line(x, y, x + dx, y + dy);
+            p5RefGlobal._p5Ref.line(x, y, x + dx, y + dy);
             lastModelDrawing.push([x, y, x + dx, y + dy]);
         }
         // Update.
@@ -389,22 +386,16 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
     };
 
     const mouseDragged = (p5) => {
-      console.log('enter drag');
-      console.log('splash'+splashIsOpen);
-      console.log('modelisactive'+modelIsActive);
-      console.log('isinbound'+isInBounds())
-      console.log('p5'+p5Ref.current);
-        if (!splashIsOpen && !modelIsActive && isInBounds() && visiable) {
-          console.log('start drag');
-            const dx0 = p5Ref.current.mouseX - x;
-            const dy0 = p5Ref.current.mouseY - y;
+        if (!splashIsOpen && !modelIsActive && isInBounds()) {
+            const dx0 = p5RefGlobal._p5Ref.mouseX - x;
+            const dy0 = p5RefGlobal._p5Ref.mouseY - y;
             if (dx0 * dx0 + dy0 * dy0 > epsilon * epsilon) {
               // Only if pen is not in same area.
               dx = dx0;
               dy = dy0;
               userPen = 1;
               if (previousUserPen === 1) {
-                p5Ref.current.line(x, y, x + dx, y + dy); // draw line connecting prev point to current point.
+                p5RefGlobal._p5Ref.line(x, y, x + dx, y + dy); // draw line connecting prev point to current point.
                 lastHumanDrawing.push([x, y, x + dx, y + dy]);
               }
               x += dx;
@@ -418,22 +409,22 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
 
     const mousePressed = (p5) => {
         if (!splashIsOpen && isInBounds()) {
-            x = startX = p5Ref.current.mouseX;
-            y = startY = p5Ref.current.mouseY;
+            x = startX = p5RefGlobal._p5Ref.mouseX;
+            y = startY = p5RefGlobal._p5Ref.mouseY;
             userPen = 1; // down!
       
             modelIsActive = false;
             currentRawLine = [];
             lastHumanDrawing = [];
             previousUserPen = userPen;
-            p5Ref.current.stroke(currentColor);
-            p5Ref.current.strokeWeight(3);
+            p5RefGlobal._p5Ref.stroke(currentColor);
+            p5RefGlobal._p5Ref.strokeWeight(3);
           }
 
     };
 
     return (
-    <div style={{display: (visiable?'':'none')}}>
+    // <div style={{display: (visiable?'':'none')}}>
     <>
       <Sketch setup={setup} draw={draw} mouseReleased={mouseReleased} mousePressed={mousePressed} mouseDragged={mouseDragged} ref={p5Ref}/>
         <div className="wrapper top">
@@ -478,7 +469,7 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
         </div>
         <div id="sketch" ></div>
         </>
-        </div>
+        // </div>
       );
 
 });

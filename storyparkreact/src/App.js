@@ -8,9 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import SketchPad from './SketchPad';
 import { restartNewStory } from './util';
 
-let appData = {};
+let appData1 = {};
 
-Object.defineProperty(appData, 'userm', {
+Object.defineProperty(appData1, 'userm', {
   get: function() {
     return this._userm;
   },
@@ -21,7 +21,37 @@ Object.defineProperty(appData, 'userm', {
   configurable: true
 });
 
-export { appData as userm };
+export { appData1 as userm };
+
+let appData2 = {};
+
+Object.defineProperty(appData2, 'p5RefGlobal', {
+  get: function() {
+    return this._p5Ref;
+  },
+  set: function(value) {
+    this._p5Ref = value;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+export { appData2 as p5RefGlobal };
+
+let appData3 = {};
+
+Object.defineProperty(appData3, 'sketchObj', {
+  get: function() {
+    return this._sketchObj;
+  },
+  set: function(value) {
+    this._sketchObj = value;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+export { appData3 as sketchObj };
 
 function StoryParkNavbar() {
   const navigate = useNavigate(); // 正确地在组件内部使用useNavigate

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SketchPad from './SketchPad.jsx';
 import './util.js'
-import { generateStory, updateStory, sendAudioFile, getText2Voice, getVoice2Text, playSound } from './util.js';
-import {Container, Col, Row, Button, Form} from 'react-bootstrap'
+import { generateStory, updateStory, sendAudioFile, getText2Voice, getVoice2Text, playSound, extractKeyword} from './util.js';
+import {Container, Col, Row, Button, Form, Image} from 'react-bootstrap'
 import MicRecorder from 'mic-recorder-to-mp3';
-import {userm} from './App.js'
+import {userm, sketchObj} from './App.js'
+import magicSketchpad from './assets/magic-sketchpad.jpg';
 
 export default function StoryPage() {
 
@@ -90,6 +91,11 @@ export default function StoryPage() {
     zIndex: 1,
   }
 
+  const imageStyle = {
+    maxWidth: '100%',
+    height: '100%',
+  }
+
   const [textContent, setTextContent] = useState('这是初始文本内容');
   const updateTextContent = (newText) => {
     setTextContent(newText);
@@ -98,75 +104,64 @@ export default function StoryPage() {
   const handleStoryInteract = async () => {
     if(window.StoryState.chapterIndex === 1) {
       console.log('这是故事1的场景1');
-      // const response = await generateStory('hello');
-      // console.log(response);
-      // const audioUrl = await getText2Voice(response.story + response.interact);
-      // console.log('audioUrl '+ audioUrl);
-      // if (audioUrl) {
-      //   playSound(audioUrl);
-      // }
+      const response = await generateStory('hello');
+      console.log(response);
+      const audioUrl = await getText2Voice(response.story + response.interact);
+      console.log('audioUrl '+ audioUrl);
+      if (audioUrl) {
+        playSound(audioUrl);
+      }
       window.isSpeakDown = false;
       window.isSketchDown = false;
     } else if (window.StoryState.chapterIndex === 2) {
       if(!window.isSpeakDown || !window.isSketchDown) return;
       console.log('这是故事1的场景2');
       console.log('此处生成故事并播放，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
-      // const response = await generateStory(userm._userm);
-      // console.log(response);
-      // const audioUrl = await getText2Voice(response.story + response.interact);
-      // console.log('audioUrl '+ audioUrl);
-      // if (audioUrl) {
-      //   playSound(audioUrl);
-      // }
+      const response = await generateStory(userm._userm);
+      console.log(response);
+      const audioUrl = await getText2Voice(response.story + response.interact);
+      console.log('audioUrl '+ audioUrl);
+      if (audioUrl) {
+        playSound(audioUrl);
+      }
       window.isSpeakDown = false;
       window.isSketchDown = false;
     } else if(window.StoryState.chapterIndex === 3) {
       if(!window.isSpeakDown || !window.isSketchDown) return;
       console.log('这是故事1的场景3');
       console.log('此处生成故事结尾并播放到问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
-      // const response = await generateStory(userm._userm);
-      // console.log(response);
-      // const audioUrl = await getText2Voice(response.story + response.Q1);
-      // console.log('audioUrl '+ audioUrl);
-      // if (audioUrl) {
-      //   playSound(audioUrl);
-      // }
+      const response = await generateStory(userm._userm);
+      console.log(response);
+      const audioUrl = await getText2Voice(response.story + response.Q1);
+      console.log('audioUrl '+ audioUrl);
+      if (audioUrl) {
+        playSound(audioUrl);
+      }
       window.isSpeakDown = false;
       window.isSketchDown = false;
     } else if(window.StoryState.chapterIndex >= 4) {
       if(window.StoryState.chapterIndex == 6) {
-        console.log('这是故事1的场景6');
-        console.log('此处生成问题反馈并播放下一个问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
-        updateStory(window.StoryState.storyIndex, 4);
-        // const response = await generateStory(userm._userm);
-        // console.log(response);
-        // const audioUrl = await getText2Voice(response.guidance);
-        // console.log('audioUrl '+ audioUrl);
-        // if (audioUrl) {
-        //   playSound(audioUrl);
-        // }
-        // story end
         console.log('这是故事收尾');
         updateStory(window.StoryState.storyIndex, 5);
-        // response = await generateStory(userm._userm);
-        // console.log(response);
-        // audioUrl = await getText2Voice(response.guidance);
-        // console.log('audioUrl '+ audioUrl);
-        // if (audioUrl) {
-        //   playSound(audioUrl);
-        // }
+        const response = await generateStory(userm._userm);
+        console.log(response);
+        const audioUrl = await getText2Voice(response.guidance);
+        console.log('audioUrl '+ audioUrl);
+        if (audioUrl) {
+          playSound(audioUrl);
+        }
         return;
       }
       console.log('这是故事1的场景4');
       console.log('此处生成问题反馈并播放下一个问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       updateStory(window.StoryState.storyIndex, 4);
-      // const response = await generateStory(userm._userm);
-      // console.log(response);
-      // const audioUrl = await getText2Voice(response.guidance + response.interact);
-      // console.log('audioUrl '+ audioUrl);
-      // if (audioUrl) {
-      //   playSound(audioUrl);
-      // }
+      const response = await generateStory(userm._userm);
+      console.log(response);
+      const audioUrl = await getText2Voice(response.guidance + response.interact);
+      console.log('audioUrl '+ audioUrl);
+      if (audioUrl) {
+        playSound(audioUrl);
+      }
     }
   };
 
@@ -184,9 +179,6 @@ export default function StoryPage() {
     initFunction();
   }, []);
 
-  
-  
-
   const storyStateChange = () => {
     window.dispatchEvent(new Event('storyStateChange'));
   }
@@ -202,17 +194,39 @@ export default function StoryPage() {
   //button func
   const sketchPadRef = useRef(null);
   const [showSketchPad, setShowSketchPad] = useState(false);
+  const [openSketchPad, setOpenSketchPad] = useState(false);
   const [sketchButtonStyle, setSketchButtonStyle] = useState(SketchButtonStyle);
+  const [imageSrc, setImageSrc] = useState(magicSketchpad);
+
+  function formatCurrentDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = ('0' + (now.getMonth() + 1)).slice(-2); // 加1是因为月份是从0开始的
+    const day = ('0' + now.getDate()).slice(-2);
+    const hours = ('0' + now.getHours()).slice(-2);
+    const minutes = ('0' + now.getMinutes()).slice(-2);
+    const seconds = ('0' + now.getSeconds()).slice(-2);
+  
+    return `${year}${month}${day}_${hours}${minutes}${seconds}`;
+  }
 
   useEffect(() => {
+    console.log('current'+sketchPadRef.current)
     if (!showSketchPad && sketchPadRef.current) {
-      sketchPadRef.current.clearSketchPad();
+      console.log('enter save');
+      const saveImgPath = './assets/'+formatCurrentDateTime();
+      sketchPadRef.current.saveSketchPad(saveImgPath);
+      import('./assets/magic-sketchpad.jpg').then(module => {
+        setImageSrc(module.default);
+      });
+      setOpenSketchPad(!openSketchPad);
     }
   }, [showSketchPad]);
 
   const handleSketchButtonClick = () => {
     window.isSketch = !window.isSketch;
     setShowSketchPad(!showSketchPad);
+    if(!openSketchPad) setOpenSketchPad(!openSketchPad);
     
     if (showSketchPad) {
       console.log('关闭画板');
@@ -276,6 +290,8 @@ export default function StoryPage() {
           userm._userm = response.text;
           window.isSpeakDown = true;
           window.StoryState.chapterIndex += 1;
+          sketchObj._sketchObj = await extractKeyword(userm._userm);
+          console.log('SketObj:'+sketchObj._sketchObj);
           storyStateChange();
         }).catch((e) => {
           console.error('录音失败:', e);
@@ -306,7 +322,7 @@ export default function StoryPage() {
         <Col md={9} lg={9}>
           <div id="storyBackground" style={DivBak}>
             {/* <SketchPad visiable={showSketchPad} ref={sketchPadRef}/> */}
-            {showSketchPad ? (
+            {openSketchPad ? (
                 <SketchPad ref={sketchPadRef} />
               ) : null}
           </div>
@@ -317,6 +333,7 @@ export default function StoryPage() {
             <Button style={sketchButtonStyle} onClick={handleSketchButtonClick}/>
             <Form.Group controlId="exampleForm.ControlInput1" style={StoryTextStyle}>
             <Form.Control as="textarea" readOnly rows={3} value={textContent} />
+            <Image src={imageSrc} fluid rounded style={imageStyle} />
             <audio id="audioPlayer" controls style={{display: "none"}}></audio>
       </Form.Group>
         </Col>

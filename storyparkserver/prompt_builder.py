@@ -44,7 +44,7 @@ def send_to_gpt(user_prompt):
 
 
 # qwen收发接口
-def send_to_qwen(user_prompt):
+def send_to_qwen(user_prompt, record_in_context=True):
   context_history.append(
         {
             "role":"user",
@@ -55,6 +55,8 @@ def send_to_qwen(user_prompt):
     messages=context_history,
     model="qwen-max",
   )
+  if not record_in_context:
+    context_history.pop()
   assistant_message = chat_completion.choices[0].message.content
   context_history.append(
     {
@@ -62,8 +64,10 @@ def send_to_qwen(user_prompt):
       "content":assistant_message
     }
   )
+  if not record_in_context:
+    context_history.pop()
   print(context_history)
-  return chat_completion.choices[0].message.content
+  return assistant_message
 
 
 # prompt格式化
@@ -80,10 +84,13 @@ def prompt_formater(story_index:int, chapter_index:int, replace: dict) -> str:
 
 # 被试关键词提取
 def extract_object(user_message):
-  extract_text = read_prompt_file("./prompt/extract.txt").format(message=user_message)
-  res_json = send_to_gpt(extract_text)
-  keyword = res_json["keyword"]
-  sketch_object = sketch_object_en[sketch_object_ch.index(res_json["object"])]
+  extract_text = read_prompt_file("./prompt/extract.txt").replace('message', user_message)
+  # res_json = send_to_gpt(extract_text)
+  print(extract_text)
+  res_json = send_to_qwen(extract_text, False)
+  print(res_json)
+  keyword = json.loads(res_json)["keyword"]
+  sketch_object = sketch_object_en[sketch_object_ch.index(json.loads(res_json)["object"])]
   return keyword, sketch_object
   
 
