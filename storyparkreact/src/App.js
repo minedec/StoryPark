@@ -53,6 +53,21 @@ Object.defineProperty(appData3, 'sketchObj', {
 
 export { appData3 as sketchObj };
 
+let appData4 = {};
+
+Object.defineProperty(appData3, 'tempData', {
+  get: function() {
+    return this._tempData;
+  },
+  set: function(value) {
+    this._tempData = value;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+export { appData4 as tempData };
+
 function StoryParkNavbar() {
   const navigate = useNavigate(); // 正确地在组件内部使用useNavigate
 
@@ -130,8 +145,8 @@ function StoryParkNavbar() {
   }
   const restartStory = () => {
     restartNewStory();
-    window.StoryState.chapterIndex = 1;
-    window.dispatchEvent(new Event('storyStateChange'));
+    window.StoryState.chapterIndex = 0;
+    // window.dispatchEvent(new Event('storyStateChange'));
   }
   
   return (

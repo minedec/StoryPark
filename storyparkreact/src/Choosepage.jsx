@@ -64,17 +64,17 @@ function ChoosePage() {
 
   const goToStoryPage1 = () => {
     window.StoryState.storyIndex = 1;
-    window.StoryState.chapterIndex = 1;
+    window.StoryState.chapterIndex = 0;
     navigate('/StoryPage'); // 假设你的路由设置中定义了'/StoryPage1'
   };
   const goToStoryPage2 = () => {
     window.StoryState.storyIndex = 2;
-    window.StoryState.chapterIndex = 1;
+    window.StoryState.chapterIndex = 0;
     navigate('/StoryPage'); // 假设你的路由设置中定义了'/StoryPage2'
   };
   const goToStoryPage3 = () => {
     window.StoryState.storyIndex = 3;
-    window.StoryState.chapterIndex = 1;
+    window.StoryState.chapterIndex = 0;
     navigate('/StoryPage'); // 假设你的路由设置中定义了'/StoryPage3'
   };
 

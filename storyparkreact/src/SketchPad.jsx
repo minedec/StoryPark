@@ -3,6 +3,7 @@ import * as ms from '@magenta/sketch';
 import React, {useRef, useImperativeHandle, forwardRef} from "react";
 import './SketchPad.css'
 import {p5RefGlobal, sketchObj} from './App.js'
+import { uploadImageToServer } from "./util.js";
 
 // global setting
 const BASE_URL =
@@ -181,6 +182,19 @@ let img;
 
 
 // SketchPad component
+function dataURLToBlob(dataURL) {
+  const parts = dataURL.split(';base64,');
+  const contentType = parts[0].split(':')[1];
+  const raw = window.atob(parts[1]);
+  const rawLength = raw.length;
+  const uInt8Array = new Uint8Array(rawLength);
+
+  for (let i = 0; i < rawLength; ++i) {
+    uInt8Array[i] = raw.charCodeAt(i);
+  }
+
+  return new Blob([uInt8Array], { type: contentType });
+}
 
 export default forwardRef(function SketchPad({ visiable }, ref) {
     const p5Ref = useRef(null);
@@ -190,16 +204,16 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
     }
 
     useImperativeHandle(ref, () => ({
-      saveSketchPad: (saveImgPath) => {
+      saveSketchPad: async (saveImgPath) => {
         console.log('save iamge'+saveImgPath);
         // p5RefGlobal._p5Ref.saveCanvas(saveImgPath, 'png');
+        const imageDataUrl = p5RefGlobal._p5Ref.canvas.toDataURL('image/png');
+        const blob = dataURLToBlob(imageDataUrl);
+        await uploadImageToServer(blob, saveImgPath);
       },
     }));
 
     // helper function
-    function saveSketchPad(saveImgPath) {
-      
-    }
 
     function retryMagic(p) {
       console.log('retry magic')
@@ -313,6 +327,7 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
         console.log(screenWidth, screenHeight);
         p5.frameRate(50);
         const modelIndex = availableModels.indexOf(sketchObj._sketchObj.sketch_object);
+        // const modelIndex = 22;
         initModel(modelIndex);
         p5RefGlobal._p5Ref = p5;
         p5RefGlobal._p5Ref = p5;

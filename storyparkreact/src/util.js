@@ -9,6 +9,9 @@ const api_call = {
     'textToVoice':'text2voice',
     'restart':'restart_new_story',
     'extractKeyword':'extract_keyword',
+    'uploadImage':'save_image',
+    'downloadImage':'download_image',
+    'drawbackContext':'drawback_context'
 }
 
 async function postJsonData(url, jsonData) {
@@ -59,6 +62,45 @@ async function sendJsonAndReceiveAudio(url, jsonData) {
         return url;
     } catch (error) {
         console.error('Error in sendJsonAndReceiveAudio:', error);
+        return null;
+    }
+}
+
+async function uploadImage(url, ImageFile, customFilename) {
+    const formData = new FormData();
+    formData.append('imgfile', ImageFile);
+    formData.append('filename', customFilename);
+
+    try {
+        const response = await axios.post(url, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        console.log('Image upload response:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        return null;
+    }
+}
+
+async function downloadImage(url, ImageFileName) {
+    try {
+        const response = await axios.post(url, {
+            filename: ImageFileName
+        }, {
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            responseType: 'blob' // 设置响应类型为blob
+        });
+
+        console.log('Image download response:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error downloading image:', error);
         return null;
     }
 }
@@ -116,5 +158,22 @@ export async function extractKeyword(message) {
     console.log(jsonString);
     const data = await postJsonData(server_url+api_call['extractKeyword'], jsonString);
     console.log(data);
+    return data;
+}
+
+export async function uploadImageToServer(imageFile, customFilename) {
+    return uploadImage(server_url+api_call['uploadImage'], imageFile, customFilename);
+}
+
+export async function downloadImageFromServer(imageFileName) {
+    return downloadImage(server_url+api_call['downloadImage'], imageFileName);
+}
+
+export async function drawbackContext(drawbackCnt) {
+    var jsonString = JSON.stringify({
+        drawback_cnt:drawbackCnt,
+    });
+    console.log(jsonString);
+    const data = await postJsonData(server_url+api_call['drawbackContext'], jsonString);
     return data;
 }

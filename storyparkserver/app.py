@@ -2,13 +2,15 @@ from flask import Flask, render_template, request, jsonify, send_file
 from datetime import datetime
 import os
 import subprocess
+from logger import logger
 
 from prompt_builder import (
   send_to_gpt,
   send_to_qwen,
   extract_object,
   prompt_formater,
-  clean_history
+  clean_history,
+  drawback_context_cnt
 )
 
 from multimod import (
@@ -46,6 +48,7 @@ def text2voice():
   text = request.json.get("text", "").lower()
   audio_file_path = './tmp/temp_text_2_voice.mp3'
   handle_text2voice(text, audio_file_path)
+  logger.info(f"Text to Voice:{text}")
   with open(audio_file_path, 'rb') as audio_file:
     return send_file(audio_file_path, mimetype='audio/mp3')
   
@@ -74,8 +77,11 @@ def voice2text():
       converted_path
   ])
 
+  text = handle_voice2text(converted_path)
+  logger.info(f"Voice to Text:{text}")
+
   res = {
-    "text":handle_voice2text(converted_path)
+    "text": text
   }
 
   return jsonify(res)
@@ -83,18 +89,30 @@ def voice2text():
 @app.route("/save_image", methods=["POST"])
 def save_image():
   """
-  save sketch image
+  Save a sketch image with a custom filename provided in the request.
   """
-  sketch_file = request.files['imgfile']
+  sketch_file = request.files.get('imgfile')
+  filename = request.form.get('filename')
+
+  if not sketch_file or not filename:
+      return jsonify({"error": "Missing file or filename"}), 400
+
   buffer_data = sketch_file.read()
-  temp_path = os.path.join('./pic/'+ 
-                           str(story_state.story_index)+ "_"+ 
-                           str(story_state.chapter_index)+ "_"+
-                           datetime.now().strftime('%Y%m%d_%H%M%S')+
-                           '.png')
+  temp_path = os.path.join('./pic/', 
+                            filename)
+
   with open(temp_path, 'wb+') as f:
-    f.write(buffer_data)
-  return jsonify({})
+      f.write(buffer_data)
+
+  logger.info(f"Save Image:{temp_path}")
+  return jsonify({"message": "Image saved successfully"})
+
+@app.route("/download_image", methods=["POST"])
+def download_image():
+  text = request.json.get("filename", "").lower()
+  img_file_path = './pic/' + text
+  with open(img_file_path, 'rb') as img_file:
+    return send_file(img_file_path, mimetype='image/png')
 
 @app.route('/restart_new_story', methods=["POST"])
 def restart_new_story():
@@ -104,6 +122,7 @@ def restart_new_story():
   story_state.story_index = -1
   story_state.chapter_index = -1
   clean_history()
+  logger.info(f"Restart new story")
   return jsonify({})
 
 @app.route('/get_story_and_chapter', methods=["POST"])
@@ -128,6 +147,7 @@ def set_story_and_chapter():
   chapter_index = request.json.get("chapter_index","")
   story_state.story_index = story_index
   story_state.chapter_index = chapter_index
+  logger.info(f"Set story:{story_index},chapter:{chapter_index}")
   return jsonify({})
 
 
@@ -140,6 +160,7 @@ def extract_keyword():
     "keyword": keyword,
     "sketch_object": sketch_object
   }
+  logger.info(f"Extract Keyword: {res}")
   return jsonify(res)
 
 
@@ -164,7 +185,6 @@ def next_chapter():
   user_message = request.json.get("message","").lower()
 
   # 记录用户反馈
-  
   user_prompt = prompt_formater(
     story_state.story_index,
     story_state.chapter_index,
@@ -174,6 +194,15 @@ def next_chapter():
   # res = send_to_gpt(user_prompt)
   res = send_to_qwen(user_prompt)
   return jsonify(res)
+
+@app.route("/drawback_context", methods=["POST"])
+def drawback_context():
+  """
+  drawback context, use this func when user feedback is not good
+  """
+  draw_back_cnt = request.json.get("drawback_cnt","")
+  drawback_context_cnt(draw_back_cnt)
+  return jsonify({})
 
 
 @app.route("/send2qwen", methods=["POST"])

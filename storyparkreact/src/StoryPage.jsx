@@ -1,17 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SketchPad from './SketchPad.jsx';
 import './util.js'
-import { generateStory, updateStory, sendAudioFile, getText2Voice, getVoice2Text, playSound, extractKeyword} from './util.js';
+import { generateStory, updateStory, sendAudioFile, getText2Voice, getVoice2Text, playSound, extractKeyword, downloadImageFromServer, drawbackContext} from './util.js';
 import {Container, Col, Row, Button, Form, Image} from 'react-bootstrap'
 import MicRecorder from 'mic-recorder-to-mp3';
-import {userm, sketchObj} from './App.js'
+import {userm, sketchObj, tempData} from './App.js'
 import magicSketchpad from './assets/magic-sketchpad.jpg';
 
 export default function StoryPage() {
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState('./background1.png');
+  
+  const updateBackgroundImage = (newImageUrl) => {
+    console.log(newImageUrl)
+    setBackgroundImageUrl(newImageUrl);
+  };
 
   const DivBak = {
     backgroundColor: 'transparent',
-    backgroundImage: 'url(./background1.png)',
+    backgroundImage: `url(${backgroundImageUrl})`,
     backgroundSize: 'cover',
     minHeight: '80vh',
     maxWidth: '100vw',
@@ -107,10 +113,13 @@ export default function StoryPage() {
       const response = await generateStory('hello');
       console.log(response);
       const audioUrl = await getText2Voice(response.story + response.interact);
+      tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
       if (audioUrl) {
         playSound(audioUrl);
       }
+      let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
+      updateBackgroundImage(newImageUrl);
       window.isSpeakDown = false;
       window.isSketchDown = false;
     } else if (window.StoryState.chapterIndex === 2) {
@@ -120,7 +129,10 @@ export default function StoryPage() {
       const response = await generateStory(userm._userm);
       console.log(response);
       const audioUrl = await getText2Voice(response.story + response.interact);
+      tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
+      let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
+      updateBackgroundImage(newImageUrl);
       if (audioUrl) {
         playSound(audioUrl);
       }
@@ -133,7 +145,10 @@ export default function StoryPage() {
       const response = await generateStory(userm._userm);
       console.log(response);
       const audioUrl = await getText2Voice(response.story + response.Q1);
+      tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
+      let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
+      updateBackgroundImage(newImageUrl);
       if (audioUrl) {
         playSound(audioUrl);
       }
@@ -145,7 +160,8 @@ export default function StoryPage() {
         updateStory(window.StoryState.storyIndex, 5);
         const response = await generateStory(userm._userm);
         console.log(response);
-        const audioUrl = await getText2Voice(response.guidance);
+        const audioUrl = await getText2Voice(response.interact);
+        tempData._tempData = audioUrl; 
         console.log('audioUrl '+ audioUrl);
         if (audioUrl) {
           playSound(audioUrl);
@@ -158,6 +174,7 @@ export default function StoryPage() {
       const response = await generateStory(userm._userm);
       console.log(response);
       const audioUrl = await getText2Voice(response.guidance + response.interact);
+      tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
       if (audioUrl) {
         playSound(audioUrl);
@@ -187,7 +204,8 @@ export default function StoryPage() {
     window.isSketch = false;
     window.isSpeak = false;
     console.log('初始化函数被执行');
-    storyStateChange();
+    let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
+    updateBackgroundImage(newImageUrl);
   };
 
 
@@ -214,13 +232,32 @@ export default function StoryPage() {
     console.log('current'+sketchPadRef.current)
     if (!showSketchPad && sketchPadRef.current) {
       console.log('enter save');
-      const saveImgPath = './assets/'+formatCurrentDateTime();
+      const saveImgPath = window.StoryState.storyIndex
+                + "_" + window.StoryState.chapterIndex
+                + "_" + formatCurrentDateTime()
+                + ".png";
       sketchPadRef.current.saveSketchPad(saveImgPath);
-      import('./assets/magic-sketchpad.jpg').then(module => {
-        setImageSrc(module.default);
+      
+      downloadImageFromServer(saveImgPath)
+      .then((blob) => {
+        const imageUrl = URL.createObjectURL(blob);
+        setImageSrc(imageUrl);
+      })
+      .catch((error) => {
+        console.error('Error downloading image:', error);
       });
       setOpenSketchPad(!openSketchPad);
     }
+
+    const cleanup = () => {
+      if (imageSrc && imageSrc.startsWith('blob:')) {
+        URL.revokeObjectURL(imageSrc);
+      }
+    };
+
+    return () => {
+      cleanup();
+    };
   }, [showSketchPad]);
 
   const handleSketchButtonClick = () => {
@@ -235,7 +272,6 @@ export default function StoryPage() {
         ...SketchButtonStyle,
         backgroundImage: 'url(./button2none.png)',
       });
-      storyStateChange();
     } else {
       console.log('开启画板');
       window.isSketchDown = false;
@@ -250,6 +286,7 @@ export default function StoryPage() {
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState([]);
   const [speakButtonStyle, setSpeakButtonStyle] = useState(SpeakButtonStyle);
+  
 
   const micRecorderRef = React.useRef(null);
 
@@ -289,10 +326,9 @@ export default function StoryPage() {
           console.log('服务器转换文字:', response.text);
           userm._userm = response.text;
           window.isSpeakDown = true;
-          window.StoryState.chapterIndex += 1;
+          // Add ChapterIndex
           sketchObj._sketchObj = await extractKeyword(userm._userm);
           console.log('SketObj:'+sketchObj._sketchObj);
-          storyStateChange();
         }).catch((e) => {
           console.error('录音失败:', e);
         });
@@ -303,6 +339,23 @@ export default function StoryPage() {
         });
     }
   };
+
+  const handleResume = () => {
+    window.StoryState.chapterIndex += 1;
+    storyStateChange();
+  }
+
+  const handleReplayCurrentChapter =() => {
+    console.log("replay chapter");
+    // window.StoryState.chapterIndex -=1;
+    // drawbackContext(1);
+    updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
+    window.isSpeakDown = false;
+    window.isSketchDown = false;
+    if (tempData._tempData) {
+      playSound(tempData._tempData);
+    }
+  }
 
   return (
       <Container fluid>
@@ -334,8 +387,15 @@ export default function StoryPage() {
             <Form.Group controlId="exampleForm.ControlInput1" style={StoryTextStyle}>
             <Form.Control as="textarea" readOnly rows={3} value={textContent} />
             <Image src={imageSrc} fluid rounded style={imageStyle} />
+            <Form.Group controlId="formBasicText">
+              <Form.Control type="text" placeholder="Enter text" />
+            </Form.Group>
+            <Row>
+            <Button onClick={handleResume}>继续</Button>
+            <Button onClick={handleReplayCurrentChapter} >重播</Button>
+            </Row>
             <audio id="audioPlayer" controls style={{display: "none"}}></audio>
-      </Form.Group>
+            </Form.Group>
         </Col>
       </Row>
       </Container>

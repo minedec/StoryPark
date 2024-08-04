@@ -1,6 +1,8 @@
 from openai import OpenAI
 import json
 from flask import jsonify
+from logger import logger
+
 #gpt
 client = OpenAI(api_key="sess-3s5HNqOgrQcYnjUiYZjutwBgYwuMLdagEfBYI8Su")
 
@@ -45,6 +47,16 @@ def send_to_gpt(user_prompt):
 
 # qwen收发接口
 def send_to_qwen(user_prompt, record_in_context=True):
+  if not record_in_context:
+    chat_completion = client.chat.completions.create(
+      messages=[{
+            "role":"user",
+            "content":user_prompt,
+        }],
+      model="qwen-max",
+    )
+    assistant_message = chat_completion.choices[0].message.content
+    return assistant_message
   context_history.append(
         {
             "role":"user",
@@ -55,8 +67,6 @@ def send_to_qwen(user_prompt, record_in_context=True):
     messages=context_history,
     model="qwen-max",
   )
-  if not record_in_context:
-    context_history.pop()
   assistant_message = chat_completion.choices[0].message.content
   context_history.append(
     {
@@ -64,9 +74,8 @@ def send_to_qwen(user_prompt, record_in_context=True):
       "content":assistant_message
     }
   )
-  if not record_in_context:
-    context_history.pop()
   print(context_history)
+  logger.info(f"Prompt:{user_prompt}\\nResponse:{assistant_message}")
   return assistant_message
 
 
@@ -99,3 +108,11 @@ def read_prompt_file(file_path):
   with open(file_path, 'r') as file:
     content = file.read()
   return content
+
+
+def drawback_context_cnt(drawback_cnt):
+  global context_history
+  for i in range(drawback_cnt):
+    context_history.pop()
+    context_history.pop()
+  print(context_history)
