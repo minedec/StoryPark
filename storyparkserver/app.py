@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, jsonify, send_file
 from datetime import datetime
 import os
 import subprocess
-from logger import logger
+from logger import logger, tester_name
+import time
 
 from prompt_builder import (
   send_to_gpt,
@@ -33,7 +34,6 @@ class StoryState:
   
 story_state = StoryState()
 
-
 @app.route("/")
 def index():
   return "hello world"
@@ -48,7 +48,8 @@ def text2voice():
   text = request.json.get("text", "").lower()
   audio_file_path = './tmp/temp_text_2_voice.mp3'
   handle_text2voice(text, audio_file_path)
-  logger.info(f"Text to Voice:{text}")
+  global tester_name
+  logger.info(f"Tester: {tester_name} - Text to Voice:{text}")
   with open(audio_file_path, 'rb') as audio_file:
     return send_file(audio_file_path, mimetype='audio/mp3')
   
@@ -78,7 +79,8 @@ def voice2text():
   ])
 
   text = handle_voice2text(converted_path)
-  logger.info(f"Voice to Text:{text}")
+  global tester_name
+  logger.info(f"Tester: {tester_name} - Voice to Text:{text}")
 
   res = {
     "text": text
@@ -104,15 +106,26 @@ def save_image():
   with open(temp_path, 'wb+') as f:
       f.write(buffer_data)
 
-  logger.info(f"Save Image:{temp_path}")
+  global tester_name
+  logger.info(f"Tester: {tester_name} - Save Image:{temp_path}")
   return jsonify({"message": "Image saved successfully"})
 
 @app.route("/download_image", methods=["POST"])
 def download_image():
   text = request.json.get("filename", "").lower()
   img_file_path = './pic/' + text
-  with open(img_file_path, 'rb') as img_file:
-    return send_file(img_file_path, mimetype='image/png')
+  max_wait_time = 10
+  start_time = time.time()
+
+  while True:
+    if os.path.exists(img_file_path):
+      with open(img_file_path, 'rb') as img_file:
+        return send_file(img_file_path, mimetype='image/png')
+    else:
+      elapsed_time = time.time() - start_time
+      if elapsed_time >= max_wait_time:
+        return "File not found after waiting for {} seconds.".format(max_wait_time), 404
+      time.sleep(0.5)
 
 @app.route('/restart_new_story', methods=["POST"])
 def restart_new_story():
@@ -122,7 +135,8 @@ def restart_new_story():
   story_state.story_index = -1
   story_state.chapter_index = -1
   clean_history()
-  logger.info(f"Restart new story")
+  global tester_name
+  logger.info(f"Tester: {tester_name} - Restart new story")
   return jsonify({})
 
 @app.route('/get_story_and_chapter', methods=["POST"])
@@ -147,7 +161,7 @@ def set_story_and_chapter():
   chapter_index = request.json.get("chapter_index","")
   story_state.story_index = story_index
   story_state.chapter_index = chapter_index
-  logger.info(f"Set story:{story_index},chapter:{chapter_index}")
+  logger.info(f"Tester: {tester_name} - Set story:{story_index},chapter:{chapter_index}")
   return jsonify({})
 
 
@@ -160,7 +174,8 @@ def extract_keyword():
     "keyword": keyword,
     "sketch_object": sketch_object
   }
-  logger.info(f"Extract Keyword: {res}")
+  global tester_name
+  logger.info(f"Tester: {tester_name} - Extract Keyword: {res}")
   return jsonify(res)
 
 
@@ -204,6 +219,11 @@ def drawback_context():
   drawback_context_cnt(draw_back_cnt)
   return jsonify({})
 
+@app.route("/set_tester_name", methods=["POST"])
+def set_tester_name():
+  global tester_name
+  tester_name = request.json.get("tester_name")
+  return jsonify({})
 
 @app.route("/send2qwen", methods=["POST"])
 def send2qwen():

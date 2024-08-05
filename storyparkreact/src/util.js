@@ -11,7 +11,8 @@ const api_call = {
     'extractKeyword':'extract_keyword',
     'uploadImage':'save_image',
     'downloadImage':'download_image',
-    'drawbackContext':'drawback_context'
+    'drawbackContext':'drawback_context',
+    'setTesterName':'set_tester_name',
 }
 
 async function postJsonData(url, jsonData) {
@@ -175,5 +176,14 @@ export async function drawbackContext(drawbackCnt) {
     });
     console.log(jsonString);
     const data = await postJsonData(server_url+api_call['drawbackContext'], jsonString);
+    return data;
+}
+
+export async function setTesterName(tester) {
+    var jsonString = JSON.stringify({
+        tester_name:tester,
+    });
+    console.log(jsonString);
+    const data = await postJsonData(server_url+api_call['setTesterName'], jsonString);
     return data;
 }

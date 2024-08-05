@@ -1,7 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SketchPad from './SketchPad.jsx';
 import './util.js'
-import { generateStory, updateStory, sendAudioFile, getText2Voice, getVoice2Text, playSound, extractKeyword, downloadImageFromServer, drawbackContext} from './util.js';
+import { 
+  generateStory, 
+  updateStory, 
+  sendAudioFile, 
+  getText2Voice, 
+  getVoice2Text, 
+  playSound, 
+  extractKeyword, 
+  downloadImageFromServer, 
+  drawbackContext,
+  setTesterName
+} from './util.js';
 import {Container, Col, Row, Button, Form, Image} from 'react-bootstrap'
 import MicRecorder from 'mic-recorder-to-mp3';
 import {userm, sketchObj, tempData} from './App.js'
@@ -110,6 +121,7 @@ export default function StoryPage() {
   const handleStoryInteract = async () => {
     if(window.StoryState.chapterIndex === 1) {
       console.log('这是故事1的场景1');
+      changeStepColor(window.StoryState.chapterIndex);
       const response = await generateStory('hello');
       console.log(response);
       const audioUrl = await getText2Voice(response.story + response.interact);
@@ -126,6 +138,7 @@ export default function StoryPage() {
       if(!window.isSpeakDown || !window.isSketchDown) return;
       console.log('这是故事1的场景2');
       console.log('此处生成故事并播放，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
+      changeStepColor(window.StoryState.chapterIndex);
       const response = await generateStory(userm._userm);
       console.log(response);
       const audioUrl = await getText2Voice(response.story + response.interact);
@@ -142,6 +155,7 @@ export default function StoryPage() {
       if(!window.isSpeakDown || !window.isSketchDown) return;
       console.log('这是故事1的场景3');
       console.log('此处生成故事结尾并播放到问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
+      changeStepColor(window.StoryState.chapterIndex);
       const response = await generateStory(userm._userm);
       console.log(response);
       const audioUrl = await getText2Voice(response.story + response.Q1);
@@ -157,6 +171,7 @@ export default function StoryPage() {
     } else if(window.StoryState.chapterIndex >= 4) {
       if(window.StoryState.chapterIndex == 6) {
         console.log('这是故事收尾');
+        changeStepColor(4);
         updateStory(window.StoryState.storyIndex, 5);
         const response = await generateStory(userm._userm);
         console.log(response);
@@ -170,6 +185,7 @@ export default function StoryPage() {
       }
       console.log('这是故事1的场景4');
       console.log('此处生成问题反馈并播放下一个问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
+      changeStepColor(4);
       updateStory(window.StoryState.storyIndex, 4);
       const response = await generateStory(userm._userm);
       console.log(response);
@@ -340,15 +356,16 @@ export default function StoryPage() {
     }
   };
 
-  const handleResume = () => {
+  const handleResume = async () => {
+    window.name = document.getElementById('test_name').value;
+    console.log("test name:"+window.name);
+    await setTesterName(window.name);
     window.StoryState.chapterIndex += 1;
     storyStateChange();
   }
 
   const handleReplayCurrentChapter =() => {
     console.log("replay chapter");
-    // window.StoryState.chapterIndex -=1;
-    // drawbackContext(1);
     updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
     window.isSpeakDown = false;
     window.isSketchDown = false;
@@ -357,15 +374,26 @@ export default function StoryPage() {
     }
   }
 
+  function changeStepColor(stepId) {
+    console.log('stepid:'+stepId);
+    for(var i = 1; i <= 4; i++) {
+      document.getElementById('step-'+i).style.backgroundColor = '#e7e7e7';
+    }
+    const targetStep = document.getElementById('step-'+stepId);
+    if (targetStep) {
+      targetStep.style.backgroundColor = '#ff69b4';
+    }
+  }
+
   return (
       <Container fluid>
          <Row>
         <Col md={1} lg={1}>
           <div style={{position: 'relative', width: '100%', height: '100%'}}>
-            <div style={{...StepStyle, top: '10%'}}></div>
-            <div style={{...StepStyle, top: '30%'}}></div>
-            <div style={{...StepStyle, top: '50%'}}></div>
-            <div style={{...StepStyle, top: '70%'}}></div>
+            <div id="step-1" style={{...StepStyle, top: '10%'}}></div>
+            <div id="step-2" style={{...StepStyle, top: '30%'}}></div>
+            <div id="step-3" style={{...StepStyle, top: '50%'}}></div>
+            <div id="step-4" style={{...StepStyle, top: '70%'}}></div>
             <div style={VerticalProgressStyle}>
               <div style={LineStyle}></div>
             </div>
@@ -388,7 +416,7 @@ export default function StoryPage() {
             <Form.Control as="textarea" readOnly rows={3} value={textContent} />
             <Image src={imageSrc} fluid rounded style={imageStyle} />
             <Form.Group controlId="formBasicText">
-              <Form.Control type="text" placeholder="Enter text" />
+              <Form.Control id="test_name" type="text" placeholder="输入你的名字" />
             </Form.Group>
             <Row>
             <Button onClick={handleResume}>继续</Button>

@@ -1,6 +1,9 @@
 from datetime import datetime
 import logging
 
+global tester_name
+tester_name = 'tester'
+
 now = datetime.now()
 log_filename = now.strftime("%Y-%m-%d_%H-%M-%S.log")  # 格式化日期和时间为文件名
 file_handler = logging.FileHandler('log/'+log_filename)

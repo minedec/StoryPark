@@ -1,7 +1,7 @@
 from openai import OpenAI
 import json
 from flask import jsonify
-from logger import logger
+from logger import logger, tester_name
 
 #gpt
 client = OpenAI(api_key="sess-3s5HNqOgrQcYnjUiYZjutwBgYwuMLdagEfBYI8Su")
@@ -75,7 +75,8 @@ def send_to_qwen(user_prompt, record_in_context=True):
     }
   )
   print(context_history)
-  logger.info(f"Prompt:{user_prompt}\\nResponse:{assistant_message}")
+  global tester_name
+  logger.info(f"Tester: {tester_name} - Prompt:{user_prompt}\\nResponse:{assistant_message}")
   return assistant_message
 
 
