@@ -146,13 +146,16 @@ function StoryParkNavbar() {
   const restartStory = () => {
     restartNewStory();
     window.StoryState.chapterIndex = 0;
-    // window.dispatchEvent(new Event('storyStateChange'));
+    console.log("story index:"+window.StoryState.storyIndex+", chapter index:"+window.StoryState.chapterIndex)
+    window.dispatchEvent(new Event('storyStateChange'));
   }
   
   return (
     <Navbar bg="purple-light" expand="lg" style={navbarStyle}>
       <Container fluid>
         <Navbar.Brand href="#home" style={brandStyle}>AI-Story Park</Navbar.Brand>
+        <Button style={chooseButtonStyle} onClick={backToChoosePage}/>
+        <Button style={restartButtonStyle} onClick={restartStory}/>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <div style={center_nav_links}>
           <Nav className='me-auto'>
@@ -160,10 +163,9 @@ function StoryParkNavbar() {
             <Nav.Link href="#scenarios">情景理解</Nav.Link>
           </Nav>
         </div>
-        <Button style={chooseButtonStyle} onClick={backToChoosePage}/>
         <Button style={createButtonStyle} />
         <Button style={noteButtonStyle} />
-        <Button style={restartButtonStyle} onClick={restartStory}/>
+        
       </Container>
     </Navbar>
   );

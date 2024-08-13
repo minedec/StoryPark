@@ -13,16 +13,16 @@ import {
   drawbackContext,
   setTesterName
 } from './util.js';
-import {Container, Col, Row, Button, Form, Image} from 'react-bootstrap'
+import {Container, Col, Row, Button, Form, Image, Stack } from 'react-bootstrap'
 import MicRecorder from 'mic-recorder-to-mp3';
 import {userm, sketchObj, tempData} from './App.js'
-import magicSketchpad from './assets/magic-sketchpad.jpg';
+import magicSketchpad from './assets/white-background.png';
 
 export default function StoryPage() {
-  const [backgroundImageUrl, setBackgroundImageUrl] = useState('./background1.png');
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState(magicSketchpad);
   
   const updateBackgroundImage = (newImageUrl) => {
-    console.log(newImageUrl)
+    console.log('update backimage:' + newImageUrl)
     setBackgroundImageUrl(newImageUrl);
   };
 
@@ -43,12 +43,12 @@ export default function StoryPage() {
     backgroundColor: 'transparent',
     backgroundImage: 'url(./button1none.png)',
     border: 'none',
-    width: '120px',
-    height: '160px',
+    width: '110px',
+    height: '130px',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     position: 'relative',
-    top: '15%',
+    top: '10%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
   }
@@ -57,12 +57,12 @@ export default function StoryPage() {
     backgroundColor: 'transparent',
     backgroundImage: 'url(./button2none.png)',
     border: 'none',
-    width: '120px',
-    height: '150px',
+    width: '110px',
+    height: '120px',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     position: 'relative',
-    top: '20%',
+    top: '15%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
   }
@@ -111,15 +111,25 @@ export default function StoryPage() {
   const imageStyle = {
     maxWidth: '100%',
     height: '100%',
+    border: '2px solid black',
+    position: 'relative',
+    top: '15%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    marginTop: '2px',
+    marginBottom: '2px',
   }
 
-  const [textContent, setTextContent] = useState('这是初始文本内容');
+  const [textContent, setTextContent] = useState('for debug');
   const updateTextContent = (newText) => {
     setTextContent(newText);
   };
 
+  window.is_interact = false;
   const handleStoryInteract = async () => {
     if(window.StoryState.chapterIndex === 1) {
+      if(window.is_interact) return;
+      window.is_interact = true;
       console.log('这是故事1的场景1');
       changeStepColor(window.StoryState.chapterIndex);
       const response = await generateStory('hello');
@@ -128,14 +138,17 @@ export default function StoryPage() {
       tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
       if (audioUrl) {
-        playSound(audioUrl);
+        //playSound(audioUrl);
       }
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
       window.isSpeakDown = false;
       window.isSketchDown = false;
+      window.is_interact = false;
     } else if (window.StoryState.chapterIndex === 2) {
+      if(window.is_interact) return;
       if(!window.isSpeakDown || !window.isSketchDown) return;
+      window.is_interact = true;
       console.log('这是故事1的场景2');
       console.log('此处生成故事并播放，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       changeStepColor(window.StoryState.chapterIndex);
@@ -147,12 +160,15 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
       if (audioUrl) {
-        playSound(audioUrl);
+        //playSound(audioUrl);
       }
       window.isSpeakDown = false;
       window.isSketchDown = false;
+      window.is_interact = false;
     } else if(window.StoryState.chapterIndex === 3) {
+      if(window.is_interact) return;
       if(!window.isSpeakDown || !window.isSketchDown) return;
+      window.is_interact = true;
       console.log('这是故事1的场景3');
       console.log('此处生成故事结尾并播放到问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       changeStepColor(window.StoryState.chapterIndex);
@@ -164,11 +180,14 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
       if (audioUrl) {
-        playSound(audioUrl);
+        //playSound(audioUrl);
       }
       window.isSpeakDown = false;
       window.isSketchDown = false;
+      window.is_interact = false;
     } else if(window.StoryState.chapterIndex >= 4) {
+      if(window.is_interact) return;
+      window.is_interact = true;
       if(window.StoryState.chapterIndex == 6) {
         console.log('这是故事收尾');
         changeStepColor(4);
@@ -179,7 +198,7 @@ export default function StoryPage() {
         tempData._tempData = audioUrl; 
         console.log('audioUrl '+ audioUrl);
         if (audioUrl) {
-          playSound(audioUrl);
+          //playSound(audioUrl);
         }
         return;
       }
@@ -193,8 +212,9 @@ export default function StoryPage() {
       tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
       if (audioUrl) {
-        playSound(audioUrl);
+        //playSound(audioUrl);
       }
+      window.is_interact = false;
     }
   };
 
@@ -204,6 +224,9 @@ export default function StoryPage() {
       console.log('storyIndex or chapterIndex changed');
       updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
       updateTextContent(`story${window.StoryState.storyIndex}chapter${window.StoryState.chapterIndex}`);
+      if(window.StoryState.chapterIndex === 0) {
+        initFunction();
+      }
       await handleStoryInteract();
     };
 
@@ -213,6 +236,7 @@ export default function StoryPage() {
   }, []);
 
   const storyStateChange = () => {
+    console.log("storyStateChange event fired");
     window.dispatchEvent(new Event('storyStateChange'));
   }
   
@@ -222,6 +246,8 @@ export default function StoryPage() {
     console.log('初始化函数被执行');
     let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
     updateBackgroundImage(newImageUrl);
+    setImageUrl1(magicSketchpad);
+    setImageUrl2(magicSketchpad);
   };
 
 
@@ -231,6 +257,8 @@ export default function StoryPage() {
   const [openSketchPad, setOpenSketchPad] = useState(false);
   const [sketchButtonStyle, setSketchButtonStyle] = useState(SketchButtonStyle);
   const [imageSrc, setImageSrc] = useState(magicSketchpad);
+  const [imageUrl1, setImageUrl1] = useState(magicSketchpad);
+  const [imageUrl2, setImageUrl2] = useState(magicSketchpad);
 
   function formatCurrentDateTime() {
     const now = new Date();
@@ -248,7 +276,8 @@ export default function StoryPage() {
     console.log('current'+sketchPadRef.current)
     if (!showSketchPad && sketchPadRef.current) {
       console.log('enter save');
-      const saveImgPath = window.StoryState.storyIndex
+      const saveImgPath = window.name
+                + "_" + window.StoryState.storyIndex
                 + "_" + window.StoryState.chapterIndex
                 + "_" + formatCurrentDateTime()
                 + ".png";
@@ -257,7 +286,11 @@ export default function StoryPage() {
       downloadImageFromServer(saveImgPath)
       .then((blob) => {
         const imageUrl = URL.createObjectURL(blob);
-        setImageSrc(imageUrl);
+        if(window.StoryState.chapterIndex == 1) {
+          setImageUrl1(imageUrl);
+        } else if(window.StoryState.chapterIndex == 2) {
+          setImageUrl2(imageUrl);
+        }
       })
       .catch((error) => {
         console.error('Error downloading image:', error);
@@ -289,6 +322,7 @@ export default function StoryPage() {
         backgroundImage: 'url(./button2none.png)',
       });
     } else {
+      if(window.StoryState.chapterIndex > 3) return;
       console.log('开启画板');
       window.isSketchDown = false;
       setSketchButtonStyle({
@@ -343,8 +377,10 @@ export default function StoryPage() {
           userm._userm = response.text;
           window.isSpeakDown = true;
           // Add ChapterIndex
-          sketchObj._sketchObj = await extractKeyword(userm._userm);
-          console.log('SketObj:'+sketchObj._sketchObj);
+          if(window.StoryState.chapterIndex <= 3) {
+            sketchObj._sketchObj = await extractKeyword(userm._userm);
+            console.log('SketObj:'+sketchObj._sketchObj);
+          }
         }).catch((e) => {
           console.error('录音失败:', e);
         });
@@ -388,7 +424,7 @@ export default function StoryPage() {
   return (
       <Container fluid>
          <Row>
-        <Col md={1} lg={1}>
+        <Col md={1} lg={1} xl={1} xxl={1}>
           <div style={{position: 'relative', width: '100%', height: '100%'}}>
             <div id="step-1" style={{...StepStyle, top: '10%'}}></div>
             <div id="step-2" style={{...StepStyle, top: '30%'}}></div>
@@ -400,7 +436,7 @@ export default function StoryPage() {
           </div>
         </Col>
         
-        <Col md={9} lg={9}>
+        <Col md={9} lg={9} xl={9} xxl={9}>
           <div id="storyBackground" style={DivBak}>
             {/* <SketchPad visiable={showSketchPad} ref={sketchPadRef}/> */}
             {openSketchPad ? (
@@ -409,15 +445,16 @@ export default function StoryPage() {
           </div>
         </Col>
         
-        <Col md={2} lg={2}>
-            <Button style={speakButtonStyle} onClick={handleSpeakButtonClick}/>
-            <Button style={sketchButtonStyle} onClick={handleSketchButtonClick}/>
-            <Form.Group controlId="exampleForm.ControlInput1" style={StoryTextStyle}>
-            <Form.Control as="textarea" readOnly rows={3} value={textContent} />
-            <Image src={imageSrc} fluid rounded style={imageStyle} />
-            <Form.Group controlId="formBasicText">
+        <Col md={2} lg={2} xl={2} xxl={2}>
+            {/* <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}> */}
+              <Button style={speakButtonStyle} onClick={handleSpeakButtonClick}/>
+              <Button style={sketchButtonStyle} onClick={handleSketchButtonClick}/>
+            {/* </div> */}
+            <Form.Group style={StoryTextStyle}>
+            {/* <Form.Control as="textarea" readOnly rows={3} value={textContent} /> */}
+            <Image id="image1" src={imageUrl1} fluid rounded style={imageStyle} />
+            <Image id="image2" src={imageUrl2} fluid rounded style={imageStyle} />
               <Form.Control id="test_name" type="text" placeholder="输入你的名字" />
-            </Form.Group>
             <Row>
             <Button onClick={handleResume}>继续</Button>
             <Button onClick={handleReplayCurrentChapter} >重播</Button>
