@@ -138,7 +138,7 @@ export default function StoryPage() {
       tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
       if (audioUrl) {
-        //playSound(audioUrl);
+        playSound(audioUrl);
       }
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
@@ -160,7 +160,7 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
       if (audioUrl) {
-        //playSound(audioUrl);
+        playSound(audioUrl);
       }
       window.isSpeakDown = false;
       window.isSketchDown = false;
@@ -180,7 +180,7 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
       if (audioUrl) {
-        //playSound(audioUrl);
+        playSound(audioUrl);
       }
       window.isSpeakDown = false;
       window.isSketchDown = false;
@@ -198,7 +198,7 @@ export default function StoryPage() {
         tempData._tempData = audioUrl; 
         console.log('audioUrl '+ audioUrl);
         if (audioUrl) {
-          //playSound(audioUrl);
+          playSound(audioUrl);
         }
         return;
       }
@@ -212,7 +212,7 @@ export default function StoryPage() {
       tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
       if (audioUrl) {
-        //playSound(audioUrl);
+        playSound(audioUrl);
       }
       window.is_interact = false;
     }

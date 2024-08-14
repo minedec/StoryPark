@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const server_url = 'http://8.140.226.160:4999/'
+const server_url = 'https://8.140.226.160:4999/'
 const api_call = {
     'generateStory':'generate_story',
     'setStoryAndChapter':'set_story_and_chapter',
     'getStoryAndChapter':'get_story_and_chapter',
-    'voiceToText':'voice2text/',
+    'voiceToText':'voice2text',
     'textToVoice':'text2voice',
     'restart':'restart_new_story',
     'extractKeyword':'extract_keyword',
