@@ -1,0 +1,2 @@
+cd storyparkreact
+npm start
