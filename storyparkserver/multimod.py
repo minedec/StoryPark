@@ -33,7 +33,7 @@ class Ws_Param_For_text2voice(object):
         self.voice_path = voice_path
         
         self.CommonArgs = {"app_id": self.APPID}
-        self.BusinessArgs = {"aue": "lame", "sfl":1, "auf": "audio/L16;rate=16000", "vcn": "x4_xiaofang", "tte": "utf8"}
+        self.BusinessArgs = {"aue": "lame", "sfl":1, "auf": "audio/L16;rate=16000", "vcn": "xiaoyan", "tte": "utf8"}
         self.Data = {"status": 2, "text": str(base64.b64encode(self.Text.encode('utf-8')), "UTF8")}
 
     def create_url(self):

@@ -47,6 +47,7 @@ def text2voice():
   """
   text = request.json.get("text", "").lower()
   audio_file_path = './tmp/temp_text_2_voice.mp3'
+  print('trans text:', text)
   handle_text2voice(text, audio_file_path)
   global tester_name
   logger.info(f"Tester: {tester_name} - Text to Voice:{text}")
@@ -195,7 +196,7 @@ def next_chapter():
   }
   then use /text2voice transfer story and interact to audio
   """
-  if story_state.story_index == -1 or story_state.chapter_index == -1:
+  if story_state.story_index <= 0 or story_state.chapter_index < 1:
     return jsonify({'error':'please set story index and chapter index'})
   user_message = request.json.get("message","").lower()
 
