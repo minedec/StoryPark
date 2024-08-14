@@ -373,6 +373,7 @@ export default function StoryPage() {
           });
 
           const response = await getVoice2Text(file);
+          console.log('voice2text 服务器response:', response);
           console.log('服务器转换文字:', response.text);
           userm._userm = response.text;
           window.isSpeakDown = true;

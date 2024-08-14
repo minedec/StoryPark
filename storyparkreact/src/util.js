@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const server_url = 'http://127.0.0.1:4999/'
+const server_url = 'http://8.140.226.160:4999/'
 const api_call = {
     'generateStory':'generate_story',
     'setStoryAndChapter':'set_story_and_chapter',
     'getStoryAndChapter':'get_story_and_chapter',
-    'voiceToText':'voice2text',
+    'voiceToText':'voice2text/',
     'textToVoice':'text2voice',
     'restart':'restart_new_story',
     'extractKeyword':'extract_keyword',
@@ -38,10 +38,30 @@ async function sendAudioFile(url, audioFile) {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
+            timeout: 30000,
         });
+        console.log('Response received:', response);
         return response.data;
     } catch (error) {
         console.error('Error in sendAudioFile:', error);
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error('Response data:', error.response.data);
+            console.error('Response status:', error.response.status);
+            console.error('Response headers:', error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received:', error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error message:', error.message);
+        }
+        console.error('Error config:', error.config);
+        if (error.code === 'ECONNABORTED') {
+            console.error('Request timed out');
+        }
+        
         return null;
     }
 }

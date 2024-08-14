@@ -1,0 +1,847 @@
+
+> ChildrenEngagement@0.1.0 start
+> node scripts/start.js
+
+Attempting to bind to HOST environment variable: 0.0.0.0
+If this was unintentional, check that you haven't mistakenly set it in your shell.
+Learn more here: https://cra.link/advanced-config
+
+(node:20369) [DEP_WEBPACK_DEV_SERVER_HTTPS] DeprecationWarning: 'https' option is deprecated. Please use the 'server' option.
+(node:20369) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(node:20369) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 124:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 125:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 124:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 125:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+[0;33mOne of your dependencies, babel-preset-react-app, is importing the
+"@babel/plugin-proposal-private-property-in-object" package without
+declaring it in its dependencies. This is currently working because
+"@babel/plugin-proposal-private-property-in-object" is already in your
+node_modules folder for unrelated reasons, but it [1mmay break at any time[0;33m.
+
+babel-preset-react-app is part of the create-react-app project, [1mwhich
+is not maintianed anymore[0;33m. It is thus unlikely that this bug will
+ever be fixed. Add "@babel/plugin-proposal-private-property-in-object" to
+your devDependencies to work around this error. This will make this message
+go away.[0m
+  
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 125:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 126:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 125:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 126:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 125:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 126:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 125:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 126:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/util.js
+Syntax error: Unexpected token, expected "," (138:20) (138:20)
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+ERROR in ./src/util.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /root/StoryPark/storyparkreact/src/util.js: Unexpected token, expected "," (138:20)
+
+  136 |     console.log(jsonString);
+  137 |     const data = await postJsonData(server_url+api_call['generateStory'], jsonString);
+> 138 |     data.replace('"'','\"');
+      |                     ^
+  139 |     data.replace('"'','\"');
+  140 |     return JSON.parse(data);
+  141 | }
+    at constructor (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:351:19)
+    at FlowParserMixin.raise (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3237:19)
+    at FlowParserMixin.unexpected (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3257:16)
+    at FlowParserMixin.expect (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3562:12)
+    at FlowParserMixin.parseCallExpressionArguments (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10753:14)
+    at FlowParserMixin.parseCoverCallAndAsyncArrowHead (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10682:29)
+    at FlowParserMixin.parseSubscript (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10619:19)
+    at FlowParserMixin.parseSubscript (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5755:18)
+    at FlowParserMixin.parseSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10592:19)
+    at FlowParserMixin.parseSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5721:18)
+    at FlowParserMixin.parseExprSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10583:17)
+    at FlowParserMixin.parseUpdate (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10562:21)
+    at FlowParserMixin.parseMaybeUnary (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10540:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10394:61)
+    at FlowParserMixin.parseExprOps (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10399:23)
+    at FlowParserMixin.parseMaybeConditional (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10376:23)
+    at FlowParserMixin.parseMaybeAssign (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10337:21)
+    at FlowParserMixin.parseMaybeAssign (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5654:18)
+    at FlowParserMixin.parseExpressionBase (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10291:23)
+    at /root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10287:39
+    at FlowParserMixin.allowInAnd (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11928:16)
+    at FlowParserMixin.parseExpression (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10287:17)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12369:23)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseStatementListItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12216:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12793:61)
+    at FlowParserMixin.parseBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12786:10)
+    at FlowParserMixin.parseBlock (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12774:10)
+    at FlowParserMixin.parseFunctionBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11613:24)
+    at FlowParserMixin.parseFunctionBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5000:11)
+    at FlowParserMixin.parseFunctionBodyAndFinish (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11599:10)
+    at FlowParserMixin.parseFunctionBodyAndFinish (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5008:18)
+    at /root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12921:12
+    at FlowParserMixin.withSmartMixTopicForbiddingContext (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11910:14)
+    at FlowParserMixin.parseFunction (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12920:10)
+    at FlowParserMixin.parseFunctionStatement (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12599:17)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12364:25)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseStatementListItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12216:17)
+    at FlowParserMixin.parseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13402:17)
+    at FlowParserMixin.parseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5225:20)
+    at FlowParserMixin.maybeParseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13361:31)
+    at FlowParserMixin.parseExport (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13286:29)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12349:27)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseModuleItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12213:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12793:36)
+
+ERROR in [eslint] 
+src/util.js
+  Line 138:20:  Parsing error: Unexpected token, expected "," (138:20)
+
+webpack compiled with 2 errors and 1 warning
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/util.js
+Syntax error: Unexpected token, expected "," (138:20) (138:20)
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+ERROR in ./src/util.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /root/StoryPark/storyparkreact/src/util.js: Unexpected token, expected "," (138:20)
+
+  136 |     console.log(jsonString);
+  137 |     const data = await postJsonData(server_url+api_call['generateStory'], jsonString);
+> 138 |     data.replace('"'','\"');
+      |                     ^
+  139 |     data.replace('"'','\"');
+  140 |     return JSON.parse(data);
+  141 | }
+    at constructor (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:351:19)
+    at FlowParserMixin.raise (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3237:19)
+    at FlowParserMixin.unexpected (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3257:16)
+    at FlowParserMixin.expect (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3562:12)
+    at FlowParserMixin.parseCallExpressionArguments (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10753:14)
+    at FlowParserMixin.parseCoverCallAndAsyncArrowHead (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10682:29)
+    at FlowParserMixin.parseSubscript (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10619:19)
+    at FlowParserMixin.parseSubscript (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5755:18)
+    at FlowParserMixin.parseSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10592:19)
+    at FlowParserMixin.parseSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5721:18)
+    at FlowParserMixin.parseExprSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10583:17)
+    at FlowParserMixin.parseUpdate (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10562:21)
+    at FlowParserMixin.parseMaybeUnary (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10540:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10394:61)
+    at FlowParserMixin.parseExprOps (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10399:23)
+    at FlowParserMixin.parseMaybeConditional (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10376:23)
+    at FlowParserMixin.parseMaybeAssign (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10337:21)
+    at FlowParserMixin.parseMaybeAssign (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5654:18)
+    at FlowParserMixin.parseExpressionBase (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10291:23)
+    at /root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10287:39
+    at FlowParserMixin.allowInAnd (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11928:16)
+    at FlowParserMixin.parseExpression (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10287:17)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12369:23)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseStatementListItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12216:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12793:61)
+    at FlowParserMixin.parseBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12786:10)
+    at FlowParserMixin.parseBlock (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12774:10)
+    at FlowParserMixin.parseFunctionBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11613:24)
+    at FlowParserMixin.parseFunctionBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5000:11)
+    at FlowParserMixin.parseFunctionBodyAndFinish (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11599:10)
+    at FlowParserMixin.parseFunctionBodyAndFinish (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5008:18)
+    at /root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12921:12
+    at FlowParserMixin.withSmartMixTopicForbiddingContext (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11910:14)
+    at FlowParserMixin.parseFunction (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12920:10)
+    at FlowParserMixin.parseFunctionStatement (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12599:17)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12364:25)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseStatementListItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12216:17)
+    at FlowParserMixin.parseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13402:17)
+    at FlowParserMixin.parseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5225:20)
+    at FlowParserMixin.maybeParseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13361:31)
+    at FlowParserMixin.parseExport (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13286:29)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12349:27)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseModuleItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12213:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12793:36)
+
+ERROR in [eslint] 
+src/util.js
+  Line 138:20:  Parsing error: Unexpected token, expected "," (138:20)
+
+webpack compiled with 2 errors and 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 125:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 126:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 125:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 126:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 138:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 139:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 138:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 139:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 138:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 139:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 138:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 139:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 139:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 140:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 139:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 140:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 139:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 140:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 139:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 140:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 140:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 141:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 140:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 141:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/util.js
+Syntax error: Unexpected token, expected "," (148:20) (148:20)
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+ERROR in ./src/util.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /root/StoryPark/storyparkreact/src/util.js: Unexpected token, expected "," (148:20)
+
+  146 |     console.log(jsonString);
+  147 |     const data = await postJsonData(server_url+api_call['generateStory'], jsonString);
+> 148 |     data.replace('"'','\"');
+      |                     ^
+  149 |     data.replace('"'','\"');
+  150 |     return JSON.parse(data);
+  151 | }
+    at constructor (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:351:19)
+    at FlowParserMixin.raise (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3237:19)
+    at FlowParserMixin.unexpected (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3257:16)
+    at FlowParserMixin.expect (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:3562:12)
+    at FlowParserMixin.parseCallExpressionArguments (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10753:14)
+    at FlowParserMixin.parseCoverCallAndAsyncArrowHead (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10682:29)
+    at FlowParserMixin.parseSubscript (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10619:19)
+    at FlowParserMixin.parseSubscript (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5755:18)
+    at FlowParserMixin.parseSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10592:19)
+    at FlowParserMixin.parseSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5721:18)
+    at FlowParserMixin.parseExprSubscripts (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10583:17)
+    at FlowParserMixin.parseUpdate (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10562:21)
+    at FlowParserMixin.parseMaybeUnary (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10540:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10394:61)
+    at FlowParserMixin.parseExprOps (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10399:23)
+    at FlowParserMixin.parseMaybeConditional (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10376:23)
+    at FlowParserMixin.parseMaybeAssign (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10337:21)
+    at FlowParserMixin.parseMaybeAssign (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5654:18)
+    at FlowParserMixin.parseExpressionBase (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10291:23)
+    at /root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10287:39
+    at FlowParserMixin.allowInAnd (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11928:16)
+    at FlowParserMixin.parseExpression (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:10287:17)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12369:23)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseStatementListItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12216:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12793:61)
+    at FlowParserMixin.parseBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12786:10)
+    at FlowParserMixin.parseBlock (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12774:10)
+    at FlowParserMixin.parseFunctionBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11613:24)
+    at FlowParserMixin.parseFunctionBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5000:11)
+    at FlowParserMixin.parseFunctionBodyAndFinish (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11599:10)
+    at FlowParserMixin.parseFunctionBodyAndFinish (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5008:18)
+    at /root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12921:12
+    at FlowParserMixin.withSmartMixTopicForbiddingContext (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:11910:14)
+    at FlowParserMixin.parseFunction (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12920:10)
+    at FlowParserMixin.parseFunctionStatement (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12599:17)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12364:25)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseStatementListItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12216:17)
+    at FlowParserMixin.parseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13402:17)
+    at FlowParserMixin.parseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5225:20)
+    at FlowParserMixin.maybeParseExportDeclaration (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13361:31)
+    at FlowParserMixin.parseExport (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:13286:29)
+    at FlowParserMixin.parseStatementContent (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12349:27)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12236:17)
+    at FlowParserMixin.parseStatementLike (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:5023:24)
+    at FlowParserMixin.parseModuleItem (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12213:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/root/StoryPark/storyparkreact/node_modules/@babel/parser/lib/index.js:12793:36)
+
+ERROR in [eslint] 
+src/util.js
+  Line 148:20:  Parsing error: Unexpected token, expected "," (148:20)
+
+webpack compiled with 2 errors and 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 144:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 145:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 144:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 145:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 144:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 145:23:  Unnecessary escape character: \"  no-useless-escape
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/StoryPage.jsx
+  Line 7:3:     'sendAudioFile' is defined but never used                                                                                                                                                                                                                            no-unused-vars
+  Line 13:3:    'drawbackContext' is defined but never used                                                                                                                                                                                                                          no-unused-vars
+  Line 16:51:   'Stack' is defined but never used                                                                                                                                                                                                                                    no-unused-vars
+  Line 123:10:  'textContent' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 191:41:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 236:6:   React Hook useEffect has missing dependencies: 'handleStoryInteract' and 'initFunction'. Either include them or remove the dependency array                                                                                                                          react-hooks/exhaustive-deps
+  Line 259:20:  'setImageSrc' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 289:43:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 291:50:  Expected '===' and instead saw '=='                                                                                                                                                                                                                                  eqeqeq
+  Line 310:6:   React Hook useEffect has missing dependencies: 'imageSrc' and 'openSketchPad'. Either include them or remove the dependency array. You can also do a functional update 'setOpenSketchPad(o => ...)' if you only need 'openSketchPad' in the 'setOpenSketchPad' call  react-hooks/exhaustive-deps
+  Line 335:9:   'mediaRecorderRef' is assigned a value but never used                                                                                                                                                                                                                no-unused-vars
+  Line 337:10:  'audioChunks' is assigned a value but never used                                                                                                                                                                                                                     no-unused-vars
+  Line 337:23:  'setAudioChunks' is assigned a value but never used                                                                                                                                                                                                                  no-unused-vars
+
+src/util.js
+  Line 144:23:  Unnecessary escape character: \"  no-useless-escape
+  Line 145:23:  Unnecessary escape character: \"  no-useless-escape
+
+webpack compiled with 1 warning

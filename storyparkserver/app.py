@@ -2,8 +2,14 @@ from flask import Flask, render_template, request, jsonify, send_file
 from datetime import datetime
 import os
 import subprocess
-from logger import logger, tester_name
 import time
+
+# 导入logger前先确保log目录存在
+log_dir = os.path.join(os.path.dirname(__file__), 'log')
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+from logger import logger, tester_name
 
 from prompt_builder import (
   send_to_gpt,
@@ -243,6 +249,6 @@ def test_get_audio():
 
 
 if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=4999, debug=True)
+  app.run(host='0.0.0.0', port=5000, debug=True)
 
 
