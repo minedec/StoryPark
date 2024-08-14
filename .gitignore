@@ -1,2 +1,4 @@
-./log/
-./pic/
+storyparkserver/log/
+storyparkserver/pic/
+storyparkserver/venv/
+storyparkserver/__pycache__/
