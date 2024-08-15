@@ -7,6 +7,7 @@ import {Button, Navbar, Nav, Container} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import SketchPad from './SketchPad';
 import { restartNewStory } from './util';
+import PaintPage from './PaintPage';
 
 let appData1 = {};
 
@@ -180,6 +181,7 @@ function App() {
       <Route path="/" element={<ChoosePage />} />
       <Route path="/choose-page" element={<ChoosePage />} />
       <Route path="/StoryPage" element={<StoryPage />} />
+      <Route path="/PaintPage" element={<PaintPage />} />
     </Routes>
     </Router>
   );
