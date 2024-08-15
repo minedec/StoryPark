@@ -17,6 +17,7 @@ const PaintPage = () => {
   const [drawingData, setDrawingData] = useState([]);
   const [history, setHistory] = useState([{ drawingData: [], droppedImages: [], selectedImages: [] }]);
   const [currentStateIndex, setCurrentStateIndex] = useState(0);
+  const [lastActionType, setLastActionType] = useState(null);
 
   const handleImageClick = (imagePath) => {
     if (selectedImages.length < 4 && !selectedImages.includes(imagePath)) {
@@ -26,6 +27,7 @@ const PaintPage = () => {
       newHistory.push({ drawingData, droppedImages, selectedImages: newSelectedImages });
       setHistory(newHistory);
       setCurrentStateIndex(newHistory.length - 1);
+      setLastActionType('imageClick');
     }
   };
 
@@ -59,6 +61,7 @@ const PaintPage = () => {
     newHistory.push({ drawingData: newDrawingData, droppedImages, selectedImages });
     setHistory(newHistory);
     setCurrentStateIndex(newHistory.length - 1);
+    setLastActionType('draw');
   };
 
   useEffect(() => {
@@ -146,6 +149,7 @@ const PaintPage = () => {
           newHistory.push({ drawingData, droppedImages: newDroppedImages, selectedImages });
           setHistory(newHistory);
           setCurrentStateIndex(newHistory.length - 1);
+          setLastActionType('drop');
         }
       },
     }));
@@ -194,11 +198,17 @@ const PaintPage = () => {
     const newHistory = [...history, { drawingData: [], droppedImages: [], selectedImages: [] }];
     setHistory(newHistory);
     setCurrentStateIndex(newHistory.length - 1);
+    setLastActionType('clear');
   };
 
   const handleUndo = () => {
     if (currentStateIndex > 0) {
-      const newIndex = currentStateIndex - 1;
+      let newIndex;
+      if (['imageClick', 'draw', 'drop'].includes(lastActionType) && currentStateIndex > 1) {
+        newIndex = currentStateIndex - 2;
+      } else {
+        newIndex = currentStateIndex - 1;
+      }
       const previousState = history[newIndex];
       setCurrentStateIndex(newIndex);
       setDrawingData(previousState.drawingData);
@@ -218,6 +228,7 @@ const PaintPage = () => {
           ctx.stroke();
         }
       });
+      setLastActionType('undo');
     }
   };
 
