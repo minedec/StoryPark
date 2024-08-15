@@ -276,8 +276,7 @@ export default function StoryPage() {
     console.log('current'+sketchPadRef.current)
     if (!showSketchPad && sketchPadRef.current) {
       console.log('enter save');
-      const saveImgPath = window.name
-                + "_" + window.StoryState.storyIndex
+      const saveImgPath = window.StoryState.storyIndex
                 + "_" + window.StoryState.chapterIndex
                 + "_" + formatCurrentDateTime()
                 + ".png";
@@ -310,6 +309,8 @@ export default function StoryPage() {
   }, [showSketchPad]);
 
   const handleSketchButtonClick = () => {
+    if(!window.isSpeakDown || window.isSketchDown) return;
+    if(window.StoryState.chapterIndex > 3) return;
     window.isSketch = !window.isSketch;
     setShowSketchPad(!showSketchPad);
     if(!openSketchPad) setOpenSketchPad(!openSketchPad);
@@ -324,7 +325,6 @@ export default function StoryPage() {
     } else {
       if(window.StoryState.chapterIndex > 3) return;
       console.log('开启画板');
-      window.isSketchDown = false;
       setSketchButtonStyle({
         ...SketchButtonStyle,
         backgroundImage: 'url(./button2.png)',
@@ -341,13 +341,12 @@ export default function StoryPage() {
   const micRecorderRef = React.useRef(null);
 
   const handleSpeakButtonClick = () => {
+    if(window.isSpeakDown) return;
     console.log('SpeakButton clicked');
     window.isSpeak = !window.isSpeak;
 
     if (!recording) {
       try {
-        window.isSpeakDown = false;
-
         if (!micRecorderRef.current) {
           micRecorderRef.current = new MicRecorder({ bitRate: 128 });
         }
@@ -394,9 +393,9 @@ export default function StoryPage() {
   };
 
   const handleResume = async () => {
-    window.name = document.getElementById('test_name').value;
-    console.log("test name:"+window.name);
-    await setTesterName(window.name);
+    // window.name = document.getElementById('test_name').value;
+    // console.log("test name:"+window.name);
+    // await setTesterName(window.name);
     window.StoryState.chapterIndex += 1;
     storyStateChange();
   }
@@ -455,7 +454,7 @@ export default function StoryPage() {
             {/* <Form.Control as="textarea" readOnly rows={3} value={textContent} /> */}
             <Image id="image1" src={imageUrl1} fluid rounded style={imageStyle} />
             <Image id="image2" src={imageUrl2} fluid rounded style={imageStyle} />
-              <Form.Control id="test_name" type="text" placeholder="输入你的名字" />
+              {/*<Form.Control id="test_name" type="text" placeholder="输入你的名字" />*/}
             <Row>
             <Button onClick={handleResume}>继续</Button>
             <Button onClick={handleReplayCurrentChapter} >重播</Button>

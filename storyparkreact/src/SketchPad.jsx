@@ -326,7 +326,12 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
         console.log("Canvas created!"); // 添加这行日志以确认是否创建了画布
         console.log(screenWidth, screenHeight);
         p5.frameRate(50);
-        const modelIndex = availableModels.indexOf(sketchObj._sketchObj.sketch_object);
+        var modelIndex;
+        if(sketchObj._sketchObj.sketch_object === 'null') {
+          modelIndex = 22;
+        } else {
+          modelIndex = availableModels.indexOf(sketchObj._sketchObj.sketch_object);
+        }
         // const modelIndex = 22;
         initModel(modelIndex);
         p5RefGlobal._p5Ref = p5;
