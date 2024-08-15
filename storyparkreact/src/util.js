@@ -159,12 +159,11 @@ export function getVoice2Text(audioFile) {
 }
 
 export function playSound(audioUrl) {
-    const audioPlayer = document.getElementById('audioPlayer');
-    audioPlayer.src = audioUrl;
-    audioPlayer.play();
-    audioPlayer.addEventListener('ended', () => {
-        URL.revokeObjectURL(audioUrl);
-    });
+  return new Promise((resolve) => {
+    const audio = new Audio(audioUrl);
+    audio.onended = resolve;
+    audio.play();
+  });
 }
 
 export function restartNewStory() {

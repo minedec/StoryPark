@@ -1,10 +1,10 @@
-[2024-08-14 16:51:34 +0800] [19342] [INFO] Starting gunicorn 23.0.0
-[2024-08-14 16:51:34 +0800] [19342] [INFO] Listening at: http://0.0.0.0:8000 (19342)
-[2024-08-14 16:51:34 +0800] [19342] [INFO] Using worker: sync
-[2024-08-14 16:51:34 +0800] [19344] [INFO] Booting worker with pid: 19344
-[2024-08-14 16:51:34 +0800] [19345] [INFO] Booting worker with pid: 19345
-[2024-08-14 16:51:34 +0800] [19346] [INFO] Booting worker with pid: 19346
-[2024-08-14 16:51:34 +0800] [19347] [INFO] Booting worker with pid: 19347
+[2024-08-15 15:40:28 +0800] [57532] [INFO] Starting gunicorn 23.0.0
+[2024-08-15 15:40:28 +0800] [57532] [INFO] Listening at: http://0.0.0.0:8000 (57532)
+[2024-08-15 15:40:28 +0800] [57532] [INFO] Using worker: sync
+[2024-08-15 15:40:28 +0800] [57534] [INFO] Booting worker with pid: 57534
+[2024-08-15 15:40:28 +0800] [57535] [INFO] Booting worker with pid: 57535
+[2024-08-15 15:40:28 +0800] [57536] [INFO] Booting worker with pid: 57536
+[2024-08-15 15:40:28 +0800] [57537] [INFO] Booting worker with pid: 57537
 ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
   built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
   configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
@@ -30,9 +30,86 @@ Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
   Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
     Metadata:
       encoder         : Lavc58.134.100 libmp3lame
-size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    [libmp3lame @ 0x5557cc470800] Trying to remove 576 samples, but the queue is empty
-size=     277kB time=00:00:17.60 bitrate= 129.1kbits/s speed= 213x    
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    [libmp3lame @ 0x559c6138c800] Trying to remove 576 samples, but the queue is empty
+size=     277kB time=00:00:17.60 bitrate= 129.1kbits/s speed= 236x    
 video:0kB audio:277kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.219131%
+[2024-08-15 15:41:03 +0800] [57532] [CRITICAL] WORKER TIMEOUT (pid:57534)
+[2024-08-15 15:41:03 +0800] [57534] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-08-15 15:41:03 +0800] [57534] [INFO] Worker exiting (pid: 57534)
+[2024-08-15 15:41:04 +0800] [57674] [INFO] Booting worker with pid: 57674
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。","interact":"小朋友们，猜猜看，小熊会用这个龟壳来做些什么有趣的事情呢？"}'}]
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。小朋友们，猜猜看，小熊会用这个龟壳来做些什么有趣的事情呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[2024-08-15 15:45:58 +0800] [57532] [CRITICAL] WORKER TIMEOUT (pid:57536)
+[2024-08-15 15:45:58 +0800] [57536] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-08-15 15:45:58 +0800] [57536] [INFO] Worker exiting (pid: 57536)
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳脱下来，丢进了附近的小河里。壳随着河水漂啊漂，不一会儿就被岸边正在玩耍的小熊发现了。小熊看着这个圆圆的龟壳，你觉得它可以用来做什么呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+[2024-08-15 15:45:58 +0800] [57976] [INFO] Booting worker with pid: 57976
 ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
   built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
   configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
@@ -44,11 +121,10 @@ ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg develop
   libswscale      5.  9.100 /  5.  9.100
   libswresample   3.  9.100 /  3.  9.100
   libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x563933dff6c0] Estimating duration from bitrate, this may be inaccurate
 Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
-  Metadata:
-    encoder         : Lavf59.16.100
-  Duration: 00:00:17.63, start: 0.025057, bitrate: 192 kb/s
-  Stream #0:0: Audio: mp3, 44100 Hz, mono, fltp, 192 kb/s
+  Duration: 00:00:01.94, start: 0.000000, bitrate: 128 kb/s
+  Stream #0:0: Audio: mp3, 48000 Hz, mono, fltp, 128 kb/s
 Stream mapping:
   Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
 Press [q] to stop, [?] for help
@@ -58,10 +134,39 @@ Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
   Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
     Metadata:
       encoder         : Lavc58.134.100 libmp3lame
-size=       1kB time=00:00:00.00 bitrate=N/A speed=   0x    [libmp3lame @ 0x55fe5438c800] Trying to remove 576 samples, but the queue is empty
-size=     277kB time=00:00:17.60 bitrate= 129.1kbits/s speed= 205x    
-video:0kB audio:277kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.219131%
-ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    size=      32kB time=00:00:01.91 bitrate= 137.6kbits/s speed= 162x    
+video:0kB audio:32kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 1.925223%
+[2024-08-15 15:49:21,987] ERROR in app: Exception on /extract_keyword [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 178, in extract_keyword
+    keyword, sketch_object = extract_object(user_message)
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 103, in extract_object
+    sketch_object = sketch_object_en[sketch_object_ch.index(json.loads(res_json)["object"])]
+ValueError: '' is not in list
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。","interact":"小朋友们，猜猜看，小熊会用这个龟壳来做些什么有趣的事情呢？"}'}, {'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"在一个阳光明媚的日子，小乌龟感到自己的壳实在是沉重，给它的行动带来不少麻烦。于是，它做了一个大胆的决定，将自己的壳悄悄丢弃到了一条清澈的小河中。不久之后，这件不同寻常的‘礼物’被一只好奇的小熊发现了。","interact":"小朋友们，想象一下，小熊捡到这个特别的龟壳后，它能用它来做什么奇妙的事情呢？让我们一起猜一猜吧！"}'}]
+trans text: 在一个阳光明媚的日子，小乌龟感到自己的壳实在是沉重，给它的行动带来不少麻烦。于是，它做了一个大胆的决定，将自己的壳悄悄丢弃到了一条清澈的小河中。不久之后，这件不同寻常的‘礼物’被一只好奇的小熊发现了。小朋友们，想象一下，小熊捡到这个特别的龟壳后，它能用它来做什么奇妙的事情呢？让我们一起猜一猜吧！
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+请从这句话中提取一个关键词，该关键词将是一个名词并且是描述某个事物。例如“小熊会去用龟壳做一个房子”，关键词就是房子而不是龟壳，要提取的这句话是{}，你的回复应当以json格式字符串返回，格式为 {"key":value,...,"key":value}，不要带markdown标记语言
+1. 其中关键词标签为keyword
+2. 将关键词提取后，我需要你从下列单词列表中选取一个与关键词含义最相近的词语，并将其返回，这个词语的json标签为object，单词列表为
+{鸟, 蚂蚁, 救护车, 天使, 闹钟, 蚂蚁瑜伽, 背包, 谷仓, 篮子, 熊, 蜜蜂, 蜂花, 自行车, 书, 大脑, 桥, 推土机, 公共汽车, 蝴蝶, 仙人掌, 日历, 城堡, 猫, 猫巴士, 猫猪, 椅子, 沙发, 蟹, 螃蟹椅, 蟹兔脸猪, 邮轮, 跳板, 狗, 狗兔子, 海豚, 鸭, 大象, 象猪, 一切, 眼睛, 脸, 粉丝, 消防栓, 救火车, 火烈鸟, 花, 花瑜伽, 青蛙, 青蛙沙发, 花园, 手, 对冲浆果, 刺猬, 直升机, 袋鼠, 关键, 灯笼, 灯塔, 狮子, 狮子羊, 龙虾, 地图, 美人鱼, 莫娜护照, 猴子, 蚊子, 章鱼, 猫头鹰, 画笔, 棕榈树, 鹦鹉, 护照, 豌豆, 企鹅, 猪, 猪羊, 菠萝, 池, 明信片, 电源插座, 兔子, 兔子乌龟, 收音机, 收音机的脸, 雨, 犀牛, 步枪, 过山车, 三明治, 蝎子, 海龟, 羊, 头骨, 蜗牛, 雪花, 快艇, 蜘蛛, 松鼠, 牛排, 火炉, 草莓, 天鹅, 秋千, 蒙娜丽莎, 老虎, 牙刷, 牙膏, 拖拉机, 长号, 卡车, 鲸, 风车, 瑜伽, 瑜伽自行车}
+如果都不匹配，也需要从单词列表{鸟, 蚂蚁, 救护车, 天使, 闹钟, 蚂蚁瑜伽, 背包, 谷仓, 篮子, 熊, 蜜蜂, 蜂花, 自行车, 书, 大脑, 桥, 推土机, 公共汽车, 蝴蝶, 仙人掌, 日历, 城堡, 猫, 猫巴士, 猫猪, 椅子, 沙发, 蟹, 螃蟹椅, 蟹兔脸猪, 邮轮, 跳板, 狗, 狗兔子, 海豚, 鸭, 大象, 象猪, 一切, 眼睛, 脸, 粉丝, 消防栓, 救火车, 火烈鸟, 花, 花瑜伽, 青蛙, 青蛙沙发, 花园, 手, 对冲浆果, 刺猬, 直升机, 袋鼠, 关键, 灯笼, 灯塔, 狮子, 狮子羊, 龙虾, 地图, 美人鱼, 莫娜护照, 猴子, 蚊子, 章鱼, 猫头鹰, 画笔, 棕榈树, 鹦鹉, 护照, 豌豆, 企鹅, 猪, 猪羊, 菠萝, 池, 明信片, 电源插座, 兔子, 兔子乌龟, 收音机, 收音机的脸, 雨, 犀牛, 步枪, 过山车, 三明治, 蝎子, 海龟, 羊, 头骨, 蜗牛, 雪花, 快艇, 蜘蛛, 松鼠, 牛排, 火炉, 草莓, 天鹅, 秋千, 蒙娜丽莎, 老虎, 牙刷, 牙膏, 拖拉机, 长号, 卡车, 鲸, 风车, 瑜伽, 瑜伽自行车}里面随机选一个列表中的词语
+举例说明，如果匹配“篮球”，而单词列表中没有类似的单词，不可以在object中返回“球”这个不存在的词语，而可以匹配列表中存在的“篮子”这种词语。
+请直接返回json字符串并不要带多余信息
+{"keyword":"","object":""}
+user_prompt: ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
   built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
   configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
   libavutil      56. 70.100 / 56. 70.100
@@ -72,11 +177,10 @@ ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg develop
   libswscale      5.  9.100 /  5.  9.100
   libswresample   3.  9.100 /  3.  9.100
   libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x555e962776c0] Estimating duration from bitrate, this may be inaccurate
 Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
-  Metadata:
-    encoder         : Lavf59.16.100
-  Duration: 00:00:17.63, start: 0.025057, bitrate: 192 kb/s
-  Stream #0:0: Audio: mp3, 44100 Hz, mono, fltp, 192 kb/s
+  Duration: 00:00:01.54, start: 0.000000, bitrate: 128 kb/s
+  Stream #0:0: Audio: mp3, 48000 Hz, mono, fltp, 128 kb/s
 Stream mapping:
   Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
 Press [q] to stop, [?] for help
@@ -86,6 +190,277 @@ Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
   Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
     Metadata:
       encoder         : Lavc58.134.100 libmp3lame
-size=       1kB time=00:00:00.00 bitrate=N/A speed=   0x    [libmp3lame @ 0x55d1bde79800] Trying to remove 576 samples, but the queue is empty
-size=     277kB time=00:00:17.60 bitrate= 129.1kbits/s speed= 233x    
-video:0kB audio:277kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.219131%
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    size=      26kB time=00:00:01.51 bitrate= 140.2kbits/s speed= 147x    
+video:0kB audio:25kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 2.395833%
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳脱下来，丢进了附近的小河里。壳随着河水漂啊漂，不一会儿就被岸边正在玩耍的小熊发现了。", "interact":"小熊看着这个圆圆的龟壳，你觉得它可以用来做什么呢？"}'}]
+trans text: 从前，有一只小乌龟，他总是觉得自己的壳又重又硬，非常麻烦。有一天，他决定把壳脱下来，悄悄丢进了村边的小河里。小乌龟刚开始觉得轻松极了，但不久就开始想念起自己的壳来。
+
+河边玩耍的小熊无意间发现了漂浮的龟壳，它灵机一动，‘咦，这个圆圆的东西能用来做什么呢？’小熊想了想，觉得这个壳可以用来做什么呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。","interact":"小朋友们，猜猜看，小熊会用这个龟壳来做些什么有趣的事情呢？"}'}]
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳丢进河里，想着这样就可以自由地奔跑和玩耍了。不久后，小乌龟遇到了小熊，小熊正巧在河边寻找制作笛子的材料。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+[2024-08-15 16:02:26,552] ERROR in app: Exception on /extract_keyword [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 178, in extract_keyword
+    keyword, sketch_object = extract_object(user_message)
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 103, in extract_object
+    sketch_object = sketch_object_en[sketch_object_ch.index(json.loads(res_json)["object"])]
+ValueError: '' is not in list
+我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳丢进河里，想着这样就可以自由地奔跑和玩耍了。不久后，小乌龟遇到了小熊，小熊正巧在河边寻找制作笛子的材料。","interact":"小熊看了看河里的龟壳，想了想，你觉得小熊能用这个龟壳做些什么呢？"}'}]
+trans text: 小朋友们，猜猜看，小熊会用这个龟壳来做些什么有趣的事情呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+请从这句话中提取一个关键词，该关键词将是一个名词并且是描述某个事物。例如“小熊会去用龟壳做一个房子”，关键词就是房子而不是龟壳，要提取的这句话是{}，你的回复应当以json格式字符串返回，格式为 {"key":value,...,"key":value}，不要带markdown标记语言
+1. 其中关键词标签为keyword
+2. 将关键词提取后，我需要你从下列单词列表中选取一个与关键词含义最相近的词语，并将其返回，这个词语的json标签为object，单词列表为
+{鸟, 蚂蚁, 救护车, 天使, 闹钟, 蚂蚁瑜伽, 背包, 谷仓, 篮子, 熊, 蜜蜂, 蜂花, 自行车, 书, 大脑, 桥, 推土机, 公共汽车, 蝴蝶, 仙人掌, 日历, 城堡, 猫, 猫巴士, 猫猪, 椅子, 沙发, 蟹, 螃蟹椅, 蟹兔脸猪, 邮轮, 跳板, 狗, 狗兔子, 海豚, 鸭, 大象, 象猪, 一切, 眼睛, 脸, 粉丝, 消防栓, 救火车, 火烈鸟, 花, 花瑜伽, 青蛙, 青蛙沙发, 花园, 手, 对冲浆果, 刺猬, 直升机, 袋鼠, 关键, 灯笼, 灯塔, 狮子, 狮子羊, 龙虾, 地图, 美人鱼, 莫娜护照, 猴子, 蚊子, 章鱼, 猫头鹰, 画笔, 棕榈树, 鹦鹉, 护照, 豌豆, 企鹅, 猪, 猪羊, 菠萝, 池, 明信片, 电源插座, 兔子, 兔子乌龟, 收音机, 收音机的脸, 雨, 犀牛, 步枪, 过山车, 三明治, 蝎子, 海龟, 羊, 头骨, 蜗牛, 雪花, 快艇, 蜘蛛, 松鼠, 牛排, 火炉, 草莓, 天鹅, 秋千, 蒙娜丽莎, 老虎, 牙刷, 牙膏, 拖拉机, 长号, 卡车, 鲸, 风车, 瑜伽, 瑜伽自行车}
+如果都不匹配，也需要从单词列表{鸟, 蚂蚁, 救护车, 天使, 闹钟, 蚂蚁瑜伽, 背包, 谷仓, 篮子, 熊, 蜜蜂, 蜂花, 自行车, 书, 大脑, 桥, 推土机, 公共汽车, 蝴蝶, 仙人掌, 日历, 城堡, 猫, 猫巴士, 猫猪, 椅子, 沙发, 蟹, 螃蟹椅, 蟹兔脸猪, 邮轮, 跳板, 狗, 狗兔子, 海豚, 鸭, 大象, 象猪, 一切, 眼睛, 脸, 粉丝, 消防栓, 救火车, 火烈鸟, 花, 花瑜伽, 青蛙, 青蛙沙发, 花园, 手, 对冲浆果, 刺猬, 直升机, 袋鼠, 关键, 灯笼, 灯塔, 狮子, 狮子羊, 龙虾, 地图, 美人鱼, 莫娜护照, 猴子, 蚊子, 章鱼, 猫头鹰, 画笔, 棕榈树, 鹦鹉, 护照, 豌豆, 企鹅, 猪, 猪羊, 菠萝, 池, 明信片, 电源插座, 兔子, 兔子乌龟, 收音机, 收音机的脸, 雨, 犀牛, 步枪, 过山车, 三明治, 蝎子, 海龟, 羊, 头骨, 蜗牛, 雪花, 快艇, 蜘蛛, 松鼠, 牛排, 火炉, 草莓, 天鹅, 秋千, 蒙娜丽莎, 老虎, 牙刷, 牙膏, 拖拉机, 长号, 卡车, 鲸, 风车, 瑜伽, 瑜伽自行车}里面随机选一个列表中的词语
+举例说明，如果匹配“篮球”，而单词列表中没有类似的单词，不可以在object中返回“球”这个不存在的词语，而可以匹配列表中存在的“篮子”这种词语。
+请直接返回json字符串并不要带多余信息
+{"keyword":"","object":""}
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个闪亮的龟壳。","interact":"小熊看了看龟壳，心想：‘这圆圆的、硬硬的壳可以用来做什么呢？’小朋友，你觉得小熊能用这个龟壳做些什么有趣的事情呢？"}'}]
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个闪亮的龟壳。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳丢进河里，想着这样就可以自由地奔跑和玩耍了。不久后，小乌龟遇到了小熊，小熊正巧在河边寻找制作笛子的材料。","interact":"小熊看了看河里的龟壳，想了想，你觉得小熊能用这个龟壳做些什么呢？"}'}, {'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"在一个阳光明媚的日子，小乌龟因为觉得自己的壳太笨重，就偷偷把它丢进了清凉的小河里。没有了壳的小乌龟刚开始觉得轻松极了，但很快它就开始想念那个曾经觉得麻烦的家了。与此同时，在河边漫步的小熊有了一个惊喜的发现……","interact":"小熊捡起了河里的龟壳，它眼睛一亮，你觉得小熊会用这个龟壳来做些什么有趣的事情呢？"}'}]
+trans text: 在一个阳光明媚的日子，小乌龟因为觉得自己的壳太笨重，就偷偷把它丢进了清凉的小河里。没有了壳的小乌龟刚开始觉得轻松极了，但很快它就开始想念那个曾经觉得麻烦的家了。与此同时，在河边漫步的小熊有了一个惊喜的发现……
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定摆脱这个‘麻烦’，于是悄悄地把壳丢进了村边的小河里。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[2024-08-15 16:33:47 +0800] [57532] [CRITICAL] WORKER TIMEOUT (pid:57537)
+[2024-08-15 16:33:47 +0800] [57537] [ERROR] Error handling request /generate_story
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 217, in next_chapter
+    res = send_to_qwen(user_prompt)
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 66, in send_to_qwen
+    chat_completion = client.chat.completions.create(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 275, in wrapper
+    return func(*args, **kwargs)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 667, in create
+    return self._post(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/openai/_base_client.py", line 1208, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/openai/_base_client.py", line 897, in request
+    return self._request(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/openai/_base_client.py", line 926, in _request
+    response = self._client.send(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpx/_client.py", line 1015, in _send_single_request
+    response = transport.handle_request(request)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpx/_transports/default.py", line 233, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 216, in handle_request
+    raise exc from None
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 196, in handle_request
+    response = connection.handle_request(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    return self._connection.handle_request(request)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 143, in handle_request
+    raise exc
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 113, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 186, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 224, in _receive_event
+    data = self._network_stream.read(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/httpcore/_backends/sync.py", line 126, in read
+    return self._sock.recv(max_bytes)
+  File "/usr/lib/python3.10/ssl.py", line 1288, in recv
+    return self.read(buflen)
+  File "/usr/lib/python3.10/ssl.py", line 1161, in read
+    return self._sslobj.read(len)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-08-15 16:33:47 +0800] [57537] [INFO] Worker exiting (pid: 57537)
+### error: on_close() takes 1 positional argument but 3 were given
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。小朋友们，猜猜看，小熊会用这个龟壳来做些什么有趣的事情呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。小熊好奇地拿起龟壳，左看看右瞧瞧，你觉得小熊可以用这个龟壳来做些什么有趣的事情呢？","interact":"小熊可以用壳做什么？"}'}]
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。小熊好奇地拿起龟壳，左看看右瞧瞧，你觉得小熊可以用这个龟壳来做些什么有趣的事情呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小熊在河边欢快地跳跃，它灵机一动，想到了一个好主意！你觉得小熊会用这个龟壳来做些什么有趣的事情呢？是不是可以做一个乐器，比如吹笛子，或者有其他创意的用途？让我们听听你的想法吧！
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 对于互动点2的回答为 {hello} ，请生成反馈，生成反馈时需要注意以下几点：
+1、及时给孩子肯定和赞美
+2、帮助孩子补充此回答的细节
+生成反馈后，直接讲述到结局
+在结局后，请根据故事的素材和传达的道理生成3个问题，每个问题提问之后，你需要停下，等待我的反馈，并根据回答内容反馈，反馈内容控制在200词以内。
+后续孩子反馈的第一个问题将是Q1，然后依次是Q2，Q3，在Q3回答完毕后，guidance中描述所有环节的总结和反馈。
+假如孩子的回答没有正确理解故事传达的道理，你需要耐心的引导孩子理解道理后再问一次。确认孩子理解后，再提下一个问题。你的回复应当以json格式返回，并且格式如下：
+你的回复应当以json格式返回，并且格式如下：
+1.故事续写的剧情文本以及反馈对应标签名称为story 
+2.结尾问题对应标签名称为Q1, Q2，Q3
+3.回答问题后生成的反馈文字标签为guidance
+4.不要出现括号包含的暗示提示性文本
+5.动物、人物不要出现出现名字，直接使用名词
+[2024-08-15 16:33:48 +0800] [60639] [INFO] Booting worker with pid: 60639
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳丢进河里，想着这样就可以自由地奔跑和玩耍了。不久后，小乌龟遇到了小熊，小熊正巧在河边寻找制作笛子的材料。","interact":"小熊看了看河里的龟壳，想了想，你觉得小熊能用这个龟壳做些什么呢？"}'}, {'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"在一个阳光明媚的日子，小乌龟因为觉得自己的壳太笨重，就偷偷把它丢进了清凉的小河里。没有了壳的小乌龟刚开始觉得轻松极了，但很快它就开始想念那个曾经觉得麻烦的家了。与此同时，在河边漫步的小熊有了一个惊喜的发现……","interact":"小熊捡起了河里的龟壳，它眼睛一亮，你觉得小熊会用这个龟壳来做些什么有趣的事情呢？"}'}, {'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"在一个温暖的春日午后，小乌龟因为嫌弃自己背上重重的壳，决定将它悄悄丢弃在了潺潺流动的小河中。没有了壳的小乌龟，虽然起初感到了前所未有的轻松，但不久便开始意识到失去了保护的不安。这时，在河边闲逛的小熊有了一个奇妙的主意……","interact":"小熊看到漂浮在水面上的龟壳，它琢磨着，小朋友们，你们觉得小熊能用这个特别的龟壳做一件什么样的事情呢？"}'}]
+trans text: 在一个阳光明媚的日子，小乌龟因为觉得自己的壳是个大麻烦，就偷偷把它丢弃到了河流中。不久后，小熊在河边漫步时，惊喜地发现了这个独特的龟壳。小朋友，想象一下，小熊会怎样利用这个找到的龟壳呢？是不是能做成什么特别的玩具或者是有用的工具呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定摆脱这个‘麻烦’，于是悄悄地把壳丢进了村边的小河里。","interact":"小熊在河边玩耍时，发现了这个漂浮的龟壳。小朋友，你觉得小熊会用这个龟壳来做什么有趣的事情呢？"}'}]
+trans text: 在一个温暖的春日午后，小乌龟因为嫌弃自己背上重重的壳，决定将它悄悄丢弃在了潺潺流动的小河中。没有了壳的小乌龟，虽然起初感到了前所未有的轻松，但不久便开始意识到失去了保护的不安。这时，在河边闲逛的小熊有了一个奇妙的主意……
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小熊看到漂浮在水面上的龟壳，它琢磨着，小朋友们，你们觉得小熊能用这个特别的龟壳做一件什么样的事情呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小熊可以用壳做什么？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定摆脱这个‘麻烦’，于是悄悄地把壳丢进了村边的小河里。","interact":"小熊在河边玩耍时，发现了这个漂浮的龟壳。小朋友，你觉得小熊会用这个龟壳来做什么有趣的事情呢？"}'}, {'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"在一个阳光明媚的日子，小乌龟因为觉得自己的壳是个大麻烦，就偷偷把它丢弃到了河流中。不久后，小熊在河边漫步时，惊喜地发现了这个独特的龟壳。小朋友，想象一下，小熊会怎样利用这个找到的龟壳呢？是不是能做成什么特别的玩具或者是有用的工具呢？","interact":"小熊在河边欢快地跳跃，它灵机一动，想到了一个好主意！你觉得小熊会用这个龟壳来做些什么有趣的事情呢？是不是可以做一个乐器，比如吹笛子，或者有其他创意的用途？让我们听听你的想法吧！"}'}]
+user_prompt: 

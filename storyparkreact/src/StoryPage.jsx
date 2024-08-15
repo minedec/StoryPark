@@ -17,13 +17,17 @@ import {Container, Col, Row, Button, Form, Image, Stack } from 'react-bootstrap'
 import MicRecorder from 'mic-recorder-to-mp3';
 import {userm, sketchObj, tempData} from './App.js'
 import magicSketchpad from './assets/white-background.png';
+import { flushSync } from 'react-dom';
 
 export default function StoryPage() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(magicSketchpad);
   
   const updateBackgroundImage = (newImageUrl) => {
     console.log('update backimage:' + newImageUrl)
-    setBackgroundImageUrl(newImageUrl);
+    flushSync(() => {
+      setBackgroundImageUrl(newImageUrl);
+    });
+    console.log('Background has been updated');
   };
 
   const DivBak = {
@@ -134,14 +138,30 @@ export default function StoryPage() {
       changeStepColor(window.StoryState.chapterIndex);
       const response = await generateStory('hello');
       console.log(response);
-      const audioUrl = await getText2Voice(response.story + response.interact);
+
+      console.log('播放story:'+response.story);
+      let audioUrl = await getText2Voice(response.story);
       tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
       if (audioUrl) {
-        playSound(audioUrl);
+        await playSound(audioUrl);
       }
+
+      console.log('更新背景图');
+      window.isSketch = false;
+      window.isSpeak = false;
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
+      
+
+      console.log('播放interact:'+response.interact);
+      audioUrl = await getText2Voice(response.interact);
+      tempData._tempData = audioUrl;
+      console.log('audioUrl '+ audioUrl);
+      if (audioUrl) {
+        await playSound(audioUrl);
+      }
+      
       window.isSpeakDown = false;
       window.isSketchDown = false;
       window.is_interact = false;
@@ -160,7 +180,7 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
       if (audioUrl) {
-        playSound(audioUrl);
+        await playSound(audioUrl);
       }
       window.isSpeakDown = false;
       window.isSketchDown = false;
@@ -180,7 +200,7 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
       if (audioUrl) {
-        playSound(audioUrl);
+        await playSound(audioUrl);
       }
       window.isSpeakDown = false;
       window.isSketchDown = false;
@@ -198,7 +218,7 @@ export default function StoryPage() {
         tempData._tempData = audioUrl; 
         console.log('audioUrl '+ audioUrl);
         if (audioUrl) {
-          playSound(audioUrl);
+          await playSound(audioUrl);
         }
         return;
       }
@@ -212,7 +232,7 @@ export default function StoryPage() {
       tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
       if (audioUrl) {
-        playSound(audioUrl);
+        await playSound(audioUrl);
       }
       window.is_interact = false;
     }
@@ -233,7 +253,10 @@ export default function StoryPage() {
     // 添加事件监听器
     window.addEventListener('storyStateChange', handleStoryStateChange);
     initFunction();
-  }, []);
+
+    // log backgroundImageUrl
+    console.log('backgroundImageUrl: '+backgroundImageUrl);
+  }, [backgroundImageUrl]);
 
   const storyStateChange = () => {
     console.log("storyStateChange event fired");
