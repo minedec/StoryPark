@@ -69,6 +69,21 @@ Object.defineProperty(appData3, 'tempData', {
 
 export { appData4 as tempData };
 
+let appData5 = {};
+
+Object.defineProperty(appData5, 'storyIsInteract', {
+  get: function() {
+    return this._storyIsInteract;
+  },
+  set: function(value) {
+    this._storyIsInteract = value;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+export { appData5 as storyIsInteract };
+
 function StoryParkNavbar() {
   const navigate = useNavigate(); // 正确地在组件内部使用useNavigate
 
@@ -148,7 +163,7 @@ function StoryParkNavbar() {
     restartNewStory();
     window.StoryState.chapterIndex = 0;
     console.log("story index:"+window.StoryState.storyIndex+", chapter index:"+window.StoryState.chapterIndex)
-    window.dispatchEvent(new Event('storyStateChange'));
+    window.dispatchEvent(new Event('storyStateChangeEvent'));
   }
   
   return (

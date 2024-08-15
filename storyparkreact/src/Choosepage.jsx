@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Button, Navbar, Nav, Container} from 'react-bootstrap'
+import { restartNewStory } from './util';
 
 window.StoryState = {
   storyIndex: 0,
