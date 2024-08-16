@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const server_url = 'http://127.0.0.1:4999/'
+const server_url = 'https://8.140.226.160:4999/'
 const api_call = {
     'generateStory':'generate_story',
     'setStoryAndChapter':'set_story_and_chapter',

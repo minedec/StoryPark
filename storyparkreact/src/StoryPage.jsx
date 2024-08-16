@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import SketchPad from './SketchPad.jsx';
 import './util.js'
 import { 
@@ -22,14 +22,17 @@ import { flushSync } from 'react-dom';
 
 export default function StoryPage() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(magicSketchpad);
+  const [backgroundKey, setBackgroundKey] = useState(0);
   
-  const updateBackgroundImage = (newImageUrl) => {
-    console.log('update backimage:' + newImageUrl)
-    flushSync(() => {
-      setBackgroundImageUrl(newImageUrl);
-    });
-    console.log('Background has been updated');
-  };
+  const updateBackgroundImage = useCallback((newImageUrl) => {
+    console.log('update backimage:' + newImageUrl);
+    setBackgroundImageUrl(newImageUrl);
+    setBackgroundKey(prevKey => prevKey + 1);
+  }, []);
+
+  useEffect(() => {
+    console.log('Background has been updated to:', backgroundImageUrl);
+  }, [backgroundImageUrl]);
 
   const DivBak = {
     backgroundColor: 'transparent',
@@ -166,7 +169,9 @@ export default function StoryPage() {
       window.isSketch = false;
       window.isSpeak = false;
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
-      updateBackgroundImage(newImageUrl);
+      setTimeout(() => {
+        updateBackgroundImage(newImageUrl);
+      }, 0);
       
       console.log('播放interact:'+response.interact);
       if (audioUrl_interact) {
@@ -567,11 +572,23 @@ export default function StoryPage() {
   }
 
   const handleForwardBG = () => {
-
+    const currentBG = backgroundImageUrl.split('-');
+    const currentIndex = parseInt(currentBG[currentBG.length - 1].split('.')[0]);
+    const prevIndex = currentIndex - 1;
+    if (prevIndex >= 0) {
+      const newImageUrl = `${currentBG[0]}-${prevIndex}.png`;
+      updateBackgroundImage(newImageUrl);
+    }
   }
 
   const handleBackBG = () => {
-
+    const currentBG = backgroundImageUrl.split('-');
+    const currentIndex = parseInt(currentBG[currentBG.length - 1].split('.')[0]);
+    const nextIndex = currentIndex + 1;
+    if (nextIndex <= 3) {
+      const newImageUrl = `${currentBG[0]}-${nextIndex}.png`;
+      updateBackgroundImage(newImageUrl);
+    }
   }
 
   function changeStepColor(stepId) {
@@ -601,7 +618,7 @@ export default function StoryPage() {
         </Col>
         
         <Col md={9} lg={9} xl={9} xxl={9}>
-          <div id="storyBackground" style={DivBak}>
+          <div id="storyBackground" style={DivBak} key={backgroundKey}>
             {/* <SketchPad visiable={showSketchPad} ref={sketchPadRef}/> */}
             {openSketchPad ? (
                 <SketchPad ref={sketchPadRef} />
