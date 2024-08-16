@@ -127,6 +127,7 @@ async function downloadImage(url, ImageFileName) {
 }
 
 export function updateStory(storyIndex, chapterIndex) {
+    console.log("updateStory" + storyIndex + " " + chapterIndex);
     var jsonString = JSON.stringify({
         story_index:storyIndex,
         chapter_index:chapterIndex,
@@ -141,8 +142,12 @@ export async function generateStory(message) {
     });
     console.log(jsonString);
     const data = await postJsonData(server_url+api_call['generateStory'], jsonString);
+    if (data === null) {
+        return null;
+    }
     data.replace('“','\"');
     data.replace('”','\"');
+    data.replace('\\n', '');
     return JSON.parse(data);
 }
 

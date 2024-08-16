@@ -2,3 +2,4 @@ storyparkserver/log/
 storyparkserver/pic/
 storyparkserver/venv/
 storyparkserver/__pycache__/
+storyparkserver/tmp/

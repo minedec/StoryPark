@@ -100,7 +100,10 @@ def extract_object(user_message):
   res_json = send_to_qwen(extract_text, False)
   print(res_json)
   keyword = json.loads(res_json)["keyword"]
-  sketch_object = sketch_object_en[sketch_object_ch.index(json.loads(res_json)["object"])]
+  if json.loads(res_json)["object"] in sketch_object_ch:
+    sketch_object = sketch_object_en[sketch_object_ch.index(json.loads(res_json)["object"])]
+  else:
+    sketch_object = "null"
   return keyword, sketch_object
   
 

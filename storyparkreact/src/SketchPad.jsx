@@ -326,7 +326,12 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
         console.log("Canvas created!"); // 添加这行日志以确认是否创建了画布
         console.log(screenWidth, screenHeight);
         p5.frameRate(50);
-        const modelIndex = availableModels.indexOf(sketchObj._sketchObj.sketch_object);
+        var modelIndex;
+        if(sketchObj._sketchObj === undefined || sketchObj._sketchObj.sketch_object === 'null') {
+          modelIndex = 22;
+        } else {
+          modelIndex = availableModels.indexOf(sketchObj._sketchObj.sketch_object);
+        }
         // const modelIndex = 22;
         initModel(modelIndex);
         p5RefGlobal._p5Ref = p5;
@@ -383,20 +388,20 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
 
     const mouseReleased = (p5) => { //鼠标释放
         if (!splashIsOpen && isInBounds()) {
-            userPen = 0; // Up!
-            const currentRawLineSimplified = model.simplifyLine(currentRawLine);
+            // userPen = 0; // Up!
+            // const currentRawLineSimplified = model.simplifyLine(currentRawLine);
       
-            // If it's an accident...ignore it.
-            if (currentRawLineSimplified.length > 1) {
-              // Encode this line as a stroke, and feed it to the model.
-              lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [
-                startX,
-                startY,
-              ]);
-              encodeStrokes(lastHumanStroke);
-            }
-            currentRawLine = [];
-            previousUserPen = userPen;
+            // // If it's an accident...ignore it.
+            // if (currentRawLineSimplified.length > 1) {
+            //   // Encode this line as a stroke, and feed it to the model.
+            //   lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [
+            //     startX,
+            //     startY,
+            //   ]);
+            //   encodeStrokes(lastHumanStroke);
+            // }
+            // currentRawLine = [];
+            // previousUserPen = userPen;
           }
     };
 
@@ -450,7 +455,7 @@ export default forwardRef(function SketchPad({ visiable }, ref) {
                 <button className="box" id="btnRetry" alt="retry magic drawing">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" /></svg>
                 </button>
-                <div className="box select-wrapper">
+                <div className="box select-wrapper" style={{ display: 'none' }}>
                     <select id="selectModels"></select>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import SketchPad from './SketchPad.jsx';
 import './util.js'
 import { 
@@ -11,24 +11,28 @@ import {
   extractKeyword, 
   downloadImageFromServer, 
   drawbackContext,
-  setTesterName
+  setTesterName,
+  restartNewStory
 } from './util.js';
 import {Container, Col, Row, Button, Form, Image, Stack } from 'react-bootstrap'
 import MicRecorder from 'mic-recorder-to-mp3';
-import {userm, sketchObj, tempData} from './App.js'
+import {userm, sketchObj, tempData, storyIsInteract} from './App.js'
 import magicSketchpad from './assets/white-background.png';
 import { flushSync } from 'react-dom';
 
 export default function StoryPage() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(magicSketchpad);
+  const [backgroundKey, setBackgroundKey] = useState(0);
   
-  const updateBackgroundImage = (newImageUrl) => {
-    console.log('update backimage:' + newImageUrl)
-    flushSync(() => {
-      setBackgroundImageUrl(newImageUrl);
-    });
-    console.log('Background has been updated');
-  };
+  const updateBackgroundImage = useCallback((newImageUrl) => {
+    console.log('update backimage:' + newImageUrl);
+    setBackgroundImageUrl(newImageUrl);
+    setBackgroundKey(prevKey => prevKey + 1);
+  }, []);
+
+  useEffect(() => {
+    console.log('Background has been updated to:', backgroundImageUrl);
+  }, [backgroundImageUrl]);
 
   const DivBak = {
     backgroundColor: 'transparent',
@@ -61,8 +65,8 @@ export default function StoryPage() {
     backgroundColor: 'transparent',
     backgroundImage: 'url(./button2none.png)',
     border: 'none',
-    width: '110px',
-    height: '120px',
+    width: '120px',
+    height: '140px',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     position: 'relative',
@@ -129,112 +133,211 @@ export default function StoryPage() {
     setTextContent(newText);
   };
 
-  window.is_interact = false;
   const handleStoryInteract = async () => {
     if(window.StoryState.chapterIndex === 1) {
-      if(window.is_interact) return;
-      window.is_interact = true;
+      if(storyIsInteract._storyIsInteract) return;
+      storyIsInteract._storyIsInteract = true;
       console.log('这是故事1的场景1');
       changeStepColor(window.StoryState.chapterIndex);
-      const response = await generateStory('hello');
+      let response = await generateStory('hello');
       console.log(response);
+      console.log("intercat is ", storyIsInteract._storyIsInteract);
 
+      let cnt = 0;
+      while((response.story === null || response.story === undefined) && cnt < 5) {
+        console.log('故事1第'+cnt+'次尝试生成故事');
+        response = await generateStory('hello');
+        cnt++;
+      }
+      if(response === null) {
+        console.log("网络异常 llm接口失效")
+        return;
+      }
+      
+      let audioUrl_story = await getText2Voice(response.story);
+      console.log('sotry_audioUrl '+ audioUrl_story);
+
+      let audioUrl_interact = await getText2Voice(response.interact);
+      console.log('interact_audioUrl '+ audioUrl_interact);
       console.log('播放story:'+response.story);
-      let audioUrl = await getText2Voice(response.story);
-      tempData._tempData = audioUrl;
-      console.log('audioUrl '+ audioUrl);
-      if (audioUrl) {
-        await playSound(audioUrl);
+
+      if (audioUrl_story) {
+        await playSound(audioUrl_story);
       }
 
-      console.log('更新背景图');
+      console.log('更新背景图1');
       window.isSketch = false;
       window.isSpeak = false;
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
-      updateBackgroundImage(newImageUrl);
+      setTimeout(() => {
+        updateBackgroundImage(newImageUrl);
+      }, 0);
       
-
       console.log('播放interact:'+response.interact);
-      audioUrl = await getText2Voice(response.interact);
-      tempData._tempData = audioUrl;
-      console.log('audioUrl '+ audioUrl);
-      if (audioUrl) {
-        await playSound(audioUrl);
+      if (audioUrl_interact) {
+        await playSound(audioUrl_interact);
       }
       
       window.isSpeakDown = false;
       window.isSketchDown = false;
-      window.is_interact = false;
+      storyIsInteract._storyIsInteract = false;
     } else if (window.StoryState.chapterIndex === 2) {
-      if(window.is_interact) return;
+      /**
+       * 章节2时 generate story部分在上一环节的speak之后完成，在sketch过程中调用故事生成
+       * overlap掉故事生成的开销，speak环节生成的故事保存在tempData._tempData中
+       *  */ 
+      if(storyIsInteract._storyIsInteract) return;
       if(!window.isSpeakDown || !window.isSketchDown) return;
-      window.is_interact = true;
+      storyIsInteract._storyIsInteract = true;
       console.log('这是故事1的场景2');
       console.log('此处生成故事并播放，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       changeStepColor(window.StoryState.chapterIndex);
-      const response = await generateStory(userm._userm);
-      console.log(response);
-      const audioUrl = await getText2Voice(response.story + response.interact);
-      tempData._tempData = audioUrl;
-      console.log('audioUrl '+ audioUrl);
+
+      // const response = await generateStory(userm._userm);
+      console.log('cached story', tempData._tempData);
+      let cnt = 0;
+      while((tempData._tempData === null || tempData._tempData.story === null || tempData._tempData.story === undefined) && cnt < 5) {
+        console.log('故事2第'+cnt+'次尝试生成故事');
+        tempData._tempData = await generateStory(userm._userm);
+        cnt++;
+      }
+      if(tempData._tempData === null) {
+        console.log("网络异常 llm接口失效")
+        return;
+      }
+
+      let audioUrl_story = await getText2Voice(tempData._tempData.story);
+      // tempData._tempData = audioUrl;
+      console.log('audioUrl_story '+ audioUrl_story);
+      let audioUrl_interact = await getText2Voice(tempData._tempData.interact);
+      console.log('audioUrl_interact '+ audioUrl_interact);
+
+      console.log('播放story:'+tempData._tempData.story);
+      if (audioUrl_story) {
+        await playSound(audioUrl_story);
+      }
+
+      console.log('更新背景图2');
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
-      if (audioUrl) {
-        await playSound(audioUrl);
+      
+      console.log('播放interact:'+tempData._tempData.interact);
+      if (audioUrl_interact) {
+        await playSound(audioUrl_interact);
       }
+
       window.isSpeakDown = false;
       window.isSketchDown = false;
-      window.is_interact = false;
+      storyIsInteract._storyIsInteract = false;
     } else if(window.StoryState.chapterIndex === 3) {
-      if(window.is_interact) return;
+      if(storyIsInteract._storyIsInteract) return;
       if(!window.isSpeakDown || !window.isSketchDown) return;
-      window.is_interact = true;
+      storyIsInteract._storyIsInteract = true;
       console.log('这是故事1的场景3');
       console.log('此处生成故事结尾并播放到问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       changeStepColor(window.StoryState.chapterIndex);
-      const response = await generateStory(userm._userm);
-      console.log(response);
-      const audioUrl = await getText2Voice(response.story + response.Q1);
-      tempData._tempData = audioUrl;
-      console.log('audioUrl '+ audioUrl);
+
+      // const response = await generateStory(userm._userm);
+      console.log('cached story', tempData._tempData.story);
+      console.log('cached q1', tempData._tempData.Q1);
+      let cnt = 0;
+      while((tempData._tempData === null || tempData._tempData.story === null || tempData._tempData.story === undefined) && cnt < 5) {
+        console.log('故事3第'+cnt+'次尝试生成故事');
+        tempData._tempData = await generateStory(userm._userm);
+        cnt++;
+      }
+      if(tempData._tempData === null) {
+        console.log("网络异常 llm接口失效")
+        return;
+      }
+
+      const audioUrl_story = await getText2Voice(tempData._tempData.story);
+      const audioUrl_Q1 = await getText2Voice(tempData._tempData.interact);
+      console.log('audioUrlstory '+ audioUrl_story);
+
+      console.log('播放story:'+tempData._tempData.story);
+      if (audioUrl_story) {
+        await playSound(audioUrl_story);
+      }
+
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
-      if (audioUrl) {
-        await playSound(audioUrl);
+
+      console.log('播放q1:'+tempData._tempData.interact);
+      if (audioUrl_Q1) {
+        await playSound(audioUrl_Q1);
       }
+
       window.isSpeakDown = false;
       window.isSketchDown = false;
-      window.is_interact = false;
+      storyIsInteract._storyIsInteract = false;
     } else if(window.StoryState.chapterIndex >= 4) {
-      if(window.is_interact) return;
-      window.is_interact = true;
+      /**
+       * 此处处理问题3的回复并生成到结尾总结
+       */
+      if(storyIsInteract._storyIsInteract) return;
+      storyIsInteract._storyIsInteract = true;
       if(window.StoryState.chapterIndex == 6) {
         console.log('这是故事收尾');
         changeStepColor(4);
         updateStory(window.StoryState.storyIndex, 5);
-        const response = await generateStory(userm._userm);
+        let response = await generateStory(userm._userm);
+        let cnt = 0;
+        while((response === null || response.interact === undefined) && cnt < 5) {
+          console.log('场景4第'+cnt+'次尝试生成结尾');
+          response = await generateStory(userm._userm);
+          cnt++;
+        }
+          if(response === null) {
+            console.log("网络异常 llm接口失效")
+            return;
+          }
         console.log(response);
         const audioUrl = await getText2Voice(response.interact);
-        tempData._tempData = audioUrl; 
+        console.log('播放结尾:'+response.interact);
         console.log('audioUrl '+ audioUrl);
         if (audioUrl) {
           await playSound(audioUrl);
         }
+        
+        window.isSpeakDown = false;
+        window.isSketchDown = false;
+        storyIsInteract._storyIsInteract = false;
+        userm._userm = '';
+        tempData._tempData = null;
+        
         return;
       }
+      /**
+       * 此处处理问题1和问题2的回复
+       */
       console.log('这是故事1的场景4');
       console.log('此处生成问题反馈并播放下一个问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       changeStepColor(4);
       updateStory(window.StoryState.storyIndex, 4);
-      const response = await generateStory(userm._userm);
+
+      let response = await generateStory(userm._userm);
+      let cnt = 0;
+      while((response === null || response.guidance === null || response.interact === undefined) && cnt < 5) {
+        console.log('场景4第'+cnt+'次尝试生成反馈');
+        response = await generateStory(userm._userm);
+        cnt++;
+      }
+      if(response === null) {
+        console.log("网络异常 llm接口失效")
+        return;
+      }
       console.log(response);
       const audioUrl = await getText2Voice(response.guidance + response.interact);
-      tempData._tempData = audioUrl;
       console.log('audioUrl '+ audioUrl);
+      console.log('播放q2或q3:'+response.guidance + response.interact);
       if (audioUrl) {
         await playSound(audioUrl);
       }
-      window.is_interact = false;
+
+      window.isSpeakDown = false;
+      window.isSketchDown = false;
+      storyIsInteract._storyIsInteract = false;
     }
   };
 
@@ -242,28 +345,29 @@ export default function StoryPage() {
       // 监听 window.StoryState 的变化
     const handleStoryStateChange = async () => {
       console.log('storyIndex or chapterIndex changed');
+      console.log('handlestorystatechange:' + window.StoryState.chapterIndex)
       updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
       updateTextContent(`story${window.StoryState.storyIndex}chapter${window.StoryState.chapterIndex}`);
-      if(window.StoryState.chapterIndex === 0) {
-        initFunction();
-      }
+      // if(window.StoryState.chapterIndex === 0) {
+      //   initFunction();
+      // }
       await handleStoryInteract();
+      return;
     };
 
     // 添加事件监听器
-    window.addEventListener('storyStateChange', handleStoryStateChange);
+    window.addEventListener('storyStateChangeEvent', handleStoryStateChange);
     initFunction();
-
-    // log backgroundImageUrl
-    console.log('backgroundImageUrl: '+backgroundImageUrl);
-  }, [backgroundImageUrl]);
+    storyStateChange();
+  }, []);
 
   const storyStateChange = () => {
     console.log("storyStateChange event fired");
-    window.dispatchEvent(new Event('storyStateChange'));
+    window.dispatchEvent(new Event('storyStateChangeEvent'));
   }
   
   const initFunction = () => {
+    restartNewStory();
     window.isSketch = false;
     window.isSpeak = false;
     console.log('初始化函数被执行');
@@ -271,6 +375,8 @@ export default function StoryPage() {
     updateBackgroundImage(newImageUrl);
     setImageUrl1(magicSketchpad);
     setImageUrl2(magicSketchpad);
+    window.StoryState.chapterIndex += 1;
+    storyIsInteract._storyIsInteract = false;
   };
 
 
@@ -298,9 +404,8 @@ export default function StoryPage() {
   useEffect(() => {
     console.log('current'+sketchPadRef.current)
     if (!showSketchPad && sketchPadRef.current) {
-      console.log('enter save');
-      const saveImgPath = window.name
-                + "_" + window.StoryState.storyIndex
+      console.log('image save');
+      const saveImgPath = window.StoryState.storyIndex
                 + "_" + window.StoryState.chapterIndex
                 + "_" + formatCurrentDateTime()
                 + ".png";
@@ -309,9 +414,9 @@ export default function StoryPage() {
       downloadImageFromServer(saveImgPath)
       .then((blob) => {
         const imageUrl = URL.createObjectURL(blob);
-        if(window.StoryState.chapterIndex == 1) {
+        if(window.StoryState.chapterIndex-1 == 1) {
           setImageUrl1(imageUrl);
-        } else if(window.StoryState.chapterIndex == 2) {
+        } else if(window.StoryState.chapterIndex-1 == 2) {
           setImageUrl2(imageUrl);
         }
       })
@@ -333,6 +438,10 @@ export default function StoryPage() {
   }, [showSketchPad]);
 
   const handleSketchButtonClick = () => {
+    if(!window.isSpeakDown || window.isSketchDown) return;
+    if(window.StoryState.chapterIndex > 3) return;
+    if(storyIsInteract._storyIsInteract) return;
+    if(showSketchPad && tempData._tempData === null) return;
     window.isSketch = !window.isSketch;
     setShowSketchPad(!showSketchPad);
     if(!openSketchPad) setOpenSketchPad(!openSketchPad);
@@ -344,10 +453,13 @@ export default function StoryPage() {
         ...SketchButtonStyle,
         backgroundImage: 'url(./button2none.png)',
       });
+      if(window.StoryState.chapterIndex <= 3) {
+        console.log('sketchButton event fired')
+        storyStateChange();
+      }
     } else {
       if(window.StoryState.chapterIndex > 3) return;
       console.log('开启画板');
-      window.isSketchDown = false;
       setSketchButtonStyle({
         ...SketchButtonStyle,
         backgroundImage: 'url(./button2.png)',
@@ -364,13 +476,13 @@ export default function StoryPage() {
   const micRecorderRef = React.useRef(null);
 
   const handleSpeakButtonClick = () => {
-    console.log('SpeakButton clicked');
+    if(window.isSpeakDown) return;
+    if(storyIsInteract._storyIsInteract) return;
+    if(window.StoryState.chapterIndex > 6) return;
     window.isSpeak = !window.isSpeak;
 
     if (!recording) {
       try {
-        window.isSpeakDown = false;
-
         if (!micRecorderRef.current) {
           micRecorderRef.current = new MicRecorder({ bitRate: 128 });
         }
@@ -399,11 +511,36 @@ export default function StoryPage() {
           console.log('voice2text 服务器response:', response);
           console.log('服务器转换文字:', response.text);
           userm._userm = response.text;
-          window.isSpeakDown = true;
+          
+          if(userm._userm === '') {
+            console.log("ERROR: 语音转文字为空,允许再次录音")
+            window.isSpeakDown = false;
+          } else {
+            window.isSpeakDown = true;
+          }
           // Add ChapterIndex
-          if(window.StoryState.chapterIndex <= 3) {
-            sketchObj._sketchObj = await extractKeyword(userm._userm);
-            console.log('SketObj:'+sketchObj._sketchObj);
+          if(userm._userm !== '' && window.StoryState.chapterIndex < 3) {
+            // sketchObj._sketchObj = await extractKeyword(userm._userm);
+            // console.log('SketObj:'+sketchObj._sketchObj);
+          }
+          /**
+           * 如果chapter index=1，2，则在此处生成故事，此刻用户在画图
+           */
+          if(userm._userm !== '' && window.StoryState.chapterIndex < 3) {
+            window.StoryState.chapterIndex += 1;
+            updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
+            console.log('speak 环节生成故事开始');
+            tempData._tempData = null;
+            tempData._tempData = await generateStory(userm._userm);
+            if(tempData._tempData === null || tempData._tempData.story === '' || tempData._tempData.story == undefined) {
+              console.log("speak 生成故事失败")
+            } else {
+              console.log('speak 环节生成故事完成'+ tempData._tempData.story 
+                + "\n" + tempData._tempData.interact);
+            }
+          } else if(window.StoryState.chapterIndex >= 3) {
+            window.StoryState.chapterIndex += 1;
+            storyStateChange();
           }
         }).catch((e) => {
           console.error('录音失败:', e);
@@ -417,20 +554,40 @@ export default function StoryPage() {
   };
 
   const handleResume = async () => {
-    window.name = document.getElementById('test_name').value;
-    console.log("test name:"+window.name);
-    await setTesterName(window.name);
-    window.StoryState.chapterIndex += 1;
-    storyStateChange();
+    // window.name = document.getElementById('test_name').value;
+    // console.log("test name:"+window.name);
+    // await setTesterName(window.name);
+    // window.StoryState.chapterIndex += 1;
+    // storyStateChange();
   }
 
   const handleReplayCurrentChapter =() => {
-    console.log("replay chapter");
-    updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
-    window.isSpeakDown = false;
-    window.isSketchDown = false;
-    if (tempData._tempData) {
-      playSound(tempData._tempData);
+    // console.log("replay chapter");
+    // updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
+    // window.isSpeakDown = false;
+    // window.isSketchDown = false;
+    // if (tempData._tempData) {
+    //   playSound(tempData._tempData);
+    // }
+  }
+
+  const handleForwardBG = () => {
+    const currentBG = backgroundImageUrl.split('-');
+    const currentIndex = parseInt(currentBG[currentBG.length - 1].split('.')[0]);
+    const prevIndex = currentIndex - 1;
+    if (prevIndex >= 0) {
+      const newImageUrl = `${currentBG[0]}-${prevIndex}.png`;
+      updateBackgroundImage(newImageUrl);
+    }
+  }
+
+  const handleBackBG = () => {
+    const currentBG = backgroundImageUrl.split('-');
+    const currentIndex = parseInt(currentBG[currentBG.length - 1].split('.')[0]);
+    const nextIndex = currentIndex + 1;
+    if (nextIndex <= 3) {
+      const newImageUrl = `${currentBG[0]}-${nextIndex}.png`;
+      updateBackgroundImage(newImageUrl);
     }
   }
 
@@ -461,7 +618,7 @@ export default function StoryPage() {
         </Col>
         
         <Col md={9} lg={9} xl={9} xxl={9}>
-          <div id="storyBackground" style={DivBak}>
+          <div id="storyBackground" style={DivBak} key={backgroundKey}>
             {/* <SketchPad visiable={showSketchPad} ref={sketchPadRef}/> */}
             {openSketchPad ? (
                 <SketchPad ref={sketchPadRef} />
@@ -478,10 +635,22 @@ export default function StoryPage() {
             {/* <Form.Control as="textarea" readOnly rows={3} value={textContent} /> */}
             <Image id="image1" src={imageUrl1} fluid rounded style={imageStyle} />
             <Image id="image2" src={imageUrl2} fluid rounded style={imageStyle} />
-              <Form.Control id="test_name" type="text" placeholder="输入你的名字" />
+              {/*<Form.Control id="test_name" type="text" placeholder="输入你的名字" />*/}
             <Row>
-            <Button onClick={handleResume}>继续</Button>
-            <Button onClick={handleReplayCurrentChapter} >重播</Button>
+            {/* <Button onClick={handleResume}>继续</Button> */}
+            <Col>
+              <Row>
+                <Button onClick={handleReplayCurrentChapter} >重新生成</Button>
+              </Row>
+              <Row>
+              <Col xs={6}>
+                <Button onClick={handleForwardBG} style={{ width: '100%', backgroundColor: '#cccccc', color: '#333333' }}>前</Button>
+              </Col>
+              <Col xs={6}>
+                <Button onClick={handleBackBG} style={{ width: '100%' , backgroundColor: '#cccccc', color: '#333333'}}>后</Button>
+            </Col>
+            </Row>
+            </Col>
             </Row>
             <audio id="audioPlayer" controls style={{display: "none"}}></audio>
             </Form.Group>
