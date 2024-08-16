@@ -3,3 +3,9 @@ storyparkserver/pic/
 storyparkserver/venv/
 storyparkserver/__pycache__/
 storyparkserver/tmp/
+storyparkreact/nohup-react.out
+storyparkserver/nohup-server.out
+storyparkserver/tmp/convert_temp_voice_2_text.mp3
+storyparkserver/tmp/origin_temp_voice_2_text.mp3
+storyparkserver/tmp/temp_text_2_voice.mp3
+storyparkserver/user_record.txt

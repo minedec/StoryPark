@@ -159,8 +159,8 @@ function StoryParkNavbar() {
   const backToChoosePage = () => {
     navigate('/choose-page');
   }
-  const restartStory = () => {
-    restartNewStory();
+  const restartStory = async () => {
+    await restartNewStory();
     window.StoryState.chapterIndex = 0;
     console.log("story index:"+window.StoryState.storyIndex+", chapter index:"+window.StoryState.chapterIndex)
     window.dispatchEvent(new Event('storyStateChangeEvent'));

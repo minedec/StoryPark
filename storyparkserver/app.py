@@ -168,7 +168,8 @@ def set_story_and_chapter():
   chapter_index = request.json.get("chapter_index","")
   story_state.story_index = story_index
   story_state.chapter_index = chapter_index
-  logger.info(f"Tester: {tester_name} - Set story:{story_index},chapter:{chapter_index}")
+  print("set story index:" + str(story_state.story_index) + ",chapter index:" + str(story_state.chapter_index))
+  logger.info(f"Tester: {tester_name} - Set story:{story_state.story_index},chapter:{story_state.chapter_index}")
   return jsonify({})
 
 
@@ -202,18 +203,21 @@ def next_chapter():
   }
   then use /text2voice transfer story and interact to audio
   """
-  if story_state.story_index <= 0 or story_state.chapter_index < 1:
-    return jsonify({'error':'please set story index and chapter index'})
+  # if story_state.story_index <= 0 or story_state.chapter_index < 1:
+  #   return jsonify({'error':'please set story index and chapter index'})
   user_message = request.json.get("message","").lower()
+  story_index = request.json.get("story_index","")
+  chapter_index = request.json.get("chapter_index","")
 
   # 记录用户反馈
   user_prompt = prompt_formater(
-    story_state.story_index,
-    story_state.chapter_index,
+    story_index,
+    chapter_index,
     {"message":user_message}
   )
   print('user_prompt:', user_prompt)
   # res = send_to_gpt(user_prompt)
+  print('story index:', story_index, "chapter index:", chapter_index)
   res = send_to_qwen(user_prompt)
   return jsonify(res)
 

@@ -126,7 +126,7 @@ async function downloadImage(url, ImageFileName) {
     }
 }
 
-export function updateStory(storyIndex, chapterIndex) {
+export async function updateStory(storyIndex, chapterIndex) {
     console.log("updateStory" + storyIndex + " " + chapterIndex);
     var jsonString = JSON.stringify({
         story_index:storyIndex,
@@ -136,19 +136,34 @@ export function updateStory(storyIndex, chapterIndex) {
     return postJsonData(server_url+api_call['setStoryAndChapter'], jsonString)
 }
 
-export async function generateStory(message) {
+export async function generateStory(storyIndex, chapterIndex, message) {
     var jsonString = JSON.stringify({
+        story_index:storyIndex,
+        chapter_index:chapterIndex,
         message:message,
     });
     console.log(jsonString);
     const data = await postJsonData(server_url+api_call['generateStory'], jsonString);
-    if (data === null) {
+    if (data === null || typeof data !== 'string') {
         return null;
     }
-    data.replace('“','\"');
-    data.replace('”','\"');
-    data.replace('\\n', '');
-    return JSON.parse(data);
+    console.log("generate story data:" + data);
+    let processedData = data
+        .replace(/“/g, '"') // 全局替换左双引号
+        .replace(/”/g, '"') // 全局替换右双引号
+        .replace(/\\n/g, '') // 全局替换转义的换行符
+        .replace(/```json/g, '')
+        .replace(/```/g, '');
+
+    console.log("generate story data:", processedData);
+
+    try {
+        const parsedData = JSON.parse(processedData);
+        return parsedData;
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return null;
+    }
 }
 
 export function getText2Voice(text) {
@@ -171,7 +186,8 @@ export function playSound(audioUrl) {
   });
 }
 
-export function restartNewStory() {
+export async function restartNewStory() {
+    console.log("restart new story")
     var jsonString = JSON.stringify({});
     return postJsonData(server_url+api_call['restart'], jsonString)
 }

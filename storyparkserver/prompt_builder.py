@@ -2,6 +2,9 @@ from openai import OpenAI
 import json
 from flask import jsonify
 from logger import logger, tester_name
+import threading
+
+context_lock = threading.Lock()
 
 #gpt
 client = OpenAI(api_key="sess-3s5HNqOgrQcYnjUiYZjutwBgYwuMLdagEfBYI8Su")
@@ -16,15 +19,38 @@ sketch_object_en = ["bird", "ant", "ambulance", "angel", "alarm_clock", "antyoga
 sketch_object_ch = ["鸟","蚂蚁","救护车","天使","闹钟","蚂蚁瑜伽","背包","谷仓","篮子","熊","蜜蜂","蜂花","自行车","书","大脑","桥","推土机","公共汽车","蝴蝶","仙人掌","日历","城堡","猫","猫巴士","猫猪","椅子","沙发","蟹","螃蟹椅","蟹兔脸猪","邮轮","跳板","狗","狗兔子","海豚","鸭","大象","象猪","一切","眼睛","脸","粉丝","消防栓","救火车","火烈鸟","花","花瑜伽","青蛙","青蛙沙发","花园","手","对冲浆果","刺猬","直升机","袋鼠","关键","灯笼","灯塔","狮子","狮子羊","龙虾","地图","美人鱼","莫娜护照","猴子","蚊子","章鱼","猫头鹰","画笔","棕榈树","鹦鹉","护照","豌豆","企鹅","猪","猪羊","菠萝","池","明信片","电源插座","兔子","兔子乌龟","收音机","收音机的脸","雨","犀牛","步枪","过山车","三明治","蝎子","海龟","羊","头骨","蜗牛","雪花","快艇","蜘蛛","松鼠","牛排","火炉","草莓","天鹅","秋千","蒙娜丽莎""老虎","牙刷","牙膏","拖拉机","长号","卡车","鲸","风车","瑜伽","瑜伽自行车"]
 
 context_history = []
+HISTORY_FILE_PATH = 'user_record.txt'
+
+def load_history_from_file():
+    history = []
+    try:
+        with open(HISTORY_FILE_PATH, 'r') as file:
+            lines = file.readlines()
+            for line in lines:
+                data = json.loads(line.strip())
+                history.append(data)
+    except FileNotFoundError:
+        pass
+    return history
+
+def save_history_to_file(history):
+    with open(HISTORY_FILE_PATH, 'w') as file:
+        for entry in history:
+            file.write(json.dumps(entry, ensure_ascii=False) + '\n')
 
 #qwen apikey sk-0b17f0d5edac4ab59b279e81a7fe8d2c
 
 # 清空对话历史
 def clean_history() -> None:
+  print("clean history cache")
+  global context_history
   context_history.clear()
+  with open(HISTORY_FILE_PATH, 'w') as file:
+        file.write('')
 
 # gpt收发接口
 def send_to_gpt(user_prompt):
+  global context_history
   context_history.append(
         {
             "role":"user",
@@ -57,24 +83,29 @@ def send_to_qwen(user_prompt, record_in_context=True):
     )
     assistant_message = chat_completion.choices[0].message.content
     return assistant_message
-  context_history.append(
-        {
-            "role":"user",
-            "content":user_prompt,
-        }
+  global context_history
+  history = load_history_from_file()
+  print("before context:" + str(history))
+  with context_lock:
+    history.append(
+          {
+              "role":"user",
+              "content":user_prompt,
+          }
+      )
+    chat_completion = client.chat.completions.create(
+      messages=history,
+      model="qwen-max",
     )
-  chat_completion = client.chat.completions.create(
-    messages=context_history,
-    model="qwen-max",
-  )
-  assistant_message = chat_completion.choices[0].message.content
-  context_history.append(
-    {
-      "role":"assistant",
-      "content":assistant_message
-    }
-  )
-  print(context_history)
+    assistant_message = chat_completion.choices[0].message.content
+    history.append(
+      {
+        "role":"assistant",
+        "content":assistant_message
+      }
+    )
+  print("after context:" + str(history))
+  save_history_to_file(history)
   global tester_name
   logger.info(f"Tester: {tester_name} - Prompt:{user_prompt}\\nResponse:{assistant_message}")
   return assistant_message

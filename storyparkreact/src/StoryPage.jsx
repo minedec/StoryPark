@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useReducer } from 'react';
 import SketchPad from './SketchPad.jsx';
 import './util.js'
 import { 
@@ -23,11 +23,13 @@ import { flushSync } from 'react-dom';
 export default function StoryPage() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(magicSketchpad);
   const [backgroundKey, setBackgroundKey] = useState(0);
-  
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
   const updateBackgroundImage = useCallback((newImageUrl) => {
     console.log('update backimage:' + newImageUrl);
     setBackgroundImageUrl(newImageUrl);
     setBackgroundKey(prevKey => prevKey + 1);
+    forceUpdate(); // 强制重新渲染
   }, []);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function StoryPage() {
 
   const DivBak = {
     backgroundColor: 'transparent',
-    backgroundImage: `url(${backgroundImageUrl})`,
+    backgroundImage: `url(${backgroundImageUrl}?${new Date().getTime()})`,
     backgroundSize: 'cover',
     minHeight: '80vh',
     maxWidth: '100vw',
@@ -139,14 +141,15 @@ export default function StoryPage() {
       storyIsInteract._storyIsInteract = true;
       console.log('这是故事1的场景1');
       changeStepColor(window.StoryState.chapterIndex);
-      let response = await generateStory('hello');
+      let response = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, 'hello');
       console.log(response);
       console.log("intercat is ", storyIsInteract._storyIsInteract);
 
       let cnt = 0;
-      while((response.story === null || response.story === undefined) && cnt < 5) {
+      while((response === null || response.story === null || response.story === undefined) && cnt < 8) {
+        
         console.log('故事1第'+cnt+'次尝试生成故事');
-        response = await generateStory('hello');
+        response = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex,'hello');
         cnt++;
       }
       if(response === null) {
@@ -171,6 +174,7 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       setTimeout(() => {
         updateBackgroundImage(newImageUrl);
+        forceUpdate();
       }, 0);
       
       console.log('播放interact:'+response.interact);
@@ -183,7 +187,7 @@ export default function StoryPage() {
       storyIsInteract._storyIsInteract = false;
     } else if (window.StoryState.chapterIndex === 2) {
       /**
-       * 章节2时 generate story部分在上一环节的speak之后完成，在sketch过程中调用故事生成
+       * 章节2时 generate story部分在上���环节的speak之后完成，在sketch过程中调用故事生成
        * overlap掉故事生成的开销，speak环节生成的故事保存在tempData._tempData中
        *  */ 
       if(storyIsInteract._storyIsInteract) return;
@@ -198,7 +202,7 @@ export default function StoryPage() {
       let cnt = 0;
       while((tempData._tempData === null || tempData._tempData.story === null || tempData._tempData.story === undefined) && cnt < 5) {
         console.log('故事2第'+cnt+'次尝试生成故事');
-        tempData._tempData = await generateStory(userm._userm);
+        tempData._tempData = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, userm._userm);
         cnt++;
       }
       if(tempData._tempData === null) {
@@ -243,7 +247,7 @@ export default function StoryPage() {
       let cnt = 0;
       while((tempData._tempData === null || tempData._tempData.story === null || tempData._tempData.story === undefined) && cnt < 5) {
         console.log('故事3第'+cnt+'次尝试生成故事');
-        tempData._tempData = await generateStory(userm._userm);
+        tempData._tempData = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, userm._userm);
         cnt++;
       }
       if(tempData._tempData === null) {
@@ -280,12 +284,12 @@ export default function StoryPage() {
       if(window.StoryState.chapterIndex == 6) {
         console.log('这是故事收尾');
         changeStepColor(4);
-        updateStory(window.StoryState.storyIndex, 5);
-        let response = await generateStory(userm._userm);
+        await updateStory(window.StoryState.storyIndex, 5);
+        let response = await generateStory(window.StoryState.storyIndex, 5, userm._userm);
         let cnt = 0;
         while((response === null || response.interact === undefined) && cnt < 5) {
-          console.log('场景4第'+cnt+'次尝试生成结尾');
-          response = await generateStory(userm._userm);
+          console.log('场景5第'+cnt+'次尝试生成结尾');
+          response = await generateStory(window.StoryState.storyIndex, 5, userm._userm);
           cnt++;
         }
           if(response === null) {
@@ -314,13 +318,13 @@ export default function StoryPage() {
       console.log('这是故事1的场景4');
       console.log('此处生成问题反馈并播放下一个问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       changeStepColor(4);
-      updateStory(window.StoryState.storyIndex, 4);
+      await updateStory(window.StoryState.storyIndex, 4);
 
-      let response = await generateStory(userm._userm);
+      let response = await generateStory(window.StoryState.storyIndex, 4, userm._userm);
       let cnt = 0;
       while((response === null || response.guidance === null || response.interact === undefined) && cnt < 5) {
         console.log('场景4第'+cnt+'次尝试生成反馈');
-        response = await generateStory(userm._userm);
+        response = await generateStory(window.StoryState.storyIndex, 4, userm._userm);
         cnt++;
       }
       if(response === null) {
@@ -346,7 +350,7 @@ export default function StoryPage() {
     const handleStoryStateChange = async () => {
       console.log('storyIndex or chapterIndex changed');
       console.log('handlestorystatechange:' + window.StoryState.chapterIndex)
-      updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
+      await updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
       updateTextContent(`story${window.StoryState.storyIndex}chapter${window.StoryState.chapterIndex}`);
       // if(window.StoryState.chapterIndex === 0) {
       //   initFunction();
@@ -357,8 +361,11 @@ export default function StoryPage() {
 
     // 添加事件监听器
     window.addEventListener('storyStateChangeEvent', handleStoryStateChange);
-    initFunction();
-    storyStateChange();
+    async function initialize() {
+      await initFunction();
+      storyStateChange();
+    }
+    initialize();
   }, []);
 
   const storyStateChange = () => {
@@ -366,8 +373,8 @@ export default function StoryPage() {
     window.dispatchEvent(new Event('storyStateChangeEvent'));
   }
   
-  const initFunction = () => {
-    restartNewStory();
+  const initFunction = async () => {
+    await restartNewStory();
     window.isSketch = false;
     window.isSpeak = false;
     console.log('初始化函数被执行');
@@ -478,7 +485,7 @@ export default function StoryPage() {
   const handleSpeakButtonClick = () => {
     if(window.isSpeakDown) return;
     if(storyIsInteract._storyIsInteract) return;
-    if(window.StoryState.chapterIndex > 6) return;
+    if(window.StoryState.chapterIndex >= 6) return;
     window.isSpeak = !window.isSpeak;
 
     if (!recording) {
@@ -528,12 +535,19 @@ export default function StoryPage() {
            */
           if(userm._userm !== '' && window.StoryState.chapterIndex < 3) {
             window.StoryState.chapterIndex += 1;
-            updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
+            await updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
             console.log('speak 环节生成故事开始');
             tempData._tempData = null;
-            tempData._tempData = await generateStory(userm._userm);
+            tempData._tempData = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, userm._userm);
+            let cnt = 0;
+            while((tempData._tempData === null || tempData._tempData.story === null || tempData._tempData.story === undefined) && cnt < 5) {
+              console.log('故事2第'+cnt+'次尝试生成故事');
+              tempData._tempData = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, userm._userm);
+              cnt++;
+            }
             if(tempData._tempData === null || tempData._tempData.story === '' || tempData._tempData.story == undefined) {
-              console.log("speak 生成故事失败")
+              console.log("网络异常 llm接口失效")
+              return;
             } else {
               console.log('speak 环节生成故事完成'+ tempData._tempData.story 
                 + "\n" + tempData._tempData.interact);
@@ -572,21 +586,21 @@ export default function StoryPage() {
   }
 
   const handleForwardBG = () => {
-    const currentBG = backgroundImageUrl.split('-');
-    const currentIndex = parseInt(currentBG[currentBG.length - 1].split('.')[0]);
+    const currentBG = backgroundImageUrl.split('?')[0].split('-');
+    const currentIndex = parseInt(currentBG[currentBG.length - 1]);
     const prevIndex = currentIndex - 1;
     if (prevIndex >= 0) {
-      const newImageUrl = `${currentBG[0]}-${prevIndex}.png`;
+      const newImageUrl = `${currentBG[0]}-${prevIndex}.png?${new Date().getTime()}`;
       updateBackgroundImage(newImageUrl);
     }
   }
 
   const handleBackBG = () => {
-    const currentBG = backgroundImageUrl.split('-');
-    const currentIndex = parseInt(currentBG[currentBG.length - 1].split('.')[0]);
+    const currentBG = backgroundImageUrl.split('?')[0].split('-');
+    const currentIndex = parseInt(currentBG[currentBG.length - 1]);
     const nextIndex = currentIndex + 1;
     if (nextIndex <= 3) {
-      const newImageUrl = `${currentBG[0]}-${nextIndex}.png`;
+      const newImageUrl = `${currentBG[0]}-${nextIndex}.png?${new Date().getTime()}`;
       updateBackgroundImage(newImageUrl);
     }
   }
@@ -601,6 +615,8 @@ export default function StoryPage() {
       targetStep.style.backgroundColor = '#ff69b4';
     }
   }
+
+  
 
   return (
       <Container fluid>
