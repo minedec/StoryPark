@@ -8,9 +8,7 @@ const PaintPage = () => {
     './story1.png',
     './story2.png',
     './story3.png',
-    './savedraw1.png',
-    // Add more image paths as needed
-  ]);
+  ].concat(window.sketches));
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [droppedImages, setDroppedImages] = useState([]);

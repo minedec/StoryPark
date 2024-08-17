@@ -417,6 +417,11 @@ export default function StoryPage() {
                 + "_" + formatCurrentDateTime()
                 + ".png";
       sketchPadRef.current.saveSketchPad(saveImgPath);
+      if (window.sketches) {
+        window.sketches.push(saveImgPath);
+      } else {
+        window.sketches = [saveImgPath];
+      }
       
       downloadImageFromServer(saveImgPath)
       .then((blob) => {

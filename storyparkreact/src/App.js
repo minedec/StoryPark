@@ -174,10 +174,8 @@ function StoryParkNavbar() {
         <Button style={restartButtonStyle} onClick={restartStory}/>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <div style={center_nav_links}>
-          <Nav className='me-auto'>
-            <Nav.Link href="#plots">情节共创</Nav.Link>
-            <Nav.Link href="#scenarios">情景理解</Nav.Link>
-          </Nav>
+          <Button onClick={() => navigate('/')} style={{ marginRight: '10px', marginLeft: '20px' }}>情节共创</Button>
+          <Button onClick={() => navigate('/PaintPage')}>情景理解</Button>
         </div>
         <Button style={createButtonStyle} />
         <Button style={noteButtonStyle} />
