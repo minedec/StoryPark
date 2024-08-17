@@ -8,7 +8,7 @@ const PaintPage = () => {
     './story1.png',
     './story2.png',
     './story3.png',
-  ].concat(window.sketches));
+  ]);
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [droppedImages, setDroppedImages] = useState([]);
@@ -16,6 +16,49 @@ const PaintPage = () => {
   const [history, setHistory] = useState([{ drawingData: [], droppedImages: [], selectedImages: [] }]);
   const [currentStateIndex, setCurrentStateIndex] = useState(0);
   const [lastActionType, setLastActionType] = useState(null);
+
+  useEffect(() => {
+    if (window.sketches && window.sketches.length > 0) {
+      const processedSketches = window.sketches.map(sketch => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Find the bounding box of the non-transparent pixels
+            let minX = img.width, minY = img.height, maxX = 0, maxY = 0;
+            const imageData = ctx.getImageData(0, 0, img.width, img.height);
+            const data = imageData.data;
+            for (let y = 0; y < img.height; y++) {
+              for (let x = 0; x < img.width; x++) {
+                const alpha = data[(y * img.width + x) * 4 + 3];
+                if (alpha > 0) {
+                  minX = Math.min(minX, x);
+                  minY = Math.min(minY, y);
+                  maxX = Math.max(maxX, x);
+                  maxY = Math.max(maxY, y);
+                }
+              }
+            }
+            
+            // Crop the image
+            canvas.width = maxX - minX + 1;
+            canvas.height = maxY - minY + 1;
+            ctx.drawImage(img, minX, minY, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+            
+            resolve(canvas.toDataURL());
+          };
+          img.onerror = reject;
+          img.src = sketch;
+        });
+      });
+
+      Promise.all(processedSketches).then(processedImages => {
+        setRightImages(prevImages => [...prevImages, ...processedImages]);
+      });
+    }
+  }, []);
 
   const handleImageClick = (imagePath) => {
     if (selectedImages.length < 4 && !selectedImages.includes(imagePath)) {
@@ -102,7 +145,14 @@ const PaintPage = () => {
       const imgElement = new Image();
       imgElement.src = img.src;
       imgElement.onload = () => {
-        ctx.drawImage(imgElement, img.x, img.y, 50, 50);
+        const aspectRatio = imgElement.width / imgElement.height;
+        let width = 50;
+        let height = 50 / aspectRatio;
+        if (height > 50) {
+          height = 50;
+          width = 50 * aspectRatio;
+        }
+        ctx.drawImage(imgElement, img.x, img.y, width, height);
       };
     });
   }, [drawingData, droppedImages]);
@@ -122,8 +172,9 @@ const PaintPage = () => {
         src={src}
         alt={`Selected ${index}`}
         style={{
-          width: '50px',
-          height: '50px',
+          maxWidth: '100%',
+          maxHeight: '100%',
+          objectFit: 'contain',
           opacity: isDragging ? 0.5 : 1,
           cursor: 'move',
           margin: '2px',
@@ -139,15 +190,28 @@ const PaintPage = () => {
         const dropPos = monitor.getClientOffset();
         if (dropPos && canvasRef.current) {
           const canvasRect = canvasRef.current.getBoundingClientRect();
-          const x = dropPos.x - canvasRect.left - 25;
-          const y = dropPos.y - canvasRect.top - 25;
-          const newDroppedImages = [...droppedImages, { src: item.src, x, y }];
-          setDroppedImages(newDroppedImages);
-          const newHistory = history.slice(0, currentStateIndex + 1);
-          newHistory.push({ drawingData, droppedImages: newDroppedImages, selectedImages });
-          setHistory(newHistory);
-          setCurrentStateIndex(newHistory.length - 1);
-          setLastActionType('drop');
+          const x = dropPos.x - canvasRect.left;
+          const y = dropPos.y - canvasRect.top;
+          const img = new Image();
+          img.src = item.src;
+          img.onload = () => {
+            const aspectRatio = img.width / img.height;
+            const maxWidth = 100;
+            const maxHeight = 100;
+            let width = maxWidth;
+            let height = maxWidth / aspectRatio;
+            if (height > maxHeight) {
+              height = maxHeight;
+              width = maxHeight * aspectRatio;
+            }
+            const newDroppedImages = [...droppedImages, { src: item.src, x, y, width, height }];
+            setDroppedImages(newDroppedImages);
+            const newHistory = history.slice(0, currentStateIndex + 1);
+            newHistory.push({ drawingData, droppedImages: newDroppedImages, selectedImages });
+            setHistory(newHistory);
+            setCurrentStateIndex(newHistory.length - 1);
+            setLastActionType('drop');
+          };
         }
       },
     }));
@@ -176,8 +240,8 @@ const PaintPage = () => {
               position: 'absolute',
               left: img.x,
               top: img.y,
-              width: '50px',
-              height: '50px',
+              width: `${img.width}px`,
+              height: `${img.height}px`,
               pointerEvents: 'none',
             }}
           />

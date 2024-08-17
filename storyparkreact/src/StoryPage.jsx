@@ -417,11 +417,6 @@ export default function StoryPage() {
                 + "_" + formatCurrentDateTime()
                 + ".png";
       sketchPadRef.current.saveSketchPad(saveImgPath);
-      if (window.sketches) {
-        window.sketches.push(saveImgPath);
-      } else {
-        window.sketches = [saveImgPath];
-      }
       
       downloadImageFromServer(saveImgPath)
       .then((blob) => {
@@ -430,6 +425,11 @@ export default function StoryPage() {
           setImageUrl1(imageUrl);
         } else if(window.StoryState.chapterIndex-1 == 2) {
           setImageUrl2(imageUrl);
+        }
+        if (window.sketches) {
+          window.sketches.push(imageUrl);
+        } else {
+          window.sketches = [imageUrl];
         }
       })
       .catch((error) => {
