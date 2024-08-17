@@ -69,40 +69,49 @@ const PaintPage = () => {
       setHistory(newHistory);
       setCurrentStateIndex(newHistory.length - 1);
       setLastActionType('imageClick');
+      
+      // Redraw the canvas to keep the drawing
+      redrawCanvas();
     }
   };
 
   const handleCanvasMouseDown = (e) => {
-    setIsDrawing(true);
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    const x = e.nativeEvent.offsetX;
-    const y = e.nativeEvent.offsetY;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    setDrawingData([...drawingData, { type: 'start', x, y }]);
+    if (e.target === canvasRef.current) {
+      setIsDrawing(true);
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      setDrawingData([...drawingData, { type: 'start', x, y }]);
+    }
   };
 
   const handleCanvasMouseMove = (e) => {
     if (!isDrawing) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const x = e.nativeEvent.offsetX;
-    const y = e.nativeEvent.offsetY;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     ctx.lineTo(x, y);
     ctx.stroke();
     setDrawingData([...drawingData, { type: 'move', x, y }]);
   };
 
   const handleCanvasMouseUp = () => {
-    setIsDrawing(false);
-    const newDrawingData = [...drawingData, { type: 'end' }];
-    setDrawingData(newDrawingData);
-    const newHistory = history.slice(0, currentStateIndex + 1);
-    newHistory.push({ drawingData: newDrawingData, droppedImages, selectedImages });
-    setHistory(newHistory);
-    setCurrentStateIndex(newHistory.length - 1);
-    setLastActionType('draw');
+    if (isDrawing) {
+      setIsDrawing(false);
+      const newDrawingData = [...drawingData, { type: 'end' }];
+      setDrawingData(newDrawingData);
+      const newHistory = history.slice(0, currentStateIndex + 1);
+      newHistory.push({ drawingData: newDrawingData, droppedImages, selectedImages });
+      setHistory(newHistory);
+      setCurrentStateIndex(newHistory.length - 1);
+      setLastActionType('draw');
+    }
   };
 
   useEffect(() => {
@@ -112,19 +121,15 @@ const PaintPage = () => {
     ctx.lineCap = 'round';
     ctx.lineWidth = 2;
 
-    // Redraw all saved drawing data
-    drawingData.forEach((data, index) => {
-      if (data.type === 'start') {
-        ctx.beginPath();
-        ctx.moveTo(data.x, data.y);
-      } else if (data.type === 'move') {
-        ctx.lineTo(data.x, data.y);
-        ctx.stroke();
-      }
-    });
-  }, [drawingData]);
+    redrawCanvas();
 
-  useEffect(() => {
+    document.addEventListener('mouseup', handleCanvasMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleCanvasMouseUp);
+    };
+  }, [drawingData, droppedImages]);
+
+  const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -145,17 +150,10 @@ const PaintPage = () => {
       const imgElement = new Image();
       imgElement.src = img.src;
       imgElement.onload = () => {
-        const aspectRatio = imgElement.width / imgElement.height;
-        let width = 50;
-        let height = 50 / aspectRatio;
-        if (height > 50) {
-          height = 50;
-          width = 50 * aspectRatio;
-        }
-        ctx.drawImage(imgElement, img.x, img.y, width, height);
+        ctx.drawImage(imgElement, img.x, img.y, img.width, img.height);
       };
     });
-  }, [drawingData, droppedImages]);
+  };
 
   const DraggableImage = ({ src, index }) => {
     const [{ isDragging }, drag] = useDrag(() => ({
@@ -195,22 +193,14 @@ const PaintPage = () => {
           const img = new Image();
           img.src = item.src;
           img.onload = () => {
-            const aspectRatio = img.width / img.height;
-            const maxWidth = 100;
-            const maxHeight = 100;
-            let width = maxWidth;
-            let height = maxWidth / aspectRatio;
-            if (height > maxHeight) {
-              height = maxHeight;
-              width = maxHeight * aspectRatio;
-            }
-            const newDroppedImages = [...droppedImages, { src: item.src, x, y, width, height }];
+            const newDroppedImages = [...droppedImages, { src: item.src, x, y, width: img.width, height: img.height }];
             setDroppedImages(newDroppedImages);
             const newHistory = history.slice(0, currentStateIndex + 1);
             newHistory.push({ drawingData, droppedImages: newDroppedImages, selectedImages });
             setHistory(newHistory);
             setCurrentStateIndex(newHistory.length - 1);
             setLastActionType('drop');
+            redrawCanvas();
           };
         }
       },
@@ -228,24 +218,7 @@ const PaintPage = () => {
           style={{ border: '1px solid black', maxWidth: '100%', maxHeight: 'calc(80vh - 20px)' }}
           onMouseDown={handleCanvasMouseDown}
           onMouseMove={handleCanvasMouseMove}
-          onMouseUp={handleCanvasMouseUp}
-          onMouseLeave={handleCanvasMouseUp}
         />
-        {droppedImages.map((img, index) => (
-          <img
-            key={index}
-            src={img.src}
-            alt={`Dropped ${index}`}
-            style={{
-              position: 'absolute',
-              left: img.x,
-              top: img.y,
-              width: `${img.width}px`,
-              height: `${img.height}px`,
-              pointerEvents: 'none',
-            }}
-          />
-        ))}
       </div>
     );
   };
@@ -265,32 +238,14 @@ const PaintPage = () => {
 
   const handleUndo = () => {
     if (currentStateIndex > 0) {
-      let newIndex;
-      if (['imageClick', 'draw', 'drop'].includes(lastActionType) && currentStateIndex > 1) {
-        newIndex = currentStateIndex - 2;
-      } else {
-        newIndex = currentStateIndex - 1;
-      }
+      let newIndex = currentStateIndex - 1;
       const previousState = history[newIndex];
       setCurrentStateIndex(newIndex);
       setDrawingData(previousState.drawingData);
       setDroppedImages(previousState.droppedImages);
       setSelectedImages(previousState.selectedImages);
-
-      // Immediately redraw the canvas
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      previousState.drawingData.forEach((data) => {
-        if (data.type === 'start') {
-          ctx.beginPath();
-          ctx.moveTo(data.x, data.y);
-        } else if (data.type === 'move') {
-          ctx.lineTo(data.x, data.y);
-          ctx.stroke();
-        }
-      });
       setLastActionType('undo');
+      redrawCanvas();
     }
   };
 

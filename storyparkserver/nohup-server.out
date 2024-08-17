@@ -1499,3 +1499,276 @@ ws is closed
 sid:iat000e7eb7@gz1915f1acec046fd802 call error:audioCoding decode fail code is:10043
 ### error: on_close() takes 1 positional argument but 3 were given
 [2024-08-17 14:51:48 +0800] [112283] [INFO] Booting worker with pid: 112283
+[2024-08-17 17:15:27,334] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+[2024-08-17 17:15:27,522] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+[2024-08-17 17:15:27,711] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+[2024-08-17 17:15:27,878] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+[2024-08-17 17:15:28,048] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+[2024-08-17 17:15:28,239] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+[2024-08-17 17:15:28,407] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+[2024-08-17 17:15:28,581] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+[2024-08-17 17:15:28,758] ERROR in app: Exception on /generate_story [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/StoryPark/storyparkserver/app.py", line 213, in next_chapter
+    user_prompt = prompt_formater(
+  File "/root/StoryPark/storyparkserver/prompt_builder.py", line 117, in prompt_formater
+    with open(prompt_file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: './prompt/3/1.txt'
+我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+story index: 1 chapter index: 1
+before context:[]
+after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个闪亮的龟壳。","interact":"小熊看了看龟壳，你觉得小熊能用这个龟壳做些什么有趣的事情呢？"}'}]
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个闪亮的龟壳。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+set story index:1,chapter index:2
+clean history cache
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小熊没有继续尝试吃龟壳，而是高兴地发现龟壳可以变成一个奇妙的乐器。小朋友，猜猜看，小熊会用龟壳做什么乐器呢？是不是可以吹出美妙的音乐？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+set story index:1,chapter index:1
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+story index: 1 chapter index: 1
+before context:[]
+after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。小熊好奇地拿起龟壳，你觉得小熊可以用这个壳做什么呢？","interact":"小熊可以用壳做什么？"}'}]
+trans text: 小熊啊，它灵机一动，觉得可以把乌龟壳当成飞镖来玩耍！它尝试着扔出去，龟壳旋转着划出漂亮的弧线，落在了草地上，小熊发现这样不仅好玩，还能锻炼自己的投掷技巧呢！小熊玩得不亦乐乎，对小乌龟充满了感激。不过，龟壳的冒险还没有结束，它又被一阵风吹到了高高的树枝上，那里住着一只小鸟。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小鸟看到这个意外的访客，你觉得小鸟会怎么利用这个龟壳呢？会不会成为一个新家，还是成为它的一个特别玩具？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳脱下来，丢进了附近的小河里。壳随着河水漂啊漂，不一会儿就被岸边正在玩耍的小熊发现了。
+ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
+  configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x55d4b7aa46c0] Estimating duration from bitrate, this may be inaccurate
+Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
+  Duration: 00:00:08.28, start: 0.000000, bitrate: 128 kb/s
+  Stream #0:0: Audio: mp3, 48000 Hz, mono, fltp, 128 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
+  Metadata:
+    TSSE            : Lavf58.76.100
+  Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc58.134.100 libmp3lame
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    size=     131kB time=00:00:08.24 bitrate= 130.2kbits/s speed= 189x    
+video:0kB audio:130kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.464709%
+太棒了！小朋友们的创意真是无限大，这群‘愤怒的小鸟’发现龟壳不仅结实，还能当作完美的‘飞行头盔’。它们兴奋地把龟壳戴在头上，感觉自己变得更加无敌了，用弹弓把自己弹射出去时，比以往任何时候都更加自信和安全，给了那些淘气的‘猪猪’一个大大的惊喜！
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小朋友们，从这个故事里，我们学到了什么呢？是不是每一个人都有自己的特别之处，就像小乌龟的壳虽然曾被它自己认为是麻烦，但最后却帮助了小熊和小鸟？你们有没有遇到过觉得自己某些地方不太一样的时候呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定摆脱这个‘麻烦’，于是悄悄地把壳丢进了村边的小河里。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小熊在河边玩耍时，发现了水中的龟壳。小朋友，你觉得小熊会用这个龟壳来做什么有趣的事情呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+set story index:1,chapter index:2
+clean history cache
+set story index:1,chapter index:1
+trans text: 从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。不久后，小熊在河边玩耍时发现了这个龟壳。小熊好奇地拿起龟壳，你觉得小熊可以用这个壳做什么呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+clean history cache
+set story index:1,chapter index:1
+clean history cache
+set story index:3,chapter index:1
+set story index:1,chapter index:1
+set story index:1,chapter index:1
+trans text: 小熊看着这个圆圆的、中空的龟壳，你觉得小熊能用它来做什么有趣的事情呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+set story index:1,chapter index:2
+user_prompt: 对于互动点1的回答为 {服务平台1.} ，请生成反馈，生成反馈时需要注意以下几点：
+1、及时给孩子肯定和赞美
+2、帮助孩子补充此回答的细节
+生成反馈后，讲述直到互动点2停下，等待孩子的反馈。
+你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本以及反馈对应标签名称为story 
+2.互动点2提出的问题文本对应标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+story index: 1 chapter index: 2
+before context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳脱下来，丢进了附近的小河里。壳随着河水漂啊漂，不一会儿就被岸边正在玩耍的小熊发现了。", "interact":"小熊看着这个圆圆的、中空的龟壳，你觉得小熊能用它来做什么有趣的事情呢？"}'}]
+after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>\n在故事中，设计互动点1：<小熊可以用壳做什么>，互动点2：<小鸟可以用壳做什么>.\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"从前，有一只小乌龟，它总是觉得自己的壳又重又硬，走路时还会发出咚咚的声音，这让它感到非常麻烦。有一天，小乌龟决定把自己的壳脱下来，丢进了附近的小河里。壳随着河水漂啊漂，不一会儿就被岸边正在玩耍的小熊发现了。", "interact":"小熊看着这个圆圆的、中空的龟壳，你觉得小熊能用它来做什么有趣的事情呢？"}'}, {'role': 'user', 'content': '对于互动点1的回答为 {服务平台1.} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"太棒了！小熊确实非常聪明，它想到了可以用这个壳来做一件很特别的事——做一个笛子！小熊小心翼翼地在壳上钻了几个洞，一吹，竟然发出了悠扬悦耳的声音。森林里的朋友们都被这美妙的音乐吸引了过来，大家都夸小熊的手艺真好。这时，一只小鸟飞了过来，它围着龟壳转了几圈，似乎也有了一个好主意。", "interact":"小鸟看了看这个既结实又宽敞的龟壳，你觉得小鸟会用它来做什么有用的东西呢？是不是也能像小熊一样找到壳的新用途？"}'}]
+trans text: 
