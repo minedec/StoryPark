@@ -583,9 +583,9 @@ export default function StoryPage() {
   const handleReplayCurrentChapter =() => {
     //speak 前（播完故事后，speak前）做replay操作
 
-    //speak 之后（speak后，sketch前）做replay操作
+    //speak 之后（speak后，sketch前）做replay操作，停止新故事生成，需要在handlestorychange里加入新的生成故事逻辑
 
-    //sketch 之后（sketch做replay操作
+    //sketch 之后（sketch做replay操作）不存在这种情况，除此以外其他情况，不允许点击replay
   }
 
   const handleForwardBG = () => {
@@ -622,59 +622,68 @@ export default function StoryPage() {
   
 
   return (
-      <Container fluid>
-         <Row>
-        <Col md={1} lg={1} xl={1} xxl={1}>
-          <div style={{position: 'relative', width: '100%', height: '100%'}}>
-            <div id="step-1" style={{...StepStyle, top: '10%'}}></div>
-            <div id="step-2" style={{...StepStyle, top: '30%'}}></div>
-            <div id="step-3" style={{...StepStyle, top: '50%'}}></div>
-            <div id="step-4" style={{...StepStyle, top: '70%'}}></div>
-            <div style={VerticalProgressStyle}>
-              <div style={LineStyle}></div>
-            </div>
+    <Container fluid>
+       <Row>
+      <Col md={1} lg={1} xl={1} xxl={1}>
+        <div style={{position: 'relative', width: '100%', height: '100%'}}>
+          <div id="step-1" style={{...StepStyle, top: '10%'}}></div>
+          <div id="step-2" style={{...StepStyle, top: '30%'}}></div>
+          <div id="step-3" style={{...StepStyle, top: '50%'}}></div>
+          <div id="step-4" style={{...StepStyle, top: '70%'}}></div>
+          <div style={VerticalProgressStyle}>
+            <div style={LineStyle}></div>
           </div>
-        </Col>
-        
-        <Col md={9} lg={9} xl={9} xxl={9}>
-          <div id="storyBackground" style={DivBak} key={backgroundKey}>
-            {/* <SketchPad visiable={showSketchPad} ref={sketchPadRef}/> */}
-            {openSketchPad ? (
-                <SketchPad ref={sketchPadRef} />
-              ) : null}
+        </div>
+      </Col>
+      
+      <Col md={9} lg={9} xl={9} xxl={9}>
+        <div id="storyBackground" style={DivBak} key={backgroundKey}>
+          {/* <SketchPad visiable={showSketchPad} ref={sketchPadRef}/> */}
+          {openSketchPad ? (
+              <SketchPad ref={sketchPadRef} />
+            ) : null}
+        </div>
+      </Col>
+      
+      <Col md={2} lg={2} xl={2} xxl={2}>
+        <Row id="row1" style={{marginBottom: '100px'}}>
+          <div id="button-div" style={{ display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: '10px', 
+                        height: '400px',
+                        justifyContent: 'center',
+                        paddingTop: '20px' }}>
+            <Button style={speakButtonStyle} onClick={handleSpeakButtonClick}/>
+            <Button style={sketchButtonStyle} onClick={handleSketchButtonClick}/>
           </div>
-        </Col>
-        
-        <Col md={2} lg={2} xl={2} xxl={2}>
-            {/* <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}> */}
-              <Button style={speakButtonStyle} onClick={handleSpeakButtonClick}/>
-              <Button style={sketchButtonStyle} onClick={handleSketchButtonClick}/>
-            {/* </div> */}
-            <Form.Group style={StoryTextStyle}>
-            {/* <Form.Control as="textarea" readOnly rows={3} value={textContent} /> */}
-            <Image id="image1" src={imageUrl1} fluid rounded style={imageStyle} />
-            <Image id="image2" src={imageUrl2} fluid rounded style={imageStyle} />
-              {/*<Form.Control id="test_name" type="text" placeholder="输入你的名字" />*/}
+        </Row>
+        <Row id="row2" style={{marginTop: '100px'}}>
+          <Form.Group style={StoryTextStyle}>
+          {/* <Form.Control as="textarea" readOnly rows={3} value={textContent} /> */}
+          <Image id="image1" src={imageUrl1} fluid rounded style={imageStyle} />
+          <Image id="image2" src={imageUrl2} fluid rounded style={imageStyle} />
+            {/*<Form.Control id="test_name" type="text" placeholder="输入你的名字" />*/}
+          <Row>
+          {/* <Button onClick={handleResume}>继续</Button> */}
+          <Col>
             <Row>
-            {/* <Button onClick={handleResume}>继续</Button> */}
-            <Col>
-              <Row>
-                <Button onClick={handleReplayCurrentChapter} >重新生成</Button>
-              </Row>
-              <Row>
-              <Col xs={6}>
-                <Button onClick={handleForwardBG} style={{ width: '100%', backgroundColor: '#cccccc', color: '#333333' }}>前</Button>
-              </Col>
-              <Col xs={6}>
-                <Button onClick={handleBackBG} style={{ width: '100%' , backgroundColor: '#cccccc', color: '#333333'}}>后</Button>
-            </Col>
+              <Button onClick={handleReplayCurrentChapter} >重新生成</Button>
             </Row>
+            <Row>
+            <Col xs={6}>
+              <Button onClick={handleForwardBG} style={{ width: '100%', backgroundColor: '#cccccc', color: '#333333' }}>前</Button>
             </Col>
-            </Row>
-            <audio id="audioPlayer" controls style={{display: "none"}}></audio>
-            </Form.Group>
-        </Col>
-      </Row>
-      </Container>
-    )
+            <Col xs={6}>
+              <Button onClick={handleBackBG} style={{ width: '100%' , backgroundColor: '#cccccc', color: '#333333'}}>后</Button>
+          </Col>
+          </Row>
+          </Col>
+          </Row>
+          <audio id="audioPlayer" controls style={{display: "none"}}></audio>
+          </Form.Group>
+        </Row>
+      </Col>
+    </Row>
+    </Container>
+  )
 };
