@@ -581,13 +581,11 @@ export default function StoryPage() {
   }
 
   const handleReplayCurrentChapter =() => {
-    // console.log("replay chapter");
-    // updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
-    // window.isSpeakDown = false;
-    // window.isSketchDown = false;
-    // if (tempData._tempData) {
-    //   playSound(tempData._tempData);
-    // }
+    //speak 前（播完故事后，speak前）做replay操作
+
+    //speak 之后（speak后，sketch前）做replay操作
+
+    //sketch 之后（sketch做replay操作
   }
 
   const handleForwardBG = () => {

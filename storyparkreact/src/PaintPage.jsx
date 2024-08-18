@@ -150,7 +150,7 @@ const PaintPage = () => {
       const imgElement = new Image();
       imgElement.src = img.src;
       imgElement.onload = () => {
-        ctx.drawImage(imgElement, img.x, img.y, img.width, img.height);
+        ctx.drawImage(imgElement, img.x - img.width / 2, img.y - img.height / 2, img.width, img.height);
       };
     });
   };
