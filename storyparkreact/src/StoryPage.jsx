@@ -282,6 +282,7 @@ export default function StoryPage() {
       if(storyIsInteract._storyIsInteract) return;
       storyIsInteract._storyIsInteract = true;
       if(window.StoryState.chapterIndex == 6) {
+        if(!window.isSpeakDown) return;
         console.log('这是故事收尾');
         changeStepColor(4);
         await updateStory(window.StoryState.storyIndex, 5);
@@ -315,6 +316,7 @@ export default function StoryPage() {
       /**
        * 此处处理问题1和问题2的回复
        */
+      if(!window.isSpeakDown) return;
       console.log('这是故事1的场景4');
       console.log('此处生成问题反馈并播放下一个问题，story:'+window.StoryState.storyIndex+',chapter:'+window.StoryState.chapterIndex);
       changeStepColor(4);
@@ -580,9 +582,41 @@ export default function StoryPage() {
     // storyStateChange();
   }
 
-  const handleReplayCurrentChapter =() => {
+  const handleReplayCurrentChapter = async() => {
     //speak 前（播完故事后，speak前）做replay操作
-
+    console.log('replayCurrentChapter, isspeakDown:'+window.isSpeakDown+', chapterIndex:'+window.StoryState.chapterIndex);
+    if (!window.isSpeakDown && !storyIsInteract._storyIsInteract) {
+      if (window.StoryState.chapterIndex === 1) {
+        await drawbackContext(2);
+        storyStateChange();
+      } else if(window.StoryState.chapterIndex === 2 || window.StoryState.chapterIndex === 3) {
+        await drawbackContext(2);
+        console.log('replay环节生成故事开始');
+        tempData._tempData = null;
+        tempData._tempData = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, userm._userm);
+        let cnt = 0;
+        while((tempData._tempData === null || tempData._tempData.story === null || tempData._tempData.story === undefined) && cnt < 5) {
+          console.log('故事2第'+cnt+'次尝试生成故事');
+          tempData._tempData = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, userm._userm);
+          cnt++;
+        }
+        if(tempData._tempData === null || tempData._tempData.story === '' || tempData._tempData.story == undefined) {
+          console.log("网络异常 llm接口失效")
+          return;
+        } else {
+          console.log('replay环节生成故事完成'+ tempData._tempData.story 
+            + "\n" + tempData._tempData.interact);
+        }
+        window.isSpeakDown = true;
+        window.isSketchDown = true;
+        storyStateChange();
+      } else if(window.StoryState.chapterIndex === 4 || window.StoryState.chapterIndex === 5 || window.StoryState.chapterIndex === 6) {
+        await drawbackContext(2);
+        window.isSpeakDown = true;
+        window.isSketchDown = true;
+        storyStateChange();
+      }
+    }
     //speak 之后（speak后，sketch前）做replay操作，停止新故事生成，需要在handlestorychange里加入新的生成故事逻辑
 
     //sketch 之后（sketch做replay操作）不存在这种情况，除此以外其他情况，不允许点击replay

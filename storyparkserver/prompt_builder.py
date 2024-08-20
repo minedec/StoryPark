@@ -84,9 +84,9 @@ def send_to_qwen(user_prompt, record_in_context=True):
     assistant_message = chat_completion.choices[0].message.content
     return assistant_message
   global context_history
-  history = load_history_from_file()
-  print("before context:" + str(history))
   with context_lock:
+    history = load_history_from_file()
+    print("before context:" + str(history))
     history.append(
           {
               "role":"user",
@@ -107,7 +107,7 @@ def send_to_qwen(user_prompt, record_in_context=True):
   print("after context:" + str(history))
   save_history_to_file(history)
   global tester_name
-  logger.info(f"Tester: {tester_name} - Prompt:{user_prompt}\\nResponse:{assistant_message}")
+  logger.info(f"Tester: {tester_name} - Prompt:{user_prompt}\nResponse:{assistant_message}")
   return assistant_message
 
 
@@ -147,7 +147,8 @@ def read_prompt_file(file_path):
 
 def drawback_context_cnt(drawback_cnt):
   global context_history
-  for i in range(drawback_cnt):
-    context_history.pop()
-    context_history.pop()
-  print(context_history)
+  with context_lock:
+    history = load_history_from_file()
+    for i in range(drawback_cnt):
+      history.pop()
+    save_history_to_file(history)
