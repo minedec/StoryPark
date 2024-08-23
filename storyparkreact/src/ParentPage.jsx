@@ -3,9 +3,8 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const ParentPage = () => {
-  const [showResults, setShowResults] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState([]);
-  const [storyText, setStoryText] = useState('');
+  const [storyText, setStoryText] = useState('这里是生成的故事文本...');
   const navigate = useNavigate();
 
   const narrativeSkills = [
@@ -22,24 +21,19 @@ const ParentPage = () => {
 
   const handleGenerate = () => {
     if (selectedSkills.length > 0) {
-      setShowResults(true);
-      setStoryText('这里是生成的故事文本...');  // 实际应用中，这里应该调用API生成故事
+      setStoryText('这里是新生成的故事文本...');  // 实际应用中，这里应该调用API生成故事
     } else {
       alert('请至少选择一个叙事能力');
-    }
-  };
-
-  const handleReset = () => {
-    setStoryText('');
-    // 重新生成故事文本
-    if (selectedSkills.length > 0) {
-      setStoryText('这里是新生成的故事文本...');  // 实际应用中，这里应该调用API重新生成故事
     }
   };
 
   const handleNextStep = () => {
     // 导航到第一阶段的 StoryPage
     navigate('/StoryPage');
+  };
+
+  const handleStoryTextChange = (event) => {
+    setStoryText(event.target.value);
   };
 
   return (
@@ -60,40 +54,34 @@ const ParentPage = () => {
                 </Button>
               ))}
               <Button 
-                onClick={showResults ? handleReset : handleGenerate} 
+                onClick={handleGenerate} 
                 className="mt-3"
                 style={{ width: '100%' }}
               >
-                {showResults ? '再试一次' : '确定生成'}
+                确定生成
               </Button>
             </Form>
           </div>
-          {showResults && (
-            <div style={{ width: '100%', maxWidth: '400px', margin: '20px auto 0' }}>
-              <Form.Control
-                as="textarea"
-                value={storyText}
-                readOnly
-                style={{ height: '200px', width: '100%' }}
-              />
-            </div>
-          )}
+          <div style={{ width: '100%', maxWidth: '400px', margin: '20px auto 0' }}>
+            <Form.Control
+              as="textarea"
+              value={storyText}
+              onChange={handleStoryTextChange}
+              style={{ height: '200px', width: '100%' }}
+            />
+          </div>
         </Col>
-        {showResults && (
-          <Col xs={12} md={6} className="text-center d-flex align-items-center">
-            <img src="1-0.png" alt="Generated Story" style={{ maxWidth: '100%', height: 'auto' }} />
-          </Col>
-        )}
+        <Col xs={12} md={6} className="text-center d-flex align-items-center">
+          <img src="1-0.png" alt="Generated Story" style={{ maxWidth: '100%', height: 'auto' }} />
+        </Col>
       </Row>
-      {showResults && (
-        <Row className="justify-content-center w-100 mt-5">
-          <Col xs={12} className="text-center">
-            <Button onClick={handleNextStep} className="mt-3" style={{ width: '200px' }}>
-              确定并下一步
-            </Button>
-          </Col>
-        </Row>
-      )}
+      <Row className="justify-content-center w-100 mt-5">
+        <Col xs={12} className="text-center">
+          <Button onClick={handleNextStep} className="mt-3" style={{ width: '200px' }}>
+            确定并下一步
+          </Button>
+        </Col>
+      </Row>
     </Container>
   );
 };

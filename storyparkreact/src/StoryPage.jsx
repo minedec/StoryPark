@@ -24,6 +24,7 @@ export default function StoryPage() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(magicSketchpad);
   const [backgroundKey, setBackgroundKey] = useState(0);
   const [, forceUpdate] = useReducer(x => x + 1, 0);
+  const [statusMessage, setStatusMessage] = useState('');
 
   const updateBackgroundImage = useCallback((newImageUrl) => {
     console.log('update backimage:' + newImageUrl);
@@ -141,6 +142,7 @@ export default function StoryPage() {
       storyIsInteract._storyIsInteract = true;
       console.log('这是故事1的场景1');
       changeStepColor(window.StoryState.chapterIndex);
+      setStatusMessage('正在生成故事...');
       let response = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, 'hello');
       console.log(response);
       console.log("intercat is ", storyIsInteract._storyIsInteract);
@@ -157,6 +159,7 @@ export default function StoryPage() {
         return;
       }
       
+      setStatusMessage('正在合成语音...');
       let audioUrl_story = await getText2Voice(response.story);
       console.log('sotry_audioUrl '+ audioUrl_story);
 
@@ -185,6 +188,7 @@ export default function StoryPage() {
       window.isSpeakDown = false;
       window.isSketchDown = false;
       storyIsInteract._storyIsInteract = false;
+      setStatusMessage('请点击录音按钮录音');
     } else if (window.StoryState.chapterIndex === 2) {
       /**
        * 章节2时 generate story部分在上���环节的speak之后完成，在sketch过程中调用故事生成
@@ -210,6 +214,7 @@ export default function StoryPage() {
         return;
       }
 
+      setStatusMessage('正在合成语音...');
       let audioUrl_story = await getText2Voice(tempData._tempData.story);
       // tempData._tempData = audioUrl;
       console.log('audioUrl_story '+ audioUrl_story);
@@ -233,6 +238,7 @@ export default function StoryPage() {
       window.isSpeakDown = false;
       window.isSketchDown = false;
       storyIsInteract._storyIsInteract = false;
+      setStatusMessage('请点击录音按钮录音');
     } else if(window.StoryState.chapterIndex === 3) {
       if(storyIsInteract._storyIsInteract) return;
       if(!window.isSpeakDown || !window.isSketchDown) return;
@@ -255,6 +261,7 @@ export default function StoryPage() {
         return;
       }
 
+      setStatusMessage('正在合成语音...');
       const audioUrl_story = await getText2Voice(tempData._tempData.story);
       const audioUrl_Q1 = await getText2Voice(tempData._tempData.interact);
       console.log('audioUrlstory '+ audioUrl_story);
@@ -275,6 +282,7 @@ export default function StoryPage() {
       window.isSpeakDown = false;
       window.isSketchDown = false;
       storyIsInteract._storyIsInteract = false;
+      setStatusMessage('请点击录音按钮录音');
     } else if(window.StoryState.chapterIndex >= 4) {
       /**
        * 此处处理问题3的回复并生成到结尾总结
@@ -286,6 +294,7 @@ export default function StoryPage() {
         console.log('这是故事收尾');
         changeStepColor(4);
         await updateStory(window.StoryState.storyIndex, 5);
+        setStatusMessage('正在生成故事结尾...');
         let response = await generateStory(window.StoryState.storyIndex, 5, userm._userm);
         let cnt = 0;
         while((response === null || response.interact === undefined) && cnt < 5) {
@@ -298,6 +307,7 @@ export default function StoryPage() {
             return;
           }
         console.log(response);
+        setStatusMessage('正在合成语音...');
         const audioUrl = await getText2Voice(response.interact);
         console.log('播放结尾:'+response.interact);
         console.log('audioUrl '+ audioUrl);
@@ -310,6 +320,7 @@ export default function StoryPage() {
         storyIsInteract._storyIsInteract = false;
         userm._userm = '';
         tempData._tempData = null;
+        setStatusMessage('故事结束');
         
         return;
       }
@@ -322,6 +333,7 @@ export default function StoryPage() {
       changeStepColor(4);
       await updateStory(window.StoryState.storyIndex, 4);
 
+      setStatusMessage('正在生成反馈...');
       let response = await generateStory(window.StoryState.storyIndex, 4, userm._userm);
       let cnt = 0;
       while((response === null || response.guidance === null || response.interact === undefined) && cnt < 5) {
@@ -334,6 +346,7 @@ export default function StoryPage() {
         return;
       }
       console.log(response);
+      setStatusMessage('正在合成语音...');
       const audioUrl = await getText2Voice(response.guidance + response.interact);
       console.log('audioUrl '+ audioUrl);
       console.log('播放q2或q3:'+response.guidance + response.interact);
@@ -656,7 +669,7 @@ export default function StoryPage() {
   
 
   return (
-    <Container fluid>
+    <Container fluid style={{ position: 'relative' }}>
        <Row>
       <Col md={1} lg={1} xl={1} xxl={1}>
         <div style={{position: 'relative', width: '100%', height: '100%'}}>
@@ -718,6 +731,27 @@ export default function StoryPage() {
         </Row>
       </Col>
     </Row>
+    {/* 添加状态消息显示 */}
+    {statusMessage && (
+      <div
+        style={{
+          color: '#800080',  // 将字体颜色改为背景的紫色
+          padding: '8px',
+          borderRadius: '0px',
+          textAlign: 'center',
+          position: 'absolute',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 1000,
+          width: '50%',
+          maxWidth: '300px',
+          opacity: 1
+        }}
+      >
+        {statusMessage}
+      </div>
+    )}
     </Container>
   )
 };
