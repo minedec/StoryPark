@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import SketchPad from './SketchPad';
 import { restartNewStory } from './util';
 import PaintPage from './PaintPage';
+import ParentPage from './ParentPage';
 
 let appData1 = {};
 
@@ -195,6 +196,7 @@ function App() {
       <Route path="/choose-page" element={<ChoosePage />} />
       <Route path="/StoryPage" element={<StoryPage />} />
       <Route path="/PaintPage" element={<PaintPage />} />
+      <Route path="/ParentPage" element={<ParentPage />} />
     </Routes>
     </Router>
   );

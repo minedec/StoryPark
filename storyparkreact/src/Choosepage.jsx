@@ -63,28 +63,18 @@ function ChoosePage() {
 
   const navigate = useNavigate(); // 正确地在组件内部使用useNavigate
 
-  const goToStoryPage1 = () => {
-    window.StoryState.storyIndex = 1;
+  const goToStoryPage = (storyIndex) => {
+    window.StoryState.storyIndex = storyIndex;
     window.StoryState.chapterIndex = 0;
-    navigate('/StoryPage'); // 假设你的路由设置中定义了'/StoryPage1'
-  };
-  const goToStoryPage2 = () => {
-    window.StoryState.storyIndex = 2;
-    window.StoryState.chapterIndex = 0;
-    navigate('/StoryPage'); // 假设你的路由设置中定义了'/StoryPage2'
-  };
-  const goToStoryPage3 = () => {
-    window.StoryState.storyIndex = 3;
-    window.StoryState.chapterIndex = 0;
-    navigate('/StoryPage'); // 假设你的路由设置中定义了'/StoryPage3'
+    navigate('/ParentPage');
   };
 
   return (
     <div className="choose-page">
       <div style={DivBak}>
-        <Button style={Story1ButtonStyle} onClick={goToStoryPage1}></Button>
-        <Button style={Story2ButtonStyle} onClick={goToStoryPage2}></Button>
-        <Button style={Story3ButtonStyle} onClick={goToStoryPage3}></Button>
+        <Button style={Story1ButtonStyle} onClick={() => goToStoryPage(1)}></Button>
+        <Button style={Story2ButtonStyle} onClick={() => goToStoryPage(2)}></Button>
+        <Button style={Story3ButtonStyle} onClick={() => goToStoryPage(3)}></Button>
       </div>
     </div>
   );
