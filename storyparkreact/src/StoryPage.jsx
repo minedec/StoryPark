@@ -167,6 +167,7 @@ export default function StoryPage() {
       console.log('interact_audioUrl '+ audioUrl_interact);
       console.log('播放story:'+response.story);
 
+      setStatusMessage('正在播放故事语音...');
       if (audioUrl_story) {
         await playSound(audioUrl_story);
       }
@@ -179,7 +180,8 @@ export default function StoryPage() {
         updateBackgroundImage(newImageUrl);
         forceUpdate();
       }, 0);
-      
+
+      setStatusMessage('正在播放互动语音...');
       console.log('播放interact:'+response.interact);
       if (audioUrl_interact) {
         await playSound(audioUrl_interact);
@@ -221,6 +223,7 @@ export default function StoryPage() {
       let audioUrl_interact = await getText2Voice(tempData._tempData.interact);
       console.log('audioUrl_interact '+ audioUrl_interact);
 
+      setStatusMessage('正在播放故事语音...');
       console.log('播放story:'+tempData._tempData.story);
       if (audioUrl_story) {
         await playSound(audioUrl_story);
@@ -230,6 +233,7 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
       
+      setStatusMessage('正在播放互动语音...');
       console.log('播放interact:'+tempData._tempData.interact);
       if (audioUrl_interact) {
         await playSound(audioUrl_interact);
@@ -266,6 +270,7 @@ export default function StoryPage() {
       const audioUrl_Q1 = await getText2Voice(tempData._tempData.interact);
       console.log('audioUrlstory '+ audioUrl_story);
 
+      setStatusMessage('正在播放故事语音...');
       console.log('播放story:'+tempData._tempData.story);
       if (audioUrl_story) {
         await playSound(audioUrl_story);
@@ -274,6 +279,7 @@ export default function StoryPage() {
       let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
       updateBackgroundImage(newImageUrl);
 
+      setStatusMessage('正在播放互动语音...');
       console.log('播放q1:'+tempData._tempData.interact);
       if (audioUrl_Q1) {
         await playSound(audioUrl_Q1);
@@ -310,6 +316,7 @@ export default function StoryPage() {
         setStatusMessage('正在合成语音...');
         const audioUrl = await getText2Voice(response.interact);
         console.log('播放结尾:'+response.interact);
+        setStatusMessage('正在播放结尾语音...');
         console.log('audioUrl '+ audioUrl);
         if (audioUrl) {
           await playSound(audioUrl);
@@ -350,6 +357,7 @@ export default function StoryPage() {
       const audioUrl = await getText2Voice(response.guidance + response.interact);
       console.log('audioUrl '+ audioUrl);
       console.log('播放q2或q3:'+response.guidance + response.interact);
+      setStatusMessage('正在播放互动语音...');
       if (audioUrl) {
         await playSound(audioUrl);
       }
@@ -557,6 +565,7 @@ export default function StoryPage() {
             window.StoryState.chapterIndex += 1;
             await updateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex);
             console.log('speak 环节生成故事开始');
+            setStatusMessage('请点击绘图按钮画图，后台正在生成故事...');
             tempData._tempData = null;
             tempData._tempData = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, userm._userm);
             let cnt = 0;
@@ -571,6 +580,7 @@ export default function StoryPage() {
             } else {
               console.log('speak 环节生成故事完成'+ tempData._tempData.story 
                 + "\n" + tempData._tempData.interact);
+              setStatusMessage('后台故事生成完毕，绘图完成后再次点击绘图按钮结束...');
             }
           } else if(window.StoryState.chapterIndex >= 3) {
             window.StoryState.chapterIndex += 1;
