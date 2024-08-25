@@ -192,8 +192,8 @@ function App() {
     <Router>
     <StoryParkNavbar />
     <Routes>
-      <Route path="/" element={<ChoosePage />} />
-      <Route path="/choose-page" element={<ChoosePage />} />
+      <Route path="/" element={<ParentPage />} />
+      {/* <Route path="/choose-page" element={<ChoosePage />} /> */}
       <Route path="/StoryPage" element={<StoryPage />} />
       <Route path="/PaintPage" element={<PaintPage />} />
       <Route path="/ParentPage" element={<ParentPage />} />
