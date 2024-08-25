@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 import subprocess
 import time
+from flasgger import Swagger, swag_from
 
 # 导入logger前先确保log目录存在
 log_dir = os.path.join(os.path.dirname(__file__), 'log')
@@ -30,6 +31,20 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources=r'/*', origins="*")
 
+# Initialize Swagger
+swagger = Swagger(app)
+
+# Ensure the static folder exists
+static_folder = os.path.join(app.root_path, 'static')
+if not os.path.exists(static_folder):
+    os.makedirs(static_folder)
+
+# Create swagger.json if it doesn't exist
+swagger_file = os.path.join(static_folder, 'swagger.json')
+if not os.path.exists(swagger_file):
+    with open(swagger_file, 'w') as f:
+        f.write('{"openapi": "3.0.0", "info": {"title": "StoryPark Server API", "version": "1.0.0"}, "paths": {}}')
+
 class StoryState:
   """
   current story state, include story index, chapter index and other things
@@ -37,19 +52,50 @@ class StoryState:
   def __init__(self) -> None:
     self.story_index = 1
     self.chapter_index = 1
+    self.story_text = ""  # 课文字符串
+    self.story_summary = ""  # 故事梗概字符串
+    self.story_elements = []  # 故事元素字符串数组
   
 story_state = StoryState()
 
 @app.route("/")
+@swag_from({
+    'responses': {
+        '200': {
+            'description': 'Welcome message',
+            'schema': {
+                'type': 'string'
+            }
+        }
+    }
+})
 def index():
   return "hello world"
 
 # 消息收发接口
 @app.route("/text2voice", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'text',
+            'in': 'body',
+            'type': 'string',
+            'required': 'true',
+            'description': 'Text you need to transform to audio'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Audio file',
+            'content': {
+                'audio/mp3': {}
+            }
+        }
+    }
+})
 def text2voice():
   """
-  json format:
-  {'text':'Text you need to transfor to audio'}
+  Transform text to voice
   """
   text = request.json.get("text", "").lower()
   audio_file_path = './tmp/temp_text_2_voice.mp3'
@@ -62,11 +108,31 @@ def text2voice():
   
 
 @app.route("/voice2text", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'audiofile',
+            'in': 'formData',
+            'type': 'file',
+            'required': 'true',
+            'description': 'Audio file to be converted to text'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Converted text',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'text': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def voice2text():
   """
-  revice voice and transfer to text
-  json format:
-  
+  Receive voice and transfer to text
   """
   voice_file = request.files['audiofile']
   
@@ -96,6 +162,35 @@ def voice2text():
   return jsonify(res)
 
 @app.route("/save_image", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'imgfile',
+            'in': 'formData',
+            'type': 'file',
+            'required': 'true',
+            'description': 'Image file to be saved'
+        },
+        {
+            'name': 'filename',
+            'in': 'formData',
+            'type': 'string',
+            'required': 'true',
+            'description': 'Filename for the image'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Image saved successfully',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'message': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def save_image():
   """
   Save a sketch image with a custom filename provided in the request.
@@ -118,6 +213,25 @@ def save_image():
   return jsonify({"message": "Image saved successfully"})
 
 @app.route("/download_image", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'filename',
+            'in': 'body',
+            'type': 'string',
+            'required': 'true',
+            'description': 'Filename of the image to download'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Image file',
+            'content': {
+                'image/png': {}
+            }
+        }
+    }
+})
 def download_image():
   text = request.json.get("filename", "").lower()
   img_file_path = './pic/' + text
@@ -135,6 +249,16 @@ def download_image():
       time.sleep(0.5)
 
 @app.route('/restart_new_story', methods=["POST"])
+@swag_from({
+    'responses': {
+        '200': {
+            'description': 'Story restarted successfully',
+            'schema': {
+                'type': 'object'
+            }
+        }
+    }
+})
 def restart_new_story():
   """
   restart new story and clean all file in the old story
@@ -147,14 +271,23 @@ def restart_new_story():
   return jsonify({})
 
 @app.route('/get_story_and_chapter', methods=["POST"])
+@swag_from({
+    'responses': {
+        '200': {
+            'description': 'Current story and chapter indices',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'story_index': {'type': 'integer'},
+                    'chapter_index': {'type': 'integer'}
+                }
+            }
+        }
+    }
+})
 def get_story_and_chapter():
   """
   get current story index and chapter index
-  return json format:
-  {
-    'story_index' : xx,
-    'chapter_index' : xx
-  }
   """
   res = {
     "story_index" : story_state.story_index,
@@ -163,6 +296,32 @@ def get_story_and_chapter():
   return jsonify(res)
 
 @app.route('/set_story_and_chapter', methods=['POST'])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'story_index',
+            'in': 'body',
+            'type': 'integer',
+            'required': 'true',
+            'description': 'Story index to set'
+        },
+        {
+            'name': 'chapter_index',
+            'in': 'body',
+            'type': 'integer',
+            'required': 'true',
+            'description': 'Chapter index to set'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Story and chapter indices set successfully',
+            'schema': {
+                'type': 'object'
+            }
+        }
+    }
+})
 def set_story_and_chapter():
   story_index = request.json.get("story_index","")
   chapter_index = request.json.get("chapter_index","")
@@ -174,6 +333,29 @@ def set_story_and_chapter():
 
 
 @app.route('/extract_keyword', methods=['POST'])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'message',
+            'in': 'body',
+            'type': 'string',
+            'required': 'true',
+            'description': 'Message to extract keyword from'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Extracted keyword and sketch object',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'keyword': {'type': 'string'},
+                    'sketch_object': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def extract_keyword():
   user_message = request.json.get('message')
   keyword, sketch_object = extract_object(user_message)
@@ -188,23 +370,47 @@ def extract_keyword():
 
 
 @app.route("/generate_story", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'message',
+            'in': 'body',
+            'type': 'string',
+            'required': 'true',
+            'description': 'User message'
+        },
+        {
+            'name': 'story_index',
+            'in': 'body',
+            'type': 'integer',
+            'required': 'true',
+            'description': 'Story index'
+        },
+        {
+            'name': 'chapter_index',
+            'in': 'body',
+            'type': 'integer',
+            'required': 'true',
+            'description': 'Chapter index'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Generated story and interaction',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'story': {'type': 'string'},
+                    'interact': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def next_chapter():
   """
   receive user response with prev chapter and generate next chapter story, update story_index and chapter_index when use this func
-  revice json format:
-  {
-    'message': user_message(string),
-    'extract': bool,
-  }
-  send json format:
-  {
-    'story':res_json["story"],
-    'interact':res_json["interact"],
-  }
-  then use /text2voice transfer story and interact to audio
   """
-  # if story_state.story_index <= 0 or story_state.chapter_index < 1:
-  #   return jsonify({'error':'please set story index and chapter index'})
   user_message = request.json.get("message","").lower()
   story_index = request.json.get("story_index","")
   chapter_index = request.json.get("chapter_index","")
@@ -222,6 +428,25 @@ def next_chapter():
   return jsonify(res)
 
 @app.route("/drawback_context", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'drawback_cnt',
+            'in': 'body',
+            'type': 'integer',
+            'required': 'true',
+            'description': 'Number of contexts to draw back'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Context drawn back successfully',
+            'schema': {
+                'type': 'object'
+            }
+        }
+    }
+})
 def drawback_context():
   """
   drawback context, use this func when user feedback is not good
@@ -231,12 +456,53 @@ def drawback_context():
   return jsonify({})
 
 @app.route("/set_tester_name", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'tester_name',
+            'in': 'body',
+            'type': 'string',
+            'required': 'true',
+            'description': 'Name of the tester'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Tester name set successfully',
+            'schema': {
+                'type': 'object'
+            }
+        }
+    }
+})
 def set_tester_name():
   global tester_name
   tester_name = request.json.get("tester_name")
   return jsonify({})
 
 @app.route("/send2qwen", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'text',
+            'in': 'body',
+            'type': 'string',
+            'required': 'true',
+            'description': 'Text to send to Qwen'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Response from Qwen',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'response': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def send2qwen():
   text = request.json.get("text")
   return jsonify({"response":send_to_qwen(text)})
