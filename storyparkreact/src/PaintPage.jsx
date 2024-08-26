@@ -4,11 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const PaintPage = () => {
   const [selectedImages, setSelectedImages] = useState([]);
-  const [rightImages, setRightImages] = useState([
-    './story1.png',
-    './story2.png',
-    './story3.png',
-  ]);
+  const [rightImages, setRightImages] = useState(window.StoryState.elementSrcs);
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [droppedImages, setDroppedImages] = useState([]);
@@ -150,7 +146,13 @@ const PaintPage = () => {
       const imgElement = new Image();
       imgElement.src = img.src;
       imgElement.onload = () => {
-        ctx.drawImage(imgElement, img.x - img.width / 2, img.y - img.height / 2, img.width, img.height);
+        let width = img.width;
+        let height = img.height;
+        if (img.src.startsWith('http://') || img.src.startsWith('https://')) {
+          width = img.width / 5;
+          height = img.height / 5;
+        }
+        ctx.drawImage(imgElement, img.x - width / 2, img.y - height / 2, width, height);
       };
     });
   };
@@ -193,7 +195,13 @@ const PaintPage = () => {
           const img = new Image();
           img.src = item.src;
           img.onload = () => {
-            const newDroppedImages = [...droppedImages, { src: item.src, x, y, width: img.width, height: img.height }];
+            let width = img.width;
+            let height = img.height;
+            if (item.src.startsWith('http://') || item.src.startsWith('https://')) {
+              width = img.width / 5;
+              height = img.height / 5;
+            }
+            const newDroppedImages = [...droppedImages, { src: item.src, x, y, width, height }];
             setDroppedImages(newDroppedImages);
             const newHistory = history.slice(0, currentStateIndex + 1);
             newHistory.push({ drawingData, droppedImages: newDroppedImages, selectedImages });

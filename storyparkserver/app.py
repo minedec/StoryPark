@@ -4,6 +4,7 @@ import os
 import subprocess
 import time
 from flasgger import Swagger, swag_from
+from zhipuai import ZhipuAI
 
 # 导入logger前先确保log目录存在
 log_dir = os.path.join(os.path.dirname(__file__), 'log')
@@ -55,6 +56,7 @@ class StoryState:
     self.story_text = ""  # 课文字符串
     self.story_summary = ""  # 故事梗概字符串
     self.story_elements = []  # 故事元素字符串数组
+    self.zhipu_client = ZhipuAI(api_key="6c709502dd4342fcd6999456f1219f0c.l2WvWtqI6PgZi70J")
   
 story_state = StoryState()
 
@@ -516,6 +518,39 @@ def test_get_text():
 def test_get_audio():
   audio_file = open('./story_voice.mp3','rb')
   return send_file(audio_file, mimetype='audio/mp3')
+
+@app.route("/generate_image", methods=["POST"])
+@swag_from({
+    'parameters': [
+        {
+            'name': 'prompt',
+            'in': 'body',
+            'type': 'string',
+            'required': 'true',
+            'description': 'Text prompt for image generation'
+        }
+    ],
+    'responses': {
+        '200': {
+            'description': 'Generated image URL',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'image_url': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
+def generate_image():
+    prompt = request.json.get("prompt")
+    response = story_state.zhipu_client.images.generations(
+        model="cogview-3",
+        prompt=prompt,
+    )
+    
+    image_url = response.data[0].url
+    return jsonify({"image_url": image_url})
 
 
 if __name__ == "__main__":

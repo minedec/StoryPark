@@ -13,6 +13,7 @@ const api_call = {
     'downloadImage':'download_image',
     'drawbackContext':'drawback_context',
     'setTesterName':'set_tester_name',
+    'generateImage':'generate_image',
 }
 
 async function postJsonData(url, jsonData) {
@@ -225,5 +226,14 @@ export async function setTesterName(tester) {
     });
     console.log(jsonString);
     const data = await postJsonData(server_url+api_call['setTesterName'], jsonString);
+    return data;
+}
+
+export async function generateImage(prompt) {
+    var jsonString = JSON.stringify({
+        prompt:prompt,
+    });
+    console.log(jsonString);
+    const data = await postJsonData(server_url+api_call['generateImage'], jsonString);
     return data;
 }

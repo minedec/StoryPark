@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, ProgressBar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { generateImage } from './util';
 
 const ParentPage = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -71,6 +72,8 @@ const ParentPage = () => {
     // 最后一步，跳转到StoryPage
     window.StoryState.storyIndex = 1;
     window.StoryState.chapterIndex = 0;
+    // store elements' src
+    window.StoryState.elementSrcs = elements.map(element => element.src);
     navigate('/StoryPage');
   };
 
@@ -86,21 +89,35 @@ const ParentPage = () => {
     setStoryText('这里是改编后的故事文本...');  // 实际应用中，这里应该调用API改编故事
   };
 
-  const handleImageClick = (index, type) => {
+  const handleImageClick = async (index, type) => {
     setLoadingStates(prev => ({ ...prev, [`${type}-${index}`]: true }));
 
-    setTimeout(() => {
+    try {
       if (type === 'scene') {
         const newScenes = [...scenes];
-        newScenes[index] = `new-scene-${index}.png`;
+        const response = await generateImage(`Generate a scene for ${newScenes[index]}`);
+        newScenes[index] = response.image_url;
         setScenes(newScenes);
       } else if (type === 'element') {
         const newElements = [...elements];
-        newElements[index] = { ...newElements[index], src: `new-element-${index}.png` };
+        const response = await generateImage(`Generate an element for ${newElements[index].name}`);
+        newElements[index] = { ...newElements[index], src: response.image_url };
         setElements(newElements);
       }
+    } catch (error) {
+      console.error('Error generating image:', error);
+      if (type === 'scene') {
+        const newScenes = [...scenes];
+        newScenes[index] = 'error-generating-image.png';
+        setScenes(newScenes);
+      } else if (type === 'element') {
+        const newElements = [...elements];
+        newElements[index] = { ...newElements[index], src: 'error-generating-image.png' };
+        setElements(newElements);
+      }
+    } finally {
       setLoadingStates(prev => ({ ...prev, [`${type}-${index}`]: false }));
-    }, 3000);
+    }
   };
 
   return (
