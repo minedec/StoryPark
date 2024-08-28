@@ -553,6 +553,75 @@ def generate_image():
     return jsonify({"image_url": image_url})
 
 
+@app.route("/generate_outline", methods=["POST"])
+def generate_outline():
+  """
+  generate outline for a story
+  """
+  keyword = request.json.get("keyword","").lower()
+  story_text = request.json.get("story_text","")
+  target = request.json.get("target","")
+  user_prompt = prompt_formater(
+    -1,
+    -1,
+    {"keyword":keyword,
+     "story_text":story_text,
+     "target":target}
+  )
+  print('outline_prompt:', user_prompt)
+  res = send_to_qwen(user_prompt, False)
+  return jsonify(res)
+
+
+@app.route("/split_story", methods=["POST"])
+def split_story():
+  """
+  split story into chapters
+  """
+  story_text = request.json.get("story_text","")
+  user_prompt = prompt_formater(
+    -1,
+    -2,
+    {"story_text":story_text}
+  )
+  print('split_prompt:', user_prompt)
+  res = send_to_qwen(user_prompt, False)
+  return jsonify(res)
+
+
+@app.route("/extract_background", methods=["POST"])
+def extract_background():
+  """
+  extract background from story
+  """
+  story_text = request.json.get("story_text","")
+  user_prompt = prompt_formater(
+    -1,
+    -3,
+    {"story_text":story_text}
+  )
+  print('extract_prompt:', user_prompt)
+  res = send_to_qwen(user_prompt, False)
+  print('res:', res)
+  return jsonify(res)
+
+@app.route("/extract_character", methods=["POST"])
+def extract_character():
+  """
+  extract character from story
+  """
+  story_text = request.json.get("story_text","")
+  user_prompt = prompt_formater(
+    -1,
+    -4,
+    {"story_text":story_text}
+  )
+  print('extract_prompt:', user_prompt)
+  res = send_to_qwen(user_prompt, False)
+  print('res:', res)
+  return jsonify(res)
+
+
 if __name__ == "__main__":
   app.run(host='0.0.0.0', port=4999, debug=True)
 

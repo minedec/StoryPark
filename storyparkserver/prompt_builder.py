@@ -113,7 +113,20 @@ def send_to_qwen(user_prompt, record_in_context=True):
 
 # prompt格式化
 def prompt_formater(story_index:int, chapter_index:int, replace: dict) -> str:
-  prompt_file_path = './prompt/' + str(story_index) + '/' + str(chapter_index) + '.txt'
+  if chapter_index < 0:
+    # outline, split story, generate image prompt etc.
+    if chapter_index == -1:
+      prompt_file_path = './prompt/outline_generate.txt'
+    elif chapter_index == -2:
+      prompt_file_path = './prompt/split_story.txt'
+    elif chapter_index == -3:
+      prompt_file_path = './prompt/extract_image_description.txt'
+    elif chapter_index == -4:
+      prompt_file_path = './prompt/extract_character_description.txt'
+  else:
+    # story_chapter  
+    prompt_file_path = './prompt/' + str(story_index) + '/' + str(chapter_index) + '.txt'
+  
   with open(prompt_file_path, 'r') as f:
     prompt_format = f.read()
     for key in replace:

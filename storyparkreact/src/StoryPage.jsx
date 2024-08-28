@@ -16,7 +16,7 @@ import {
 } from './util.js';
 import {Container, Col, Row, Button, Form, Image, Stack } from 'react-bootstrap'
 import MicRecorder from 'mic-recorder-to-mp3';
-import {userm, sketchObj, tempData, storyIsInteract} from './App.js'
+import {userm, sketchObj, tempData, storyIsInteract, splitStoryText} from './App.js'
 import magicSketchpad from './assets/white-background.png';
 import { flushSync } from 'react-dom';
 
@@ -143,7 +143,7 @@ export default function StoryPage() {
       console.log('这是故事1的场景1');
       changeStepColor(window.StoryState.chapterIndex);
       setStatusMessage('正在生成故事...');
-      let response = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, 'hello');
+      let response = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex, JSON.stringify(splitStoryText._splitStoryText));
       console.log(response);
       console.log("intercat is ", storyIsInteract._storyIsInteract);
 
@@ -151,7 +151,7 @@ export default function StoryPage() {
       while((response === null || response.story === null || response.story === undefined) && cnt < 8) {
         
         console.log('故事1第'+cnt+'次尝试生成故事');
-        response = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex,'hello');
+        response = await generateStory(window.StoryState.storyIndex, window.StoryState.chapterIndex,JSON.stringify(splitStoryText._splitStoryText));
         cnt++;
       }
       if(response === null) {
@@ -361,7 +361,7 @@ export default function StoryPage() {
       if (audioUrl) {
         await playSound(audioUrl);
       }
-
+      setStatusMessage('请点击录音按钮录音');
       window.isSpeakDown = false;
       window.isSketchDown = false;
       storyIsInteract._storyIsInteract = false;

@@ -85,6 +85,66 @@ Object.defineProperty(appData5, 'storyIsInteract', {
 
 export { appData5 as storyIsInteract };
 
+let appData6 = {};
+
+Object.defineProperty(appData6, 'extractBackgroundPrompt', {
+  get: function() {
+    return this._extractBackgroundPrompt;
+  },
+  set: function(value) {
+    this._extractBackgroundPrompt = value;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+export { appData6 as extractBackgroundPrompt };
+
+let appData7 = {};
+
+Object.defineProperty(appData7, 'scensUrl', {
+  get: function() {
+    return this._scensUrl;
+  },
+  set: function(value) {
+    this._scensUrl = value;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+export { appData7 as scensUrl };
+
+let appData8 = {};
+
+Object.defineProperty(appData8, 'characterPrompt', {
+  get: function() {
+    return this._characterPrompt;
+  },
+  set: function(value) {
+    this._characterPrompt = value;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+export { appData8 as characterPrompt };
+
+let appData9 = {};
+
+Object.defineProperty(appData9, 'splitStoryText', {
+  get: function() {
+    return this._splitStoryText;
+  },
+  set: function(value) {
+    this._splitStoryText = value;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+export { appData9 as splitStoryText };
+
 function StoryParkNavbar() {
   const navigate = useNavigate(); // 正确地在组件内部使用useNavigate
 
@@ -158,7 +218,8 @@ function StoryParkNavbar() {
   }
 
   const backToChoosePage = () => {
-    navigate('/choose-page');
+    restartNewStory();
+    navigate('/');
   }
   const restartStory = async () => {
     await restartNewStory();

@@ -14,6 +14,10 @@ const api_call = {
     'drawbackContext':'drawback_context',
     'setTesterName':'set_tester_name',
     'generateImage':'generate_image',
+    'generateOutline':'generate_outline',
+    'splitStory':'split_story',
+    'extractBackground':'extract_background',
+    'extractCharacter':'extract_character'
 }
 
 async function postJsonData(url, jsonData) {
@@ -235,5 +239,58 @@ export async function generateImage(prompt) {
     });
     console.log(jsonString);
     const data = await postJsonData(server_url+api_call['generateImage'], jsonString);
+    return data;
+}
+
+export async function generateOutline(story, keyword, target) {
+    var jsonString = JSON.stringify({
+        story_text:story,
+        keyword:keyword,
+        target:target
+    });
+    console.log(jsonString);
+    const data = await postJsonData(server_url+api_call['generateOutline'], jsonString);
+    return data;
+}
+
+export async function splitStory(story) {
+    var jsonString = JSON.stringify({
+        story_text:story,
+    });
+    console.log(jsonString);
+    const data = await postJsonData(server_url+api_call['splitStory'], jsonString);
+    let processedData = data
+        .replace(/“/g, '"') // 全局替换左双引号
+        .replace(/”/g, '"') // 全局替换右双引号
+        .replace(/\\n/g, '') // 全局替换转义的换行符
+        .replace(/```json/g, '')
+        .replace(/```/g, '');
+
+    console.log("generate story data:", processedData);
+
+    try {
+        const parsedData = JSON.parse(processedData);
+        return parsedData;
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return null;
+    }
+}
+
+export async function extractBackground(story) {
+    var jsonString = JSON.stringify({
+        story_text:story,
+    });
+    console.log(jsonString);
+    const data = await postJsonData(server_url+api_call['extractBackground'], jsonString);
+    return data;
+}
+
+export async function extractCharacter(story) {
+    var jsonString = JSON.stringify({
+        story_text:story,
+    });
+    console.log(jsonString);
+    const data = await postJsonData(server_url+api_call['extractCharacter'], jsonString);
     return data;
 }

@@ -1,0 +1,8 @@
+You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {story_text}

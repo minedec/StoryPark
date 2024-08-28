@@ -1,7 +1,127 @@
-[2024-08-26 13:36:07 +0800] [179089] [INFO] Starting gunicorn 23.0.0
-[2024-08-26 13:36:07 +0800] [179089] [INFO] Listening at: http://0.0.0.0:8000 (179089)
-[2024-08-26 13:36:07 +0800] [179089] [INFO] Using worker: sync
-[2024-08-26 13:36:07 +0800] [179092] [INFO] Booting worker with pid: 179092
-[2024-08-26 13:36:07 +0800] [179093] [INFO] Booting worker with pid: 179093
-[2024-08-26 13:36:07 +0800] [179094] [INFO] Booting worker with pid: 179094
-[2024-08-26 13:36:07 +0800] [179095] [INFO] Booting worker with pid: 179095
+[2024-08-27 02:27:31 +0800] [192125] [INFO] Starting gunicorn 23.0.0
+[2024-08-27 02:27:31 +0800] [192125] [INFO] Listening at: http://0.0.0.0:8000 (192125)
+[2024-08-27 02:27:31 +0800] [192125] [INFO] Using worker: sync
+[2024-08-27 02:27:31 +0800] [192127] [INFO] Booting worker with pid: 192127
+[2024-08-27 02:27:31 +0800] [192128] [INFO] Booting worker with pid: 192128
+[2024-08-27 02:27:31 +0800] [192129] [INFO] Booting worker with pid: 192129
+[2024-08-27 02:27:31 +0800] [192133] [INFO] Booting worker with pid: 192133
+[2024-08-28 01:11:58 +0800] [192127] [INFO] Worker exiting (pid: 192127)
+outline_prompt: You will receive a story. Use the provided 小鸟,猴子,雪人,s to simplify the story into a new summary that focuses on these 小鸟,猴子,雪人,s.
+Keywords: {小鸟,猴子,雪人,}
+Story: {早上上课}
+Target: {场景描述}
+其中story是故事输入，场景描述是故事的教育目标，小鸟,猴子,雪人,是故事中需要出现的角色元素
+你需要生成200字的故事大纲，也就是summary
+请用中文回答，直接返回生成内容，不要写任何多余的文字。
+split_prompt: You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
+For each part, describe the actions of the characters in the scene. 
+The story is: {在一个被白雪覆盖的冬日森林里，小鸟、猴子和雪人成为了不可思议的朋友。小鸟 chirp 着欢快的旋律，为寂静的雪景添上生机。猴子好奇地跳跃着，探索这银装素裹的世界，它发现了孤零零的雪人，便邀请小鸟一起来装饰雪人，给它戴上帽子和围巾，还用果实做眼睛，胡萝卜做鼻子。雪人仿佛活了过来，朋友们围绕它跳舞，分享着简单的快乐。
+
+然而，随着阳光渐渐温暖，雪人开始担忧自己会融化。小鸟和猴子感受到了雪人的悲伤，它们决定做些什么来安慰朋友。小鸟唱起了最动听的歌，猴子则找来大片树叶为雪人遮阳。它们通过行动表达了对雪人的关爱和支持，展现了友情的力量。
+
+这个故事以小鸟、猴子和雪人的友情为中心，传达了在面对失去与变化时，情感表达的重要性——无论是通过歌声还是实际行动，都是维系关系、传递爱与希望的桥梁。在冬日的寒冷中，它们用温暖的心点亮了彼此的世界。}
+使用中文进行回答，以json格式返回，四个parts分别用part1，part2，part3，part4作为key来标识。
+每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。每一个part里只能出现一位角色。
+以下是一个完整的拆分过程
+输入故事内容大纲：
+我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。
+他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+返回的json格式，返回标准json格式，每条目之间不要包含额外符号，只有逗号
+{
+    "part1": "从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。",
+    "part2": "不久后，小熊在河边玩耍时发现了这个龟壳。小熊思考这个龟壳的作用",
+    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。小鸟看到这个龟壳，思考它的作用",
+    "part4": "小鸟把龟壳当作了一个天然的滑板，在树枝间滑行，引来其他小鸟羡慕的目光，大家都想试试这特别的滑板。小乌龟听说了自己的壳给朋友们带来了这么多快乐，心里感到非常温暖和自豪。"
+}
+
+[2024-08-28 01:11:58 +0800] [192128] [INFO] Worker exiting (pid: 192128)
+[2024-08-28 01:11:58 +0800] [192125] [INFO] Handling signal: term
+outline_prompt: You will receive a story. Use the provided 小鸟,猴子,兔子,s to simplify the story into a new summary that focuses on these 小鸟,猴子,兔子,s.
+Keywords: {小鸟,猴子,兔子,}
+Story: {天天早点下班}
+Target: {情感表达}
+其中story是故事输入，情感表达是故事的教育目标，小鸟,猴子,兔子,是故事中需要出现的角色元素
+你需要生成200字的故事大纲，也就是summary
+请用中文回答，直接返回生成内容，不要写任何多余的文字。
+split_prompt: You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
+For each part, describe the actions of the characters in the scene. 
+The story is: {在一个充满欢声笑语的森林里，小鸟、猴子和兔子是无话不谈的好朋友。它们每天最大的乐趣就是早早地结束玩耍，相约在森林中央那棵古老的橡树下分享各自的小确幸。
+
+小鸟会带来从高空中俯瞰世界的奇妙见闻，用清脆的歌声表达它对自由的热爱与对友情的珍惜。猴子则机灵活泼，常在林间跳跃，为伙伴们寻觅美味的果实，用行动展示它的关怀与忠诚。温柔的兔子，总在夕阳的余晖中编织着一个个温馨的故事，用它柔软的话语温暖着每个心灵。
+
+这样的日子，让森林里的友谊愈发深厚，也教会了小鸟、猴子和兔子一个宝贵的道理：早点下班不只是为了休息，更是为了有更多时间与爱的人共度，用情感的交流丰富彼此的心灵家园。在这个简单却温馨的日常中，它们学会了如何用最真挚的情感表达对生活的热爱与对朋友的感激。}
+使用中文进行回答，以json格式返回，四个parts分别用part1，part2，part3，part4作为key来标识。
+每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。每一个part里只能出现一位角色。
+以下是一个完整的拆分过程
+输入故事内容大纲：
+我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。
+他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+返回的json格式，返回标准json格式，每条目之间不要包含额外符号，只有逗号
+{
+    "part1": "从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。",
+    "part2": "不久后，小熊在河边玩耍时发现了这个龟壳。小熊思考这个龟壳的作用",
+    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。小鸟看到这个龟壳，思考它的作用",
+    "part4": "小鸟把龟壳当作了一个天然的滑板，在树枝间滑行，引来其他小鸟羡慕的目光，大家都想试试这特别的滑板。小乌龟听说了自己的壳给朋友们带来了这么多快乐，心里感到非常温暖和自豪。"
+}
+
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject] [doing action], [adjective] [background subject], [scenery]
+Example output: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+The story is: {猴子邀请小鸟装饰雪人，它们为雪人戴上帽子、围巾，用果实和胡萝卜赋予其面孔，雪人仿佛被赋予了生命，三个朋友围绕它欢舞。}
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject] [doing action], [adjective] [background subject], [scenery]
+Example output: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+The story is: {随着阳光温暖，雪人害怕融化，显得忧心忡忡；小鸟唱起悦耳歌曲安慰它，猴子找来树叶为雪人遮挡阳光，体现了深切的关怀。}
+[2024-08-28 01:11:58 +0800] [192133] [INFO] Worker exiting (pid: 192133)
+[2024-08-28 01:11:58 +0800] [192129] [INFO] Worker exiting (pid: 192129)
+split_prompt: You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
+For each part, describe the actions of the characters in the scene. 
+The story is: {在一个被白雪覆盖的森林里，小鸟、猴子和雪人成为了不期而遇的朋友。清晨，当第一缕阳光穿透树梢，小鸟拍打着翅膀，在枝头欢快地唱着歌，它的歌声引来了一旁嬉戏的猴子。猴子好奇地跳跃着接近小鸟，两者之间的欢乐气氛引出了藏在林间的一个雪人。
+
+雪人眨着由煤块制成的眼睛，对这两位新朋友报以友好的微笑。它提议大家一起探索这个冬季仙境。于是，小鸟引领着方向，猴子穿梭于树木之间，雪人则缓缓跟随，享受着难得的冬日温暖。它们经过的地方，雪花似乎都舞动得更加轻盈。
+
+途中，小鸟发现了冻僵的小虫，它赶紧告知猴子与雪人。猴子迅速找来干草和叶子，雪人则贡献出自己的帽子作为小窝，它们齐心协力救助了小生命。这次经历让这三个性格迥异的小伙伴深刻体会到了团结与互助的力量。
+
+随着太阳西下，它们围坐在雪地里，分享着一天中的趣事。小鸟唱起了感谢的曲调，猴子模仿着各种动物的动作逗乐大家，雪人则静静地听着，心中充满了温暖和幸福。这一天，不仅是一场关于友情和探险的旅程，更是小鸟、猴子和雪人之间美好情谊的见证。}
+使用中文进行回答，以json格式返回，四个parts分别用part1，part2，part3，part4作为key来标识。
+每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。每一个part里只能出现一位角色。
+以下是一个完整的拆分过程
+输入故事内容大纲：
+我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。
+他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+返回的json格式，返回标准json格式，每条目之间不要包含额外符号，只有逗号
+{
+    "part1": "从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。",
+    "part2": "不久后，小熊在河边玩耍时发现了这个龟壳。小熊思考这个龟壳的作用",
+    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。小鸟看到这个龟壳，思考它的作用",
+    "part4": "小鸟把龟壳当作了一个天然的滑板，在树枝间滑行，引来其他小鸟羡慕的目光，大家都想试试这特别的滑板。小乌龟听说了自己的壳给朋友们带来了这么多快乐，心里感到非常温暖和自豪。"
+}
+
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject] [doing action], [adjective] [background subject], [scenery]
+Example output: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+The story is: {小鸟、猴子与雪人的友情在这个冬日里绽放，它们通过歌声和行动证明了爱与支持的力量，共同抵御了寒冷，照亮了彼此的世界。}
+outline_prompt: You will receive a story. Use the provided 小鸟,猴子,雪人,s to simplify the story into a new summary that focuses on these 小鸟,猴子,雪人,s.
+Keywords: {小鸟,猴子,雪人,}
+Story: {白天下雪}
+Target: {情感表达}
+其中story是故事输入，情感表达是故事的教育目标，小鸟,猴子,雪人,是故事中需要出现的角色元素
+你需要生成200字的故事大纲，也就是summary
+请用中文回答，直接返回生成内容，不要写任何多余的文字。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject] [doing action], [adjective] [background subject], [scenery]
+Example output: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+The story is: {在白雪皑皑的森林中，小鸟 chirp 地唱着歌，为冬日增添欢乐；猴子活泼地跳跃探索，发现了孤独的雪人。}
+[2024-08-28 01:11:58 +0800] [192125] [ERROR] Worker (pid:192127) was sent SIGTERM!
+[2024-08-28 01:11:58 +0800] [192125] [ERROR] Worker (pid:192128) was sent SIGTERM!
+[2024-08-28 01:11:58 +0800] [192125] [ERROR] Worker (pid:192133) was sent SIGTERM!
+[2024-08-28 01:11:58 +0800] [192125] [ERROR] Worker (pid:192129) was sent SIGTERM!
+[2024-08-28 01:11:58 +0800] [192125] [INFO] Shutting down: Master

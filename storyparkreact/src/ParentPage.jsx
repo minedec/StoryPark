@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, ProgressBar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { generateImage } from './util';
+import { generateImage, generateOutline, splitStory, extractBackground, extractCharacter } from './util';
+import { extractBackgroundPrompt, scensUrl, characterPrompt, splitStoryText } from './App.js'
 
 const ParentPage = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -9,6 +10,8 @@ const ParentPage = () => {
   const [storyText, setStoryText] = useState('');
   const [stage, setStage] = useState(1);
   const [lessonText, setLessonText] = useState('');
+  const [splitStoryJson, setSplitStoryJson] = useState();
+  const [outline, setOutline] = useState('');
   const navigate = useNavigate();
 
   // 新增的状态变量
@@ -30,8 +33,17 @@ const ParentPage = () => {
   ];
 
   const keywords = [
-    '友谊', '勇气', '诚实', '责任', '创新'
+    '兔子', '雪人', '猴子', '小鸟', '变形金刚'
   ];
+
+  extractBackgroundPrompt._extractBackgroundPrompt = [];
+  characterPrompt._characterPrompt = [];
+  scensUrl._scensUrl = [
+    '1-0.png',
+    '1-1.png',
+    '1-2.png',
+    '1-3.png'
+  ]
 
   const handleSkillChange = (skill) => {
     setSelectedSkills(prevSkills =>
@@ -49,17 +61,42 @@ const ParentPage = () => {
     );
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (selectedSkills.length > 0) {
-      setStoryText('这里是新生成的故事文本...');  // 实际应用中，这里应该调用API生成故事
+      console.log(selectedSkills);
+      console.log(selectedKeywords);
+      setStoryText('');
+      var target = selectedSkills[0];
+      var keywords = "";
+      for (var keyword of selectedKeywords) {
+        keywords += keyword + ',';
+      }
+      var data = await generateOutline(lessonText, keywords, target);
+      setOutline(data);
+      setStoryText(data);
+      // split story
+      var text = data;
+      text += '\n------------------------';
+      data = await splitStory(data);
+      text += '\nPart1:' + data.part1;
+      text += '\nPart2:' + data.part2;
+      text += '\nPart3:' + data.part3;
+      text += '\nPart4:' + data.part4;
+      setStoryText(text);
+      setSplitStoryJson(data);
+      splitStoryText._splitStoryText = data;
     } else {
       alert('请至少选择一个叙事能力');
     }
   };
 
-  const handleNextStage = () => {
+  const handleNextStage = async () => {
     if (stage === 1) {
       setStoryText(lessonText);
+      console.log("获取初始文本：\n" + lessonText)
+    } else if (stage === 2) {
+      handleInitImage();
+      handleInitElement();
     }
     setStage(prevStage => prevStage + 1);
   };
@@ -85,9 +122,50 @@ const ParentPage = () => {
     setLessonText(event.target.value);
   };
 
-  const handleAdaptStory = () => {
-    setStoryText('这里是改编后的故事文本...');  // 实际应用中，这里应该调用API改编故事
+  const handleAdaptStory = async () => {
+    handleGenerate();
   };
+
+  const handleInitImage = async () => {
+    // 初始化图片加载
+    if(splitStoryJson === undefined || splitStoryJson === null) return;
+    console.log("extract image prompt");
+    const ch1 = await extractBackground(splitStoryJson.part1);
+    const ch2 = await extractBackground(splitStoryJson.part2);
+    const ch3 = await extractBackground(splitStoryJson.part3);
+    const ch4 = await extractBackground(splitStoryJson.part4);
+    console.log("extract:\n1:" + ch1 + "\n2:" + ch2 + "\n3:" + ch3 + "\n4:" + ch4);
+    const bgPrompt = [ch1, ch2, ch3, ch4];
+    extractBackgroundPrompt._extractBackgroundPrompt = [ch1,ch2,ch3,ch4];
+    for(let i = 0; i < 4; i++) {
+      console.log(extractBackgroundPrompt._extractBackgroundPrompt[i]);
+      const response = await generateImage(`Generate a scene for ${bgPrompt[i]}`);
+      scensUrl._scensUrl[i] = response.image_url
+      const newScenes = [...scenes];
+      newScenes[i] = response.image_url;
+      setScenes(newScenes);
+    }
+  }
+
+  useEffect(() => {
+    console.log('scenes changed');
+    console.log(scenes);
+  }, [scenes]);
+
+  const handleInitElement = async () => {
+    console.log("extract character prompt");
+    const character = await extractCharacter(outline);
+    console.log("extract:\n" + character);
+    const characters = character.split('|');
+    characterPrompt._characterPrompt = [];
+    for(let i = 0; i < characters.length; i++) {
+      characterPrompt._characterPrompt.append(characters[i]);
+      const response = await generateImage(`Generate an element for ${characters[i]}`);
+      const newElements = [...elements];
+      newElements[i] = { name: characters[i], src: response.image_url };
+      setElements(newElements);
+    }
+  }
 
   const handleImageClick = async (index, type) => {
     setLoadingStates(prev => ({ ...prev, [`${type}-${index}`]: true }));
@@ -95,8 +173,9 @@ const ParentPage = () => {
     try {
       if (type === 'scene') {
         const newScenes = [...scenes];
-        const response = await generateImage(`Generate a scene for ${newScenes[index]}`);
+        const response = await generateImage(`Generate a scene for ${extractBackgroundPrompt._extractBackgroundPrompt[index]}`);
         newScenes[index] = response.image_url;
+        scensUrl._scensUrl[index] = response.image_url;
         setScenes(newScenes);
       } else if (type === 'element') {
         const newElements = [...elements];
