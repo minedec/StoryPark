@@ -129,10 +129,12 @@ const PaintPage = () => {
       imgElement.onload = () => {
         let width = img.width;
         let height = img.height;
-        if (img.src.startsWith('http://') || img.src.startsWith('https://')) {
-          width = img.width / 5;
-          height = img.height / 5;
-        }
+        // if (img.src.startsWith('http://') || img.src.startsWith('https://')) {
+        //   width = img.width / 4;
+        //   height = img.height / 4;
+        // }
+        width = img.width / 4;
+        height = img.height / 4;
         ctx.drawImage(imgElement, img.x - width / 2, img.y - height / 2, width, height);
       };
     });
