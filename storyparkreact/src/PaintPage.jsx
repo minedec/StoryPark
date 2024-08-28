@@ -21,28 +21,9 @@ const PaintPage = () => {
           img.onload = () => {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            
-            // Find the bounding box of the non-transparent pixels
-            let minX = img.width, minY = img.height, maxX = 0, maxY = 0;
-            const imageData = ctx.getImageData(0, 0, img.width, img.height);
-            const data = imageData.data;
-            for (let y = 0; y < img.height; y++) {
-              for (let x = 0; x < img.width; x++) {
-                const alpha = data[(y * img.width + x) * 4 + 3];
-                if (alpha > 0) {
-                  minX = Math.min(minX, x);
-                  minY = Math.min(minY, y);
-                  maxX = Math.max(maxX, x);
-                  maxY = Math.max(maxY, y);
-                }
-              }
-            }
-            
-            // Crop the image
-            canvas.width = maxX - minX + 1;
-            canvas.height = maxY - minY + 1;
-            ctx.drawImage(img, minX, minY, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-            
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
             resolve(canvas.toDataURL());
           };
           img.onerror = reject;

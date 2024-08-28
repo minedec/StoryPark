@@ -10,6 +10,14 @@ import { restartNewStory } from './util';
 import PaintPage from './PaintPage';
 import ParentPage from './ParentPage';
 
+// Add this global variable
+export let backgroundImages = [
+  '1-0.png',
+  '1-1.png',
+  '1-2.png',
+  '1-3.png'
+];
+
 let appData1 = {};
 
 Object.defineProperty(appData1, 'userm', {

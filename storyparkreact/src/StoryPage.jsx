@@ -19,6 +19,7 @@ import MicRecorder from 'mic-recorder-to-mp3';
 import {userm, sketchObj, tempData, storyIsInteract, splitStoryText} from './App.js'
 import magicSketchpad from './assets/white-background.png';
 import { flushSync } from 'react-dom';
+import { backgroundImages } from './App.js';
 
 export default function StoryPage() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState(magicSketchpad);
@@ -26,11 +27,15 @@ export default function StoryPage() {
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const [statusMessage, setStatusMessage] = useState('');
 
-  const updateBackgroundImage = useCallback((newImageUrl) => {
-    console.log('update backimage:' + newImageUrl);
-    setBackgroundImageUrl(newImageUrl);
-    setBackgroundKey(prevKey => prevKey + 1);
-    forceUpdate(); // 强制重新渲染
+  const updateBackgroundImage = useCallback((index) => {
+    if (backgroundImages[index]) {
+      console.log('update backimage:', backgroundImages[index]);
+      setBackgroundImageUrl(backgroundImages[index]);
+      setBackgroundKey(prevKey => prevKey + 1);
+      forceUpdate();
+    } else {
+      console.error('Background image not found for index:', index);
+    }
   }, []);
 
   useEffect(() => {
@@ -175,11 +180,7 @@ export default function StoryPage() {
       console.log('更新背景图1');
       window.isSketch = false;
       window.isSpeak = false;
-      let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
-      setTimeout(() => {
-        updateBackgroundImage(newImageUrl);
-        forceUpdate();
-      }, 0);
+      updateBackgroundImage(0);
 
       setStatusMessage('正在播放互动语音...');
       console.log('播放interact:'+response.interact);
@@ -193,7 +194,7 @@ export default function StoryPage() {
       setStatusMessage('请点击录音按钮录音');
     } else if (window.StoryState.chapterIndex === 2) {
       /**
-       * 章节2时 generate story部分在上���环节的speak之后完成，在sketch过程中调用故事生成
+       * 章节2时 generate story部分在上环节的speak之后完成，在sketch过程中调用故事生成
        * overlap掉故事生成的开销，speak环节生成的故事保存在tempData._tempData中
        *  */ 
       if(storyIsInteract._storyIsInteract) return;
@@ -230,8 +231,7 @@ export default function StoryPage() {
       }
 
       console.log('更新背景图2');
-      let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
-      updateBackgroundImage(newImageUrl);
+      updateBackgroundImage(1);
       
       setStatusMessage('正在播放互动语音...');
       console.log('播放interact:'+tempData._tempData.interact);
@@ -276,8 +276,7 @@ export default function StoryPage() {
         await playSound(audioUrl_story);
       }
 
-      let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
-      updateBackgroundImage(newImageUrl);
+      updateBackgroundImage(2);
 
       setStatusMessage('正在播放互动语音...');
       console.log('播放q1:'+tempData._tempData.interact);
@@ -328,6 +327,8 @@ export default function StoryPage() {
         userm._userm = '';
         tempData._tempData = null;
         setStatusMessage('故事结束');
+        
+        updateBackgroundImage(3);
         
         return;
       }
@@ -401,8 +402,7 @@ export default function StoryPage() {
     window.isSketch = false;
     window.isSpeak = false;
     console.log('初始化函数被执行');
-    let newImageUrl = './'+window.StoryState.storyIndex+'-'+window.StoryState.chapterIndex+'.png';
-    updateBackgroundImage(newImageUrl);
+    updateBackgroundImage(0);
     setImageUrl1(magicSketchpad);
     setImageUrl2(magicSketchpad);
     window.StoryState.chapterIndex += 1;
@@ -646,22 +646,16 @@ export default function StoryPage() {
   }
 
   const handleForwardBG = () => {
-    const currentBG = backgroundImageUrl.split('?')[0].split('-');
-    const currentIndex = parseInt(currentBG[currentBG.length - 1]);
-    const prevIndex = currentIndex - 1;
-    if (prevIndex >= 0) {
-      const newImageUrl = `${currentBG[0]}-${prevIndex}.png?${new Date().getTime()}`;
-      updateBackgroundImage(newImageUrl);
+    const currentIndex = backgroundImages.indexOf(backgroundImageUrl);
+    if (currentIndex > 0) {
+      updateBackgroundImage(currentIndex - 1);
     }
   }
 
   const handleBackBG = () => {
-    const currentBG = backgroundImageUrl.split('?')[0].split('-');
-    const currentIndex = parseInt(currentBG[currentBG.length - 1]);
-    const nextIndex = currentIndex + 1;
-    if (nextIndex <= 3) {
-      const newImageUrl = `${currentBG[0]}-${nextIndex}.png?${new Date().getTime()}`;
-      updateBackgroundImage(newImageUrl);
+    const currentIndex = backgroundImages.indexOf(backgroundImageUrl);
+    if (currentIndex < backgroundImages.length - 1) {
+      updateBackgroundImage(currentIndex + 1);
     }
   }
 

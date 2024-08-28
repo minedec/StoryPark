@@ -1,27 +1,124 @@
-[2024-08-27 02:27:31 +0800] [192125] [INFO] Starting gunicorn 23.0.0
-[2024-08-27 02:27:31 +0800] [192125] [INFO] Listening at: http://0.0.0.0:8000 (192125)
-[2024-08-27 02:27:31 +0800] [192125] [INFO] Using worker: sync
-[2024-08-27 02:27:31 +0800] [192127] [INFO] Booting worker with pid: 192127
-[2024-08-27 02:27:31 +0800] [192128] [INFO] Booting worker with pid: 192128
-[2024-08-27 02:27:31 +0800] [192129] [INFO] Booting worker with pid: 192129
-[2024-08-27 02:27:31 +0800] [192133] [INFO] Booting worker with pid: 192133
-[2024-08-28 01:11:58 +0800] [192127] [INFO] Worker exiting (pid: 192127)
-outline_prompt: You will receive a story. Use the provided 小鸟,猴子,雪人,s to simplify the story into a new summary that focuses on these 小鸟,猴子,雪人,s.
-Keywords: {小鸟,猴子,雪人,}
-Story: {早上上课}
-Target: {场景描述}
-其中story是故事输入，场景描述是故事的教育目标，小鸟,猴子,雪人,是故事中需要出现的角色元素
-你需要生成200字的故事大纲，也就是summary
+[2024-08-28 10:45:24 +0800] [209189] [INFO] Starting gunicorn 23.0.0
+[2024-08-28 10:45:24 +0800] [209189] [INFO] Listening at: http://0.0.0.0:8000 (209189)
+[2024-08-28 10:45:24 +0800] [209189] [INFO] Using worker: sync
+[2024-08-28 10:45:24 +0800] [209191] [INFO] Booting worker with pid: 209191
+[2024-08-28 10:45:24 +0800] [209192] [INFO] Booting worker with pid: 209192
+[2024-08-28 10:45:24 +0800] [209193] [INFO] Booting worker with pid: 209193
+[2024-08-28 10:45:25 +0800] [209194] [INFO] Booting worker with pid: 209194
+[2024-08-28 10:47:24,447] ERROR in app: Exception on /generate_image [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flasgger/utils.py", line 305, in wrapper
+    return function(*args, **kwargs)
+  File "/root/StoryPark/storyparkserver/app.py", line 547, in generate_image
+    response = story_state.zhipu_client.images.generations(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/api_resource/images.py", line 43, in generations
+    return self._post(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"contentFilter":[{"level":2,"role":"user"}],"error":{"code":"1301","message":"系统检测到输入或生成内容可能包含不安全或敏感内容，请您避免输入易产生敏感内容的提示语，感谢您的配合。"}}
+[2024-08-28 10:47:46,694] ERROR in app: Exception on /generate_image [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flasgger/utils.py", line 305, in wrapper
+    return function(*args, **kwargs)
+  File "/root/StoryPark/storyparkserver/app.py", line 547, in generate_image
+    response = story_state.zhipu_client.images.generations(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/api_resource/images.py", line 43, in generations
+    return self._post(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"contentFilter":[{"level":2,"role":"user"}],"error":{"code":"1301","message":"系统检测到输入或生成内容可能包含不安全或敏感内容，请您避免输入易产生敏感内容的提示语，感谢您的配合。"}}
+[2024-08-28 10:48:09,763] ERROR in app: Exception on /generate_image [POST]
+Traceback (most recent call last):
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/flasgger/utils.py", line 305, in wrapper
+    return function(*args, **kwargs)
+  File "/root/StoryPark/storyparkserver/app.py", line 547, in generate_image
+    response = story_state.zhipu_client.images.generations(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/api_resource/images.py", line 43, in generations
+    return self._post(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+  File "/root/StoryPark/storyparkserver/venv/lib/python3.10/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"contentFilter":[{"level":2,"role":"user"}],"error":{"code":"1301","message":"系统检测到输入或生成内容可能包含不安全或敏感内容，请您避免输入易产生敏感内容的提示语，感谢您的配合。"}}
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {旅途中，猴子发挥智慧，编织藤蔓成滑轮助小熊过河；小熊则以力推石，为猴子开路，双方友情加深。}
+res: 猴子，机智，编织藤蔓；小熊，力气大，推石头，河岸，绿色森林，夕阳余晖。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {到达山谷，见奥特曼与怪兽战斗，猴子智引怪兽，小熊助力推倒巨石，协力救出奥特曼，赢得赞赏。}
+res: 奥特曼，外星英雄，身着紧身战衣；怪兽，庞大身躯，鳞片覆盖；猴子，机智灵敏，毛发棕黄；小熊，力量惊人，憨态可掬。
+outline_prompt: You will receive a story. Use the provided 猴子,s to simplify the story into a new summary that focuses on these 猴子,s.
+Keywords: {猴子,}
+Story: {小熊遇到了奥特曼
+}
+Target: {情节构建}
+其中story是故事输入，情节构建是故事的教育目标，猴子,是故事中需要出现的角色元素
+你需要生成200字的故事大纲，也就是summary，每一段中只出现一个角色且描述它的行为。
 请用中文回答，直接返回生成内容，不要写任何多余的文字。
 split_prompt: You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
 For each part, describe the actions of the characters in the scene. 
-The story is: {在一个被白雪覆盖的冬日森林里，小鸟、猴子和雪人成为了不可思议的朋友。小鸟 chirp 着欢快的旋律，为寂静的雪景添上生机。猴子好奇地跳跃着，探索这银装素裹的世界，它发现了孤零零的雪人，便邀请小鸟一起来装饰雪人，给它戴上帽子和围巾，还用果实做眼睛，胡萝卜做鼻子。雪人仿佛活了过来，朋友们围绕它跳舞，分享着简单的快乐。
+The story is: {猴子在森林中嬉戏，无意间发现了一块神秘的石头。它好奇地触摸，突然间被耀眼的光芒包围，身形变得高大强壮，化身为猴王。
 
-然而，随着阳光渐渐温暖，雪人开始担忧自己会融化。小鸟和猴子感受到了雪人的悲伤，它们决定做些什么来安慰朋友。小鸟唱起了最动听的歌，猴子则找来大片树叶为雪人遮阳。它们通过行动表达了对雪人的关爱和支持，展现了友情的力量。
+猴王拥有了超凡的力量，决定用自己的能力保护森林。它首先修复了被破坏的树木，为小动物们重建家园，赢得了大家的尊敬和爱戴。
 
-这个故事以小鸟、猴子和雪人的友情为中心，传达了在面对失去与变化时，情感表达的重要性——无论是通过歌声还是实际行动，都是维系关系、传递爱与希望的桥梁。在冬日的寒冷中，它们用温暖的心点亮了彼此的世界。}
+另一边，小熊在探险时迷路了，焦急万分。猴王感应到小熊的困境，迅速穿越树林，安全地将小熊引导回了家。小熊对猴王感激不尽，二者成为了好朋友。
+
+然而，森林的和平并未持续太久，奥特曼的到来打破了宁静。他误以为猴王是破坏森林的怪物，二人展开了一场误会之斗。战斗中，猴王展现了智慧与力量的结合，最终解释清楚，与奥特曼握手言和。
+
+从此，猴王、小熊和奥特曼成为了守护森林的伙伴，共同抵御外来威胁，确保每一寸土地都充满和谐与生机。}
 使用中文进行回答，以json格式返回，四个parts分别用part1，part2，part3，part4作为key来标识。
-每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。每一个part里只能出现一位角色。
+每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。
 以下是一个完整的拆分过程
 输入故事内容大纲：
 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。
@@ -30,28 +127,23 @@ The story is: {在一个被白雪覆盖的冬日森林里，小鸟、猴子和�
 {
     "part1": "从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。",
     "part2": "不久后，小熊在河边玩耍时发现了这个龟壳。小熊思考这个龟壳的作用",
-    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。小鸟看到这个龟壳，思考它的作用",
+    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。",
     "part4": "小鸟把龟壳当作了一个天然的滑板，在树枝间滑行，引来其他小鸟羡慕的目光，大家都想试试这特别的滑板。小乌龟听说了自己的壳给朋友们带来了这么多快乐，心里感到非常温暖和自豪。"
 }
+注意：每一个part里只能出现一位角色并作出一些行为。不要在一个part中出现多个角色描写和互动。
 
-[2024-08-28 01:11:58 +0800] [192128] [INFO] Worker exiting (pid: 192128)
-[2024-08-28 01:11:58 +0800] [192125] [INFO] Handling signal: term
-outline_prompt: You will receive a story. Use the provided 小鸟,猴子,兔子,s to simplify the story into a new summary that focuses on these 小鸟,猴子,兔子,s.
-Keywords: {小鸟,猴子,兔子,}
-Story: {天天早点下班}
-Target: {情感表达}
-其中story是故事输入，情感表达是故事的教育目标，小鸟,猴子,兔子,是故事中需要出现的角色元素
-你需要生成200字的故事大纲，也就是summary
-请用中文回答，直接返回生成内容，不要写任何多余的文字。
-split_prompt: You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
+
+split_prompt: split_prompt: You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
 For each part, describe the actions of the characters in the scene. 
-The story is: {在一个充满欢声笑语的森林里，小鸟、猴子和兔子是无话不谈的好朋友。它们每天最大的乐趣就是早早地结束玩耍，相约在森林中央那棵古老的橡树下分享各自的小确幸。
+The story is: {猴子在森林中嬉戏，不慎迷失方向，偶遇小熊。猴子好奇询问小熊是否见过奥特曼，小熊茫然摇头。猴子决定带领小熊踏上寻找奥特曼的冒险之旅，途中它们互相帮助，克服重重困难。经过一系列挑战，它们了解到团结与勇气的重要性。
 
-小鸟会带来从高空中俯瞰世界的奇妙见闻，用清脆的歌声表达它对自由的热爱与对友情的珍惜。猴子则机灵活泼，常在林间跳跃，为伙伴们寻觅美味的果实，用行动展示它的关怀与忠诚。温柔的兔子，总在夕阳的余晖中编织着一个个温馨的故事，用它柔软的话语温暖着每个心灵。
+在旅途中，猴子展现智慧，用藤蔓编织成滑轮，帮助小熊跨越宽阔河流。小熊则以力量辅助，推开巨石为猴子开辟道路。它们的友谊在共同经历中愈发坚固。
 
-这样的日子，让森林里的友谊愈发深厚，也教会了小鸟、猴子和兔子一个宝贵的道理：早点下班不只是为了休息，更是为了有更多时间与爱的人共度，用情感的交流丰富彼此的心灵家园。在这个简单却温馨的日常中，它们学会了如何用最真挚的情感表达对生活的热爱与对朋友的感激。}
+终于，它们到达一处山谷，传说中的奥特曼正与怪兽激战。猴子灵机一动，用丛林中的果实吸引怪兽注意，小熊趁机推落巨石，协助奥特曼击败怪兽。奥特曼赞赏它们的勇敢与智慧，答应带它们遨游天空作为奖励。
+
+这次经历不仅让猴子与小熊找到了奥特曼，更学会了友情、智慧与勇气的真正意义，它们的冒险故事在森林中传为佳话。}
 使用中文进行回答，以json格式返回，四个parts分别用part1，part2，part3，part4作为key来标识。
-每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。每一个part里只能出现一位角色。
+每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。
 以下是一个完整的拆分过程
 输入故事内容大纲：
 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。
@@ -60,35 +152,328 @@ The story is: {在一个充满欢声笑语的森林里，小鸟、猴子和兔�
 {
     "part1": "从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。",
     "part2": "不久后，小熊在河边玩耍时发现了这个龟壳。小熊思考这个龟壳的作用",
-    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。小鸟看到这个龟壳，思考它的作用",
+    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。",
     "part4": "小鸟把龟壳当作了一个天然的滑板，在树枝间滑行，引来其他小鸟羡慕的目光，大家都想试试这特别的滑板。小乌龟听说了自己的壳给朋友们带来了这么多快乐，心里感到非常温暖和自豪。"
 }
+注意：每一个part里只能出现一位角色并作出一些行为。不要在一个part中出现多个角色描写和互动。
 
-extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
 Assign each character characteristics that describe what they look like, considering the story’s context. 
 For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
-[subject] [doing action], [adjective] [background subject], [scenery]
-Example output: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
-The story is: {猴子邀请小鸟装饰雪人，它们为雪人戴上帽子、围巾，用果实和胡萝卜赋予其面孔，雪人仿佛被赋予了生命，三个朋友围绕它欢舞。}
-extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {猴子在森林中嬉戏，不慎迷失方向，偶遇小熊，好奇询问小熊关于奥特曼的信息，小熊表示不知，猴子提议一起寻找奥特曼。}
+res: 猴子，棕色毛发，活泼好动，在茂密的森林中，迷雾缭绕；小熊，圆滚滚身躯，憨态可掬，身处树林深处，身旁是郁郁葱葱的树木，对猴子的好奇眼神回报以茫然。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
 Assign each character characteristics that describe what they look like, considering the story’s context. 
 For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
-[subject] [doing action], [adjective] [background subject], [scenery]
-Example output: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
-The story is: {随着阳光温暖，雪人害怕融化，显得忧心忡忡；小鸟唱起悦耳歌曲安慰它，猴子找来树叶为雪人遮挡阳光，体现了深切的关怀。}
-[2024-08-28 01:11:58 +0800] [192133] [INFO] Worker exiting (pid: 192133)
-[2024-08-28 01:11:58 +0800] [192129] [INFO] Worker exiting (pid: 192129)
-split_prompt: You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {奥特曼奖励它们遨游天空，经历使它们懂得了友情、智慧和勇气的真谛，它们的故事成为森林佳话。}
+res: 奥特曼，正义的巨人，授予能力；一群动物，包括但不限于小鸟、小兔等，学会飞行，表情喜悦，穿梭于云朵间，蓝天为背景，展现了友谊、智慧与勇气的空中冒险，森林下方郁郁葱葱，见证着这段佳话。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {奥特曼奖励它们遨游天空，经历使它们懂得了友情、智慧和勇气的真谛，它们的故事成为森林佳话。}
+res: 奥特曼，正义的巨人，授予能力；动物朋友们，包括好奇小鸟、聪明兔子、勇敢小鹿，特征各异，身着自然之衣，在蔚蓝天空中自由飞翔，笑容满面，穿梭于白云之间，森林茂密，绿叶盎然，见证着友情、智慧与勇气的美好传奇。
+outline_prompt: You will receive a story. Use the provided 猴子,小鸟,s to simplify the story into a new summary that focuses on these 猴子,小鸟,s.
+Keywords: {猴子,小鸟,}
+Story: {小熊遇到了小鸟。小鸟和小猴子结婚了。小熊爱慕者小鸟，但是只能眼睁睁的看着，并祝福他们。}
+Target: {情节构建}
+其中story是故事输入，情节构建是故事的教育目标，猴子,小鸟,是故事中需要出现的角色元素
+你需要生成200字的故事大纲，也就是summary，每一段中只出现一个角色且描述它的行为。
+请用中文回答，直接返回生成内容，不要写任何多余的文字。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {猴子与小鸟婚后生活美满，共同筑巢，分享日常。小熊在一旁默默守护，学会放手，并以实际行动帮助它们，传递了友情与大爱的信息。}
+res: outline_prompt: You will receive a story. Use the provided 猴子,s to simplify the story into a new summary that focuses on these 猴子,s.
+Keywords: {猴子,}
+Story: {小熊遇到了奥特曼
+}
+Target: {情节构建}
+其中story是故事输入，情节构建是故事的教育目标，猴子,是故事中需要出现的角色元素
+你需要生成200字的故事大纲，也就是summary，每一段中只出现一个角色且描述它的行为。
+请用中文回答，直接返回生成内容，不要写任何多余的文字。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {旅途中，猴子发挥智慧，编织藤蔓成滑轮助小熊过河；小熊则以力推石，为猴子开路，双方友情加深。}
+res: 猴子，机智，编织藤蔓；小熊，力气大，推石头，河岸，绿色森林，夕阳余晖。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {猴子在森林中嬉戏，不慎迷失方向，偶遇小熊，好奇询问小熊关于奥特曼的信息，小熊表示不知，猴子提议一起寻找奥特曼。}
+res: 猴子，棕色毛发，活泼好动，在茂密的森林中，迷路状态；小熊，圆胖身材，好奇眼神，于树林间偶遇猴子。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。}
+res: 猴子，毛茸茸的身体，欢快地跳跃，树林间，葱郁的绿叶，阳光斑驳。  
+小鸟，羽毛鲜艳，歌声悦耳动听，枝头轻盈站立，树木环绕，自然和谐。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。}
+res: 猴子，棕色毛发，活泼的眼神， 小鸟，羽毛鲜艳，歌声悠扬，在树梢上，绿叶茂密，阳光斑驳，简单装饰的婚礼现场，温馨氛围。
+clean history cache
+user_prompt: 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。","part2":"随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。","part3":"小熊，一直默默喜欢着小鸟，意外见证了两者的婚礼，内心虽有失落，但仍衷心祝福它们，决定埋藏自己的情感，展现大爱无私的一面。","part4":"猴子与小鸟婚后生活美满，共同筑巢，分享日常。小熊在一旁默默守护，学会放手，并以实际行动帮助它们，传递了友情与大爱的信息。"}}
+在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+story index: 1 chapter index: 1
+before context:[]
+ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
+  configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x562cea3596c0] Estimating duration from bitrate, this may be inaccurate
+Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
+  Duration: 00:00:03.58, start: 0.000000, bitrate: 128 kb/s
+  Stream #0:0: Audio: mp3, 44100 Hz, mono, fltp, 128 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
+  Metadata:
+    TSSE            : Lavf58.76.100
+  Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc58.134.100 libmp3lame
+size=       1kB time=00:00:00.00 bitrate=N/A speed=   0x    size=      58kB time=00:00:03.56 bitrate= 133.2kbits/s speed= 171x    
+video:0kB audio:57kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 1.056985%
+ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
+  configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x562d1f95c6c0] Estimating duration from bitrate, this may be inaccurate
+Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
+  Duration: 00:00:04.34, start: 0.000000, bitrate: 127 kb/s
+  Stream #0:0: Audio: mp3, 44100 Hz, mono, fltp, 128 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
+  Metadata:
+    TSSE            : Lavf58.76.100
+  Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc58.134.100 libmp3lame
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    size=      70kB time=00:00:04.32 bitrate= 132.3kbits/s speed= 172x    
+video:0kB audio:69kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.876524%
+after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。","part2":"随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。","part3":"小熊，一直默默喜欢着小鸟，意外见证了两者的婚礼，内心虽有失落，但仍衷心祝福它们，决定埋藏自己的情感，展现大爱无私的一面。","part4":"猴子与小鸟婚后生活美满，共同筑巢，分享日常。小熊在一旁默默守护，学会放手，并以实际行动帮助它们，传递了友情与大爱的信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。在阳光的照耀下，树梢上的花朵仿佛也为了它们的爱情而更加鲜艳。",\n  "interact": "小朋友，你觉得猴子和小鸟的婚礼上，还会有什么特别的事情发生呢？"\n}\n```'}]
+trans text: 猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。在阳光的照耀下，树梢上的花朵仿佛也为了它们的爱情而更加鲜艳。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 对于互动点2的回答为 {小熊会衷心的祝福小鸟和猴子。} ，请生成反馈，生成反馈时需要注意以下几点：
+1、及时给孩子肯定和赞美
+2、帮助孩子补充此回答的细节
+生成反馈后，直接讲述到part4结局
+在结局后，请根据故事的素材和传达的道理生成3个问题，每个问题提问之后，你需要停下，等待我的反馈，并根据回答内容反馈，反馈内容控制在200词以内。
+后续孩子反馈的第一个问题将是问题1也就是Q1，然后依次是问题2也就是Q2，问题3也就是Q3，在Q3回答完毕后，guidance中描述所有环节的总结和反馈。
+假如孩子的回答没有正确理解故事传达的道理，你需要耐心的引导孩子理解道理后再问一次。确认孩子理解后，再提下一个问题。你的回复应当以json格式返回，并且格式如下：
+你的回复应当以json格式返回，并且格式如下：
+1.故事续写的剧情文本以及反馈对应标签名称为story 
+2.首先生成问题1，生成的问题的json标签为interact
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+你返回的json内容应当只包含story和interact标签，interact标签里只有问题1的内容
+story index: 1 chapter index: 3
+before context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。","part2":"随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。","part3":"小熊，一直默默喜欢着小鸟，意外见证了两者的婚礼，内心虽有失落，但仍衷心祝福它们，决定埋藏自己的情感，展现大爱无私的一面。","part4":"猴子与小鸟婚后生活美满，共同筑巢，分享日常。小熊在一旁默默守护，学会放手，并以实际行动帮助它们，传递了友情与大爱的信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。在阳光的照耀下，树梢上的花朵仿佛也为了它们的爱情而更加鲜艳。",\n  "interact": "小朋友，你觉得猴子和小鸟的婚礼上，还会有什么特别的事情发生呢？"\n}\n```'}, {'role': 'user', 'content': '对于互动点1的回答为 {小熊喜欢上了小鸟。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "真是个有趣的想法！小熊因为经常看到猴子和小鸟快乐地玩耍，慢慢地心里也对小鸟产生了好感。它虽然没有说出来，但这份感情悄悄地在心底生根发芽。婚礼当天，小熊带着复杂的心情躲在一旁的灌木丛中，看着这对幸福的伴侣交换了誓言。",\n  "interact": "小熊看到猴子和小鸟这么幸福，它心里会怎么想呢？要是你遇到了这样的情况，会怎么做呢？”\n}\n```'}]
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {到达山谷，见奥特曼与怪兽战斗，猴子智引怪兽，小熊助力推倒巨石，协力救出奥特曼，赢得赞赏。}
+res: 奥特曼，外星英雄，身着紧身战衣；怪兽，庞大身躯，鳞片覆盖；猴子，机智灵敏，毛发棕黄；小熊，力量惊人，憨态可掬。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {猴子在森林中嬉戏，不慎迷失方向，偶遇小熊，好奇询问小熊关于奥特曼的信息，小熊表示不知，猴子提议一起寻找奥特曼。}
+res: 猴子，棕色毛发，活泼好动，在茂密的森林中，迷路状态；小熊，圆胖身材，好奇眼神，于树木丛生的环境中，与猴子相遇。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {旅途中，猴子发挥智慧，编织藤蔓成滑轮助小熊过河；小熊则以力推石，为猴子开路，双方友情加深。}
+res: 猴子，机智的眼神，灵活的手指，编藤蔓成滑轮；小熊，圆胖的身躯，有力的臂膀，推石头开路，河边景色，绿树茂密，河水潺潺。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {到达山谷，见奥特曼与怪兽战斗，猴子智引怪兽，小熊助力推倒巨石，协力救出奥特曼，赢得赞赏。}
+res: 奥特曼，外星英雄，身着紧身战衣；怪兽，庞大身躯，鳞片覆盖；猴子，机智灵敏，毛发棕黄；小熊，力量惊人，憨态可掬。
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {奥特曼奖励它们遨游天空，经历使它们懂得了友情、智慧和勇气的真谛，它们的故事成为森林佳话。}
+res: 奥特曼，正义的巨人，授予它们飞翔的权利；一群动物，包括好奇小鸟，聪明小兔，勇敢小鹿，身着自然之衣，在广袤森林中，于蓝天翱翔，他们的身影在绿叶间穿梭，笑容在阳光下闪耀，共同编织成森林里传颂的美好传说。
+extract_prompt: You will receive a story. Find all of the characters within this story. Don’t just say the name, include what they actually are, without including adjectives. If the character is wukong, who is a monkey, output it as wukong the monkey. 
+Output them in the following format: Character 1 | Character 2 | Character 3 | . 
+The story is : {猴子在林间跳跃，偶遇了欢快歌唱的小鸟。它们彼此吸引，迅速成为了朋友。随着时间的推移，猴子与小鸟之间萌生了更深的情感，最终决定共结连理，在枝头举办了一场简单而温馨的婚礼。
+
+小熊，一位长期暗恋小鸟的森林居民，无意间见证了这对幸福伴侣的结合。它的心中虽有失落，但更多的是对小鸟能找到幸福的欣慰。小熊决定将这份未说出口的爱意深埋心底，转而以最真挚的态度祝福猴子与小鸟的婚姻，希望它们能够携手共度每一个阳光明媚的日子。
+
+从此，猴子与小鸟在森林中形影不离，共同筑巢，分享生活的点点滴滴。而小熊，则在不远处默默关注，学会了放手与成全，偶尔还会为这对伴侣送去自己采集的果实，用行动诠释了友情与大爱的真谛。}
+res: 猴子 | 小鸟 | 小熊
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小熊展现了它成熟善良的一面，它意识到真正的友情是希望对方幸福，即使那份幸福不是自己给予的。因此，小熊鼓起勇气，从灌木丛中走出，带着最真挚的笑容，向猴子和小鸟送上了最深的祝福。看到这一幕，森林里的其他动物们也为之动容，纷纷赞扬小熊的大度。从此以后，猴子、小鸟与小熊成为了不可分割的好朋友，它们共同筑巢，分享日常，小熊在一旁默默守护，学会了放手，以实际行动诠释了友情与大爱的真谛。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+split_prompt: 猴子与小鸟，幸福生活，共筑爱巢，分享日常温馨；小熊，善良守望，学会放手，实际行动，传递友情与大爱。
+set story index:1,chapter index:1
+set story index:1,chapter index:2
+user_prompt: 对于互动点1的回答为 {小熊喜欢上了小鸟。} ，请生成反馈，生成反馈时需要注意以下几点：
+1、及时给孩子肯定和赞美
+2、帮助孩子补充此回答的细节
+生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。
+你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本以及反馈对应标签名称为story 
+2.互动点2提出的问题文本对应标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+story index: 1 chapter index: 2
+before context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。","part2":"随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。","part3":"小熊，一直默默喜欢着小鸟，意外见证了两者的婚礼，内心虽有失落，但仍衷心祝福它们，决定埋藏自己的情感，展现大爱无私的一面。","part4":"猴子与小鸟婚后生活美满，共同筑巢，分享日常。小熊在一旁默默守护，学会放手，并以实际行动帮助它们，传递了友情与大爱的信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。在阳光的照耀下，树梢上的花朵仿佛也为了它们的爱情而更加鲜艳。",\n  "interact": "小朋友，你觉得猴子和小鸟的婚礼上，还会有什么特别的事情发生呢？"\n}\n```'}]
+after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。","part2":"随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。","part3":"小熊，一直默默喜欢着小鸟，意外见证了两者的婚礼，内心虽有失落，但仍衷心祝福它们，决定埋藏自己的情感，展现大爱无私的一面。","part4":"猴子与小鸟婚后生活美满，共同筑巢，分享日常。小熊在一旁默默守护，学会放手，并以实际行动帮助它们，传递了友情与大爱的信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。在阳光的照耀下，树梢上的花朵仿佛也为了它们的爱情而更加鲜艳。",\n  "interact": "小朋友，你觉得猴子和小鸟的婚礼上，还会有什么特别的事情发生呢？"\n}\n```'}, {'role': 'user', 'content': '对于互动点1的回答为 {小熊喜欢上了小鸟。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "真是个有趣的想法！小熊因为经常看到猴子和小鸟快乐地玩耍，慢慢地心里也对小鸟产生了好感。它虽然没有说出来，但这份感情悄悄地在心底生根发芽。婚礼当天，小熊带着复杂的心情躲在一旁的灌木丛中，看着这对幸福的伴侣交换了誓言。",\n  "interact": "小熊看到猴子和小鸟这么幸福，它心里会怎么想呢？要是你遇到了这样的情况，会怎么做呢？”\n}\n```'}]
+set story index:1,chapter index:2
+trans text: q1：在这个故事里，你最喜欢哪个动物？为什么呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+Assign each character characteristics that describe what they look like, considering the story’s context. 
+For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。}
+res: 大黄蜂（汽车人，能够变形为跑车，正在播放音乐，营造欢乐气氛）
+extract_prompt: after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。","part2":"随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。","part3":"小熊，一直默默喜欢着小鸟，意外见证了两者的婚礼，内心虽有失落，但仍衷心祝福它们，决定埋藏自己的情感，展现大爱无私的一面。","part4":"猴子与小鸟婚后生活美满，共同筑巢，分享日常。小熊在一旁默默守护，学会放手，并以实际行动帮助它们，传递了友情与大爱的信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "猴子在林间愉快地跳跃，偶然听见了小鸟悦耳的歌声，被深深吸引，两者相遇并迅速建立了友谊。随着时间流逝，猴子与小鸟之间的情感日益深厚，最终决定结婚，它们在树梢上举行了一个简单而温馨的婚礼仪式。在阳光的照耀下，树梢上的花朵仿佛也为了它们的爱情而更加鲜艳。",\n  "interact": "小朋友，你觉得猴子和小鸟的婚礼上，还会有什么特别的事情发生呢？"\n}\n```'}, {'role': 'user', 'content': '对于互动点1的回答为 {小熊喜欢上了小鸟。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "真是个有趣的想法！小熊因为经常看到猴子和小鸟快乐地玩耍，慢慢地心里也对小鸟产生了好感。它虽然没有说出来，但这份感情悄悄地在心底生根发芽。婚礼当天，小熊带着复杂的心情躲在一旁的灌木丛中，看着这对幸福的伴侣交换了誓言。",\n  "interact": "小熊看到猴子和小鸟这么幸福，它心里会怎么想呢？要是你遇到了这样的情况，会怎么做呢？”\n}\n```'}, {'role': 'user', 'content': '对于互动点2的回答为 {小熊会衷心的祝福小鸟和猴子。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，直接讲述到part4结局\n在结局后，请根据故事的素材和传达的道理生成3个问题，每个问题提问之后，你需要停下，等待我的反馈，并根据回答内容反馈，反馈内容控制在200词以内。\n后续孩子反馈的第一个问题将是问题1也就是Q1，然后依次是问题2也就是Q2，问题3也就是Q3，在Q3回答完毕后，guidance中描述所有环节的总结和反馈。\n假如孩子的回答没有正确理解故事传达的道理，你需要耐心的引导孩子理解道理后再问一次。确认孩子理解后，再提下一个问题。你的回复应当以json格式返回，并且格式如下：\n你的回复应当以json格式返回，并且格式如下：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.首先生成问题1，生成的问题的json标签为interact\n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词\n你返回的json内容应当只包含story和interact标签，interact标签里只有问题1的内容'}, {'role': 'assistant', 'content': '```json\n{\n  "story": "小熊展现了它成熟善良的一面，它意识到真正的友情是希望对方幸福，即使那份幸福不是自己给予的。因此，小熊鼓起勇气，从灌木丛中走出，带着最真挚的笑容，向猴子和小鸟送上了最深的祝福。看到这一幕，森林里的其他动物们也为之动容，纷纷赞扬小熊的大度。从此以后，猴子、小鸟与小熊成为了不可分割的好朋友，它们共同筑巢，分享日常，小熊在一旁默默守护，学会了放手，以实际行动诠释了友情与大爱的真谛。",\n  "interact": "Q1：在这个故事里，你最喜欢哪个动物？为什么呢？"\n}\n```'}]
+set story index:1,chapter index:3
+extract_prompt: You will receive a story. Find all of the characters within this story. Don’t just say the name, include what they actually are, without including adjectives. If the character is wukong, who is a monkey, output it as wukong the monkey. 
+Output them in the following format: Character 1 | Character 2 | Character 3 | . 
+The story is : {变形金刚擎天柱巡逻时，偶遇小镇上的冰淇淋摊。他变身成卡车，缓缓靠近，好奇地观察着快乐的人群。
+
+大黄蜂，作为擎天柱的忠诚伙伴，感应到领袖的停留，迅速飞至现场，变形为一辆炫酷跑车，停在冰淇淋摊旁。他通过车载广播播放起轻快音乐，为现场增添欢乐气氛。
+
+擎天柱被这温馨场景感染，决定参与其中。他变回机器人形态，用巨大的手掌轻轻拿起一个冰淇淋，小心翼翼地品尝，表情透露出孩子般的惊喜。
+
+这时，冰淇淋摊主的小儿子注意到这两个巨大的机器人，眼中满是崇拜。大黄蜂注意到孩子的反应，变形为机器人形态，蹲下身与孩子亲切交谈，询问他想不想和变形金刚一起吃冰淇淋。
+
+在大黄蜂的鼓励下，小男孩鼓起勇气，递给擎天柱一个冰淇淋，两人共享了这份简单的快乐。这一幕，不仅让周围的人们感到温馨，也让变形金刚们体会到了与人类之间的深厚友谊。
+
+故事以变形金刚通过一次偶然的冰淇淋邂逅，展现了他们温柔、友好的一面，以及与人类世界温馨互动的可能性，启发孩子们勇敢表达善意，跨越种族界限建立纯真友谊。}
+res: 变形金刚擎天柱 the transformer | 大黄蜂 the transformer | 冰淇淋摊主 the ice cream vendor | 小儿子 the son | 人们 the people
+user_prompt: ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
+  configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x55f67d1106c0] Estimating duration from bitrate, this may be inaccurate
+Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
+  Duration: 00:00:04.21, start: 0.000000, bitrate: 127 kb/s
+  Stream #0:0: Audio: mp3, 44100 Hz, mono, fltp, 128 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
+  Metadata:
+    TSSE            : Lavf58.76.100
+  Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc58.134.100 libmp3lame
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    size=      68kB time=00:00:04.17 bitrate= 132.4kbits/s speed= 164x    
+video:0kB audio:67kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.905987%
+You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
 For each part, describe the actions of the characters in the scene. 
-The story is: {在一个被白雪覆盖的森林里，小鸟、猴子和雪人成为了不期而遇的朋友。清晨，当第一缕阳光穿透树梢，小鸟拍打着翅膀，在枝头欢快地唱着歌，它的歌声引来了一旁嬉戏的猴子。猴子好奇地跳跃着接近小鸟，两者之间的欢乐气氛引出了藏在林间的一个雪人。
+The story is: {变形金刚擎天柱巡逻时，偶遇小镇上的冰淇淋摊。他变身成卡车，缓缓靠近，好奇地观察着快乐的人群。
 
-雪人眨着由煤块制成的眼睛，对这两位新朋友报以友好的微笑。它提议大家一起探索这个冬季仙境。于是，小鸟引领着方向，猴子穿梭于树木之间，雪人则缓缓跟随，享受着难得的冬日温暖。它们经过的地方，雪花似乎都舞动得更加轻盈。
+大黄蜂，作为擎天柱的忠诚伙伴，感应到领袖的停留，迅速飞至现场，变形为一辆炫酷跑车，停在冰淇淋摊旁。他通过车载广播播放起轻快音乐，为现场增添欢乐气氛。
 
-途中，小鸟发现了冻僵的小虫，它赶紧告知猴子与雪人。猴子迅速找来干草和叶子，雪人则贡献出自己的帽子作为小窝，它们齐心协力救助了小生命。这次经历让这三个性格迥异的小伙伴深刻体会到了团结与互助的力量。
+擎天柱被这温馨场景感染，决定参与其中。他变回机器人形态，用巨大的手掌轻轻拿起一个冰淇淋，小心翼翼地品尝，表情透露出孩子般的惊喜。
 
-随着太阳西下，它们围坐在雪地里，分享着一天中的趣事。小鸟唱起了感谢的曲调，猴子模仿着各种动物的动作逗乐大家，雪人则静静地听着，心中充满了温暖和幸福。这一天，不仅是一场关于友情和探险的旅程，更是小鸟、猴子和雪人之间美好情谊的见证。}
+这时，冰淇淋摊主的小儿子注意到这两个巨大的机器人，眼中满是崇拜。大黄蜂注意到孩子的反应，变形为机器人形态，蹲下身与孩子亲切交谈，询问他想不想和变形金刚一起吃冰淇淋。
+
+在大黄蜂的鼓励下，小男孩鼓起勇气，递给擎天柱一个冰淇淋，两人共享了这份简单的快乐。这一幕，不仅让周围的人们感到温馨，也让变形金刚们体会到了与人类之间的深厚友谊。
+
+故事以变形金刚通过一次偶然的冰淇淋邂逅，展现了他们温柔、友好的一面，以及与人类世界温馨互动的可能性，启发孩子们勇敢表达善意，跨越种族界限建立纯真友谊。}
 使用中文进行回答，以json格式返回，四个parts分别用part1，part2，part3，part4作为key来标识。
-每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。每一个part里只能出现一位角色。
+每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。
 以下是一个完整的拆分过程
 输入故事内容大纲：
 我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。
@@ -97,31 +482,236 @@ The story is: {在一个被白雪覆盖的森林里，小鸟、猴子和雪人�
 {
     "part1": "从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。",
     "part2": "不久后，小熊在河边玩耍时发现了这个龟壳。小熊思考这个龟壳的作用",
-    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。小鸟看到这个龟壳，思考它的作用",
+    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。",
     "part4": "小鸟把龟壳当作了一个天然的滑板，在树枝间滑行，引来其他小鸟羡慕的目光，大家都想试试这特别的滑板。小乌龟听说了自己的壳给朋友们带来了这么多快乐，心里感到非常温暖和自豪。"
 }
+注意：每一个part里只能出现一位角色并作出一些行为。不要在一个part中出现多个角色描写和互动。
 
-extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+
+set story index:1,chapter index:1
+user_prompt: 对于互动点1的回答为 {嗯，我会想去看一下是怎么回事的。} ，请生成反馈，生成反馈时需要注意以下几点：
+1、及时给孩子肯定和赞美
+2、帮助孩子补充此回答的细节
+生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。
+你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本以及反馈对应标签名称为story 
+2.互动点2提出的问题文本对应标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+story index: 1 chapter index: 2
+before context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。","part2":"大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。","part3":"擎天柱受到感染，变回机器人形态，尝试拿起冰淇淋品尝，流露出孩子般的惊喜；大黄蜂注意到崇拜他们的摊主小儿子，与其亲切交流。","part4":"小男孩在大黄蜂的鼓励下与擎天柱共享冰淇淋，场景温馨，促进了变形金刚与人类的友谊，传递跨越种族的纯真友情信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"变形金刚首领在执行巡逻任务时，偶然发现了一个弥漫着欢声笑语的小镇角落，那里有一个色彩斑斓的冰淇淋摊位吸引了他的注意。他心中涌起一股好奇，于是悄悄地将自己的庞大身躯变换为一辆不起眼的卡车，缓缓靠近，用那双机械眼细细观察着周围洋溢着幸福的人们。就在这时，一位身形灵活的好友感知到了首领的停留，嗖地一声飞驰而至，瞬间变形成一辆炫酷的跑车，从车里流淌出欢快的旋律，让现场的气氛更加热烈起来。","interact":"小朋友，如果你是那个小镇上的孩子，看到这么大一个卡车突然停在冰淇淋摊旁，还有一位朋友放起了音乐，你会怎么做呢？会不会感到好奇，想去看看是怎么回事？"}'}]
+ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
+  configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x5619292816c0] Estimating duration from bitrate, this may be inaccurate
+Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
+  Duration: 00:00:01.49, start: 0.000000, bitrate: 127 kb/s
+  Stream #0:0: Audio: mp3, 44100 Hz, mono, fltp, 128 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
+  Metadata:
+    TSSE            : Lavf58.76.100
+  Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc58.134.100 libmp3lame
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    size=      25kB time=00:00:01.47 bitrate= 140.5kbits/s speed= 130x    
+video:0kB audio:25kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 2.450284%
+after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。","part2":"大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。","part3":"擎天柱受到感染，变回机器人形态，尝试拿起冰淇淋品尝，流露出孩子般的惊喜；大黄蜂注意到崇拜他们的摊主小儿子，与其亲切交流。","part4":"小男孩在大黄蜂的鼓励下与擎天柱共享冰淇淋，场景温馨，促进了变形金刚与人类的友谊，传递跨越种族的纯真友情信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"变形金刚首领在执行巡逻任务时，偶然发现了一个弥漫着欢声笑语的小镇角落，那里有一个色彩斑斓的冰淇淋摊位吸引了他的注意。他心中涌起一股好奇，于是悄悄地将自己的庞大身躯变换为一辆不起眼的卡车，缓缓靠近，用那双机械眼细细观察着周围洋溢着幸福的人们。就在这时，一位身形灵活的好友感知到了首领的停留，嗖地一声飞驰而至，瞬间变形成一辆炫酷的跑车，从车里流淌出欢快的旋律，让现场的气氛更加热烈起来。","interact":"小朋友，如果你是那个小镇上的孩子，看到这么大一个卡车突然停在冰淇淋摊旁，还有一位朋友放起了音乐，你会怎么做呢？会不会感到好奇，想去看看是怎么回事？"}'}, {'role': 'user', 'content': '对于互动点1的回答为 {嗯，我会想去看一下是怎么回事的。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"太好了！你的好奇心就像探险家一样闪闪发光呢！你走近后，可能会看到那位变成卡车的大家伙正小心翼翼地伸出巨大的金属手指，轻轻触摸那份五彩斑斓的冰淇淋，眼神里满是对这个世界简单快乐的好奇。而那位播放音乐的朋友则在一旁，用他那能变化万千的眼睛温柔地观察着周围的孩子，似乎在寻找某个特别的身影。","interact":"你觉得那位变成跑车的朋友找到了谁？是不是有个小朋友也特别喜欢他们，但又有点害羞不敢靠近呢？如果你在那里，敢不敢走上前去跟他们打个招呼？"}'}]
+set story index:1,chapter index:2
+user_prompt: 对于互动点2的回答为 {感恩。} ，请生成反馈，生成反馈时需要注意以下几点：
+1、及时给孩子肯定和赞美
+2、帮助孩子补充此回答的细节
+生成反馈后，直接讲述到part4结局
+在结局后，请根据故事的素材和传达的道理生成3个问题，每个问题提问之后，你需要停下，等待我的反馈，并根据回答内容反馈，反馈内容控制在200词以内。
+后续孩子反馈的第一个问题将是问题1也就是Q1，然后依次是问题2也就是Q2，问题3也就是Q3，在Q3回答完毕后，guidance中描述所有环节的总结和反馈。
+假如孩子的回答没有正确理解故事传达的道理，你需要耐心的引导孩子理解道理后再问一次。确认孩子理解后，再提下一个问题。你的回复应当以json格式返回，并且格式如下：
+你的回复应当以json格式返回，并且格式如下：
+1.故事续写的剧情文本以及反馈对应标签名称为story 
+2.首先生成问题1，生成的问题的json标签为interact
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+你返回的json内容应当只包含story和interact标签，interact标签里只有问题1的内容
+story index: 1 chapter index: 3
+ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
+  configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x56447ca1c6c0] Estimating duration from bitrate, this may be inaccurate
+Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
+  Duration: 00:00:04.39, start: 0.000000, bitrate: 127 kb/s
+  Stream #0:0: Audio: mp3, 44100 Hz, mono, fltp, 128 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
+  Metadata:
+    TSSE            : Lavf58.76.100
+  Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc58.134.100 libmp3lame
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    size=      70kB time=00:00:04.35 bitrate= 132.2kbits/s speed= 139x    
+video:0kB audio:70kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.869456%
+You will receive a story. Please divide the story into four parts: the beginning, key plot point 1, key plot point 2, and the ending. 
+For each part, describe the actions of the characters in the scene. 
+The story is: {猴子在林间跳跃，偶遇了欢快歌唱的小鸟。它们彼此吸引，迅速成为了朋友。随着时间的推移，猴子与小鸟之间萌生了更深的情感，最终决定共结连理，在枝头举办了一场简单而温馨的婚礼。
+
+小熊，一位长期暗恋小鸟的森林居民，无意间见证了这对幸福伴侣的结合。它的心中虽有失落，但更多的是对小鸟能找到幸福的欣慰。小熊决定将这份未说出口的爱意深埋心底，转而以最真挚的态度祝福猴子与小鸟的婚姻，希望它们能够携手共度每一个阳光明媚的日子。
+
+从此，猴子与小鸟在森林中形影不离，共同筑巢，分享生活的点点滴滴。而小熊，则在不远处默默关注，学会了放手与成全，偶尔还会为这对伴侣送去自己采集的果实，用行动诠释了友情与大爱的真谛。}
+使用中文进行回答，以json格式返回，四个parts分别用part1，part2，part3，part4作为key来标识。
+每一个part只需要1-2句话即可，每一个part只需要描述情节，不要添加额外描述。
+以下是一个完整的拆分过程
+输入故事内容大纲：
+我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事<小乌龟觉得自己的壳很麻烦，所以把壳丢进了河里，小熊发现龟壳可以吹笛，小鸟发现龟壳可以作为自己的巢。
+他们都感谢小乌龟，小乌龟觉得很开心”，我希望通过这个故事，教育孩子“不要歧视别人”、“珍惜自己的特点”>
+返回的json格式，返回标准json格式，每条目之间不要包含额外符号，只有逗号
+{
+    "part1": "从前，有一只小乌龟，它总是觉得自己的壳又重又硬，非常麻烦。有一天，它决定把壳脱下来，丢进了附近的小河里。",
+    "part2": "不久后，小熊在河边玩耍时发现了这个龟壳。小熊思考这个龟壳的作用",
+    "part3": "小熊捡起龟壳，发现它圆圆的，有许多洞，突然有了个好主意。它把龟壳当成了一件特别的乐器，吹出了悠扬的声音，就像在吹笛子一样动听。森林里的朋友们都被这美妙的音乐吸引了过来。",
+    "part4": "小鸟把龟壳当作了一个天然的滑板，在树枝间滑行，引来其他小鸟羡慕的目光，大家都想试试这特别的滑板。小乌龟听说了自己的壳给朋友们带来了这么多快乐，心里感到非常温暖和自豪。"
+}
+注意：每一个part里只能出现一位角色并作出一些行为。不要在一个part中出现多个角色描写和互动。
+
+
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
 Assign each character characteristics that describe what they look like, considering the story’s context. 
 For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
-[subject] [doing action], [adjective] [background subject], [scenery]
-Example output: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
-The story is: {小鸟、猴子与雪人的友情在这个冬日里绽放，它们通过歌声和行动证明了爱与支持的力量，共同抵御了寒冷，照亮了彼此的世界。}
-outline_prompt: You will receive a story. Use the provided 小鸟,猴子,雪人,s to simplify the story into a new summary that focuses on these 小鸟,猴子,雪人,s.
-Keywords: {小鸟,猴子,雪人,}
-Story: {白天下雪}
-Target: {情感表达}
-其中story是故事输入，情感表达是故事的教育目标，小鸟,猴子,雪人,是故事中需要出现的角色元素
-你需要生成200字的故事大纲，也就是summary
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {小熊，一直默默喜欢着小鸟，意外见证了两者的婚礼，内心虽有失落，但仍衷心祝福它们，决定埋藏自己的情感，展现大爱无私的一面。}
+res: 小熊，穿着质朴的棕色外衣，眼神温柔，站在绿意盎然的森林中，身旁是装饰着花朵的婚礼现场，小鸟身披彩羽婚纱，依偎在新郎身边，场景中洋溢着幸福与爱的气息。
+trans text: 小朋友，你觉得猴子和小鸟的婚礼上，还会有什么特别的事情发生呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 真是个有趣的想法！小熊因为经常看到猴子和小鸟快乐地玩耍，慢慢地心里也对小鸟产生了好感。它虽然没有说出来，但这份感情悄悄地在心底生根发芽。婚礼当天，小熊带着复杂的心情躲在一旁的灌木丛中，看着这对幸福的伴侣交换了誓言。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小熊看到猴子和小鸟这么幸福，它心里会怎么想呢？要是你遇到了这样的情况，会怎么做呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+set story index:1,chapter index:3
+outline_prompt: You will receive a story. Use the provided 变形金刚,s to simplify the story into a new summary that focuses on these 变形金刚,s.
+Keywords: {变形金刚,}
+Story: {小熊遇到了冰淇淋}
+Target: {对话创作}
+其中story是故事输入，对话创作是故事的教育目标，变形金刚,是故事中需要出现的角色元素
+你需要生成200字的故事大纲，也就是summary，每一段中只出现一个角色且描述它的行为。
 请用中文回答，直接返回生成内容，不要写任何多余的文字。
-extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
+extract_prompt: You will receive a story‘s part. Identify all characters and specify what they are. 
+For example, If a character is Wukong, who is a monkey, refer to him as Wukong the monkey. 
 Assign each character characteristics that describe what they look like, considering the story’s context. 
 For humans, include descriptions of their clothing. Write a single sentence that depicts an image for this page in the following format:
-[subject] [doing action], [adjective] [background subject], [scenery]
-Example output: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
-The story is: {在白雪皑皑的森林中，小鸟 chirp 地唱着歌，为冬日增添欢乐；猴子活泼地跳跃探索，发现了孤独的雪人。}
-[2024-08-28 01:11:58 +0800] [192125] [ERROR] Worker (pid:192127) was sent SIGTERM!
-[2024-08-28 01:11:58 +0800] [192125] [ERROR] Worker (pid:192128) was sent SIGTERM!
-[2024-08-28 01:11:58 +0800] [192125] [ERROR] Worker (pid:192133) was sent SIGTERM!
-[2024-08-28 01:11:58 +0800] [192125] [ERROR] Worker (pid:192129) was sent SIGTERM!
-[2024-08-28 01:11:58 +0800] [192125] [INFO] Shutting down: Master
+[subject], [doing action], [adjective], [background subject], [scenery]
+举例来说: Little monkey with brown fur, curious eyes, entering the cornfield, tall corn stalks, golden field, looking at the big corn, plentiful corn stalks, sunlit field.  
+只用中文返回且只需要提取下面story中的角色描述
+The story is: {变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。}
+res: 擎天柱，蓝色机体的变形金刚，威严高大，巡逻中变身卡车，靠近充满欢乐气氛的小镇冰淇淋摊，好奇地观察着快乐的人群，阳光照耀下的彩色摊位旁，孩子们欢笑。
+clean history cache
+trans text: 变形金刚首领在执行巡逻任务时，偶然发现了一个弥漫着欢声笑语的小镇角落，那里有一个色彩斑斓的冰淇淋摊位吸引了他的注意。他心中涌起一股好奇，于是悄悄地将自己的庞大身躯变换为一辆不起眼的卡车，缓缓靠近，用那双机械眼细细观察着周围洋溢着幸福的人们。就在这时，一位身形灵活的好友感知到了首领的停留，嗖地一声飞驰而至，瞬间变形成一辆炫酷的跑车，从车里流淌出欢快的旋律，让现场的气氛更加热烈起来。
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+trans text: 小朋友，如果你是那个小镇上的孩子，看到这么大一个卡车突然停在冰淇淋摊旁，还有一位朋友放起了音乐，你会怎么做呢？会不会感到好奇，想去看看是怎么回事？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+### error: on_close() takes 1 positional argument but 3 were given
+set story index:1,chapter index:2
+set story index:1,chapter index:3
+trans text: q1：在这个故事里，你觉得是什么让小男孩最终敢于接近巨大的机器人朋友呢？是不是因为他内心有某种特别的感觉？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。","part2":"大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。","part3":"擎天柱受到感染，变回机器人形态，尝试拿起冰淇淋品尝，流露出孩子般的惊喜；大黄蜂注意到崇拜他们的摊主小儿子，与其亲切交流。","part4":"小男孩在大黄蜂的鼓励下与擎天柱共享冰淇淋，场景温馨，促进了变形金刚与人类的友谊，传递跨越种族的纯真友情信息。"}}
+在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。
+每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。
+在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。
+假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。
+现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：
+1.故事续写的剧情文本对应的json标签名称为story 
+2.互动点1提出的问题文本对应json标签为interact 
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+story index: 1 chapter index: 1
+before context:[]
+after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。","part2":"大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。","part3":"擎天柱受到感染，变回机器人形态，尝试拿起冰淇淋品尝，流露出孩子般的惊喜；大黄蜂注意到崇拜他们的摊主小儿子，与其亲切交流。","part4":"小男孩在大黄蜂的鼓励下与擎天柱共享冰淇淋，场景温馨，促进了变形金刚与人类的友谊，传递跨越种族的纯真友情信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"变形金刚首领在执行巡逻任务时，偶然发现了一个弥漫着欢声笑语的小镇角落，那里有一个色彩斑斓的冰淇淋摊位吸引了他的注意。他心中涌起一股好奇，于是悄悄地将自己的庞大身躯变换为一辆不起眼的卡车，缓缓靠近，用那双机械眼细细观察着周围洋溢着幸福的人们。就在这时，一位身形灵活的好友感知到了首领的停留，嗖地一声飞驰而至，瞬间变形成一辆炫酷的跑车，从车里流淌出欢快的旋律，让现场的气氛更加热烈起来。","interact":"小朋友，如果你是那个小镇上的孩子，看到这么大一个卡车突然停在冰淇淋摊旁，还有一位朋友放起了音乐，你会怎么做呢？会不会感到好奇，想去看看是怎么回事？"}'}]
+trans text: 你觉得那位变成跑车的朋友找到了谁？是不是有个小朋友也特别喜欢他们，但又有点害羞不敢靠近呢？如果你在那里，敢不敢走上前去跟他们打个招呼？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+set story index:1,chapter index:4
+user_prompt: 针对当前问题，孩子反馈为 {对，她应该很喜欢看变形金刚。}，生成反馈后等待下一个问题（即之前提出的Q1，Q2，Q3）的孩子的响应，返回应当以json格式返回
+格式为 {"key":value,...,"key":value}
+1.回答问题后生成的反馈标签为guidance
+2.向下一个问题的引导性文字标签为interact
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+你的返回只有json格式串，不要包含其他内容
+story index: 1 chapter index: 4
+before context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。","part2":"大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。","part3":"擎天柱受到感染，变回机器人形态，尝试拿起冰淇淋品尝，流露出孩子般的惊喜；大黄蜂注意到崇拜他们的摊主小儿子，与其亲切交流。","part4":"小男孩在大黄蜂的鼓励下与擎天柱共享冰淇淋，场景温馨，促进了变形金刚与人类的友谊，传递跨越种族的纯真友情信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"变形金刚首领在执行巡逻任务时，偶然发现了一个弥漫着欢声笑语的小镇角落，那里有一个色彩斑斓的冰淇淋摊位吸引了他的注意。他心中涌起一股好奇，于是悄悄地将自己的庞大身躯变换为一辆不起眼的卡车，缓缓靠近，用那双机械眼细细观察着周围洋溢着幸福的人们。就在这时，一位身形灵活的好友感知到了首领的停留，嗖地一声飞驰而至，瞬间变形成一辆炫酷的跑车，从车里流淌出欢快的旋律，让现场的气氛更加热烈起来。","interact":"小朋友，如果你是那个小镇上的孩子，看到这么大一个卡车突然停在冰淇淋摊旁，还有一位朋友放起了音乐，你会怎么做呢？会不会感到好奇，想去看看是怎么回事？"}'}, {'role': 'user', 'content': '对于互动点1的回答为 {嗯，我会想去看一下是怎么回事的。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"太好了！你的好奇心就像探险家一样闪闪发光呢！你走近后，可能会看到那位变成卡车的大家伙正小心翼翼地伸出巨大的金属手指，轻轻触摸那份五彩斑斓的冰淇淋，眼神里满是对这个世界简单快乐的好奇。而那位播放音乐的朋友则在一旁，用他那能变化万千的眼睛温柔地观察着周围的孩子，似乎在寻找某个特别的身影。","interact":"你觉得那位变成跑车的朋友找到了谁？是不是有个小朋友也特别喜欢他们，但又有点害羞不敢靠近呢？如果你在那里，敢不敢走上前去跟他们打个招呼？"}'}, {'role': 'user', 'content': '对于互动点2的回答为 {感恩。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，直接讲述到part4结局\n在结局后，请根据故事的素材和传达的道理生成3个问题，每个问题提问之后，你需要停下，等待我的反馈，并根据回答内容反馈，反馈内容控制在200词以内。\n后续孩子反馈的第一个问题将是问题1也就是Q1，然后依次是问题2也就是Q2，问题3也就是Q3，在Q3回答完毕后，guidance中描述所有环节的总结和反馈。\n假如孩子的回答没有正确理解故事传达的道理，你需要耐心的引导孩子理解道理后再问一次。确认孩子理解后，再提下一个问题。你的回复应当以json格式返回，并且格式如下：\n你的回复应当以json格式返回，并且格式如下：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.首先生成问题1，生成的问题的json标签为interact\n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词\n你返回的json内容应当只包含story和interact标签，interact标签里只有问题1的内容'}, {'role': 'assistant', 'content': '{"story":"感恩的心让你变得非常特别！在你的善意想象中，那位跑车朋友不仅找到了一个害羞的小男孩，还用一种温柔的方式鼓励了他。小男孩鼓起勇气，一步步走向前，最终与变成机器人的大家伙一起分享了美味的冰淇淋。那一刻，不论是大人还是小孩，都见证了这份超越种族界限的纯真友谊，小镇上空弥漫着前所未有的和谐与喜悦。","interact":"Q1：在这个故事里，你觉得是什么让小男孩最终敢于接近巨大的机器人朋友呢？是不是因为他内心有某种特别的感觉？"}'}]
+ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
+  configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+[mp3 @ 0x5592d89ea6c0] Estimating duration from bitrate, this may be inaccurate
+Input #0, mp3, from './tmp/origin_temp_voice_2_text.mp3':
+  Duration: 00:00:06.48, start: 0.000000, bitrate: 127 kb/s
+  Stream #0:0: Audio: mp3, 44100 Hz, mono, fltp, 128 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> mp3 (libmp3lame))
+Press [q] to stop, [?] for help
+Output #0, mp3, to './tmp/convert_temp_voice_2_text.mp3':
+  Metadata:
+    TSSE            : Lavf58.76.100
+  Stream #0:0: Audio: mp3, 16000 Hz, mono, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc58.134.100 libmp3lame
+size=       1kB time=00:00:00.00 bitrate=N/A speed=N/A    size=     103kB time=00:00:06.44 bitrate= 130.9kbits/s speed= 164x    
+video:0kB audio:102kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.592376%
+before context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。","part2":"大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。","part3":"擎天柱受到感染，变回机器人形态，尝试拿起冰淇淋品尝，流露出孩子般的惊喜；大黄蜂注意到崇拜他们的摊主小儿子，与其亲切交流。","part4":"小男孩在大黄蜂的鼓励下与擎天柱共享冰淇淋，场景温馨，促进了变形金刚与人类的友谊，传递跨越种族的纯真友情信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"变形金刚首领在执行巡逻任务时，偶然发现了一个弥漫着欢声笑语的小镇角落，那里有一个色彩斑斓的冰淇淋摊位吸引了他的注意。他心中涌起一股好奇，于是悄悄地将自己的庞大身躯变换为一辆不起眼的卡车，缓缓靠近，用那双机械眼细细观察着周围洋溢着幸福的人们。就在这时，一位身形灵活的好友感知到了首领的停留，嗖地一声飞驰而至，瞬间变形成一辆炫酷的跑车，从车里流淌出欢快的旋律，让现场的气氛更加热烈起来。","interact":"小朋友，如果你是那个小镇上的孩子，看到这么大一个卡车突然停在冰淇淋摊旁，还有一位朋友放起了音乐，你会怎么做呢？会不会感到好奇，想去看看是怎么回事？"}'}, {'role': 'user', 'content': '对于互动点1的回答为 {嗯，我会想去看一下是怎么回事的。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"太好了！你的好奇心就像探险家一样闪闪发光呢！你走近后，可能会看到那位变成卡车的大家伙正小心翼翼地伸出巨大的金属手指，轻轻触摸那份五彩斑斓的冰淇淋，眼神里满是对这个世界简单快乐的好奇。而那位播放音乐的朋友则在一旁，用他那能变化万千的眼睛温柔地观察着周围的孩子，似乎在寻找某个特别的身影。","interact":"你觉得那位变成跑车的朋友找到了谁？是不是有个小朋友也特别喜欢他们，但又有点害羞不敢靠近呢？如果你在那里，敢不敢走上前去跟他们打个招呼？"}'}]
+after context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。","part2":"大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。","part3":"擎天柱受到感染，变回机器人形态，尝试拿起冰淇淋品尝，流露出孩子般的惊喜；大黄蜂注意到崇拜他们的摊主小儿子，与其亲切交流。","part4":"小男孩在大黄蜂的鼓励下与擎天柱共享冰淇淋，场景温馨，促进了变形金刚与人类的友谊，传递跨越种族的纯真友情信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"变形金刚首领在执行巡逻任务时，偶然发现了一个弥漫着欢声笑语的小镇角落，那里有一个色彩斑斓的冰淇淋摊位吸引了他的注意。他心中涌起一股好奇，于是悄悄地将自己的庞大身躯变换为一辆不起眼的卡车，缓缓靠近，用那双机械眼细细观察着周围洋溢着幸福的人们。就在这时，一位身形灵活的好友感知到了首领的停留，嗖地一声飞驰而至，瞬间变形成一辆炫酷的跑车，从车里流淌出欢快的旋律，让现场的气氛更加热烈起来。","interact":"小朋友，如果你是那个小镇上的孩子，看到这么大一个卡车突然停在冰淇淋摊旁，还有一位朋友放起了音乐，你会怎么做呢？会不会感到好奇，想去看看是怎么回事？"}'}, {'role': 'user', 'content': '对于互动点1的回答为 {嗯，我会想去看一下是怎么回事的。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"太好了！你的好奇心就像探险家一样闪闪发光呢！你走近后，可能会看到那位变成卡车的大家伙正小心翼翼地伸出巨大的金属手指，轻轻触摸那份五彩斑斓的冰淇淋，眼神里满是对这个世界简单快乐的好奇。而那位播放音乐的朋友则在一旁，用他那能变化万千的眼睛温柔地观察着周围的孩子，似乎在寻找某个特别的身影。","interact":"你觉得那位变成跑车的朋友找到了谁？是不是有个小朋友也特别喜欢他们，但又有点害羞不敢靠近呢？如果你在那里，敢不敢走上前去跟他们打个招呼？"}'}, {'role': 'user', 'content': '对于互动点2的回答为 {感恩。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，直接讲述到part4结局\n在结局后，请根据故事的素材和传达的道理生成3个问题，每个问题提问之后，你需要停下，等待我的反馈，并根据回答内容反馈，反馈内容控制在200词以内。\n后续孩子反馈的第一个问题将是问题1也就是Q1，然后依次是问题2也就是Q2，问题3也就是Q3，在Q3回答完毕后，guidance中描述所有环节的总结和反馈。\n假如孩子的回答没有正确理解故事传达的道理，你需要耐心的引导孩子理解道理后再问一次。确认孩子理解后，再提下一个问题。你的回复应当以json格式返回，并且格式如下：\n你的回复应当以json格式返回，并且格式如下：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.首先生成问题1，生成的问题的json标签为interact\n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词\n你返回的json内容应当只包含story和interact标签，interact标签里只有问题1的内容'}, {'role': 'assistant', 'content': '{"story":"感恩的心让你变得非常特别！在你的善意想象中，那位跑车朋友不仅找到了一个害羞的小男孩，还用一种温柔的方式鼓励了他。小男孩鼓起勇气，一步步走向前，最终与变成机器人的大家伙一起分享了美味的冰淇淋。那一刻，不论是大人还是小孩，都见证了这份超越种族界限的纯真友谊，小镇上空弥漫着前所未有的和谐与喜悦。","interact":"Q1：在这个故事里，你觉得是什么让小男孩最终敢于接近巨大的机器人朋友呢？是不是因为他内心有某种特别的感觉？"}'}]
+set story index:1,chapter index:4
+trans text: 没错，小男孩可能从小就对变形金刚充满了喜爱，这种喜爱给了他勇气。不过，更重要的是，机器人展现出的友好和善良，让他感觉到安全和温暖。q2：如果有一天，你在公园遇到了一个看起来很特别或不一样的新朋友，你会怎么去和他打招呼，让他感到受欢迎呢？
+------>开始发送文本数据
+ws is closed
+### error: on_close() takes 1 positional argument but 3 were given
+user_prompt: 针对当前问题，孩子反馈为 {像这个小男孩主动找变形金刚那样主动去找这位新朋友。}，生成反馈后等待下一个问题（即之前提出的Q1，Q2，Q3）的孩子的响应，返回应当以json格式返回
+格式为 {"key":value,...,"key":value}
+1.回答问题后生成的反馈标签为guidance
+2.向下一个问题的引导性文字标签为interact
+3.不要出现括号包含的暗示提示性文本
+4.动物、人物不要出现出现名字，直接使用名词
+你的返回只有json格式串，不要包含其他内容
+story index: 1 chapter index: 4
+before context:[{'role': 'user', 'content': '我需要给3-8岁的孩子讲故事。请扩充并讲述这个故事{{"part1":"变形金刚擎天柱在巡逻时，偶遇一个充满欢乐的小镇冰淇淋摊，他被吸引，变身为卡车靠近，好奇观察人群。","part2":"大黄蜂感受到擎天柱的停留，飞速赶来变形成跑车，播放音乐，增加现场的欢乐气氛。","part3":"擎天柱受到感染，变回机器人形态，尝试拿起冰淇淋品尝，流露出孩子般的惊喜；大黄蜂注意到崇拜他们的摊主小儿子，与其亲切交流。","part4":"小男孩在大黄蜂的鼓励下与擎天柱共享冰淇淋，场景温馨，促进了变形金刚与人类的友谊，传递跨越种族的纯真友情信息。"}}\n在故事中，自行设计互动点1和互动点2，互动点1出现在part2后，互动点2出现在part3后。\n每一次扩充在250字以内，并且不论互动点1和2如何反馈，都能够传达教育信息。\n在互动点中，尽量将孩子的任何回答嵌入故事的发展，假如该回答完全无法嵌入故事，或者与问题毫无关系，请再重复一次互动点处生成的问题。\n假如孩子对讲故事这一活动本身有强烈的抗拒，请用耐心的语气劝导，并重复互动点生成的问题。\n现在讲述到part1和part2到互动点1时，你需要停下，等待我的反馈。你的回复应当以json格式返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本对应的json标签名称为story \n2.互动点1提出的问题文本对应json标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"变形金刚首领在执行巡逻任务时，偶然发现了一个弥漫着欢声笑语的小镇角落，那里有一个色彩斑斓的冰淇淋摊位吸引了他的注意。他心中涌起一股好奇，于是悄悄地将自己的庞大身躯变换为一辆不起眼的卡车，缓缓靠近，用那双机械眼细细观察着周围洋溢着幸福的人们。就在这时，一位身形灵活的好友感知到了首领的停留，嗖地一声飞驰而至，瞬间变形成一辆炫酷的跑车，从车里流淌出欢快的旋律，让现场的气氛更加热烈起来。","interact":"小朋友，如果你是那个小镇上的孩子，看到这么大一个卡车突然停在冰淇淋摊旁，还有一位朋友放起了音乐，你会怎么做呢？会不会感到好奇，想去看看是怎么回事？"}'}, {'role': 'user', 'content': '对于互动点1的回答为 {嗯，我会想去看一下是怎么回事的。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，讲述part3直到互动点2停下，等待孩子的反馈。\n你的回复应当以纯json格式字符串返回，格式为 {"key":value,...,"key":value} ：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.互动点2提出的问题文本对应标签为interact \n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词'}, {'role': 'assistant', 'content': '{"story":"太好了！你的好奇心就像探险家一样闪闪发光呢！你走近后，可能会看到那位变成卡车的大家伙正小心翼翼地伸出巨大的金属手指，轻轻触摸那份五彩斑斓的冰淇淋，眼神里满是对这个世界简单快乐的好奇。而那位播放音乐的朋友则在一旁，用他那能变化万千的眼睛温柔地观察着周围的孩子，似乎在寻找某个特别的身影。","interact":"你觉得那位变成跑车的朋友找到了谁？是不是有个小朋友也特别喜欢他们，但又有点害羞不敢靠近呢？如果你在那里，敢不敢走上前去跟他们打个招呼？"}'}, {'role': 'user', 'content': '对于互动点2的回答为 {感恩。} ，请生成反馈，生成反馈时需要注意以下几点：\n1、及时给孩子肯定和赞美\n2、帮助孩子补充此回答的细节\n生成反馈后，直接讲述到part4结局\n在结局后，请根据故事的素材和传达的道理生成3个问题，每个问题提问之后，你需要停下，等待我的反馈，并根据回答内容反馈，反馈内容控制在200词以内。\n后续孩子反馈的第一个问题将是问题1也就是Q1，然后依次是问题2也就是Q2，问题3也就是Q3，在Q3回答完毕后，guidance中描述所有环节的总结和反馈。\n假如孩子的回答没有正确理解故事传达的道理，你需要耐心的引导孩子理解道理后再问一次。确认孩子理解后，再提下一个问题。你的回复应当以json格式返回，并且格式如下：\n你的回复应当以json格式返回，并且格式如下：\n1.故事续写的剧情文本以及反馈对应标签名称为story \n2.首先生成问题1，生成的问题的json标签为interact\n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词\n你返回的json内容应当只包含story和interact标签，interact标签里只有问题1的内容'}, {'role': 'assistant', 'content': '{"story":"感恩的心让你变得非常特别！在你的善意想象中，那位跑车朋友不仅找到了一个害羞的小男孩，还用一种温柔的方式鼓励了他。小男孩鼓起勇气，一步步走向前，最终与变成机器人的大家伙一起分享了美味的冰淇淋。那一刻，不论是大人还是小孩，都见证了这份超越种族界限的纯真友谊，小镇上空弥漫着前所未有的和谐与喜悦。","interact":"Q1：在这个故事里，你觉得是什么让小男孩最终敢于接近巨大的机器人朋友呢？是不是因为他内心有某种特别的感觉？"}'}, {'role': 'user', 'content': '针对当前问题，孩子反馈为 {对，她应该很喜欢看变形金刚。}，生成反馈后等待下一个问题（即之前提出的Q1，Q2，Q3）的孩子的响应，返回应当以json格式返回\n格式为 {"key":value,...,"key":value}\n1.回答问题后生成的反馈标签为guidance\n2.向下一个问题的引导性文字标签为interact\n3.不要出现括号包含的暗示提示性文本\n4.动物、人物不要出现出现名字，直接使用名词\n你的返回只有json格式串，不要包含其他内容'}, {'role': 'assistant', 'content': '{"guidance":"没错，小男孩可能从小就对变形金刚充满了喜爱，这种喜爱给了他勇气。不过，更重要的是，机器人展现出的友好和善良，让他感觉到安全和温暖。","interact":"Q2：如果有一天，你在公园遇到了一个看起来很特别或不一样的新朋友，你会怎么去和他打招呼，让他感到受欢迎呢？"}'}]

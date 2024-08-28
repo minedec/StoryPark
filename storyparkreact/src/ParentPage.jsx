@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, ProgressBar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { generateImage, generateOutline, splitStory, extractBackground, extractCharacter } from './util';
-import { extractBackgroundPrompt, scensUrl, characterPrompt, splitStoryText } from './App.js'
+import { extractBackgroundPrompt, scensUrl, characterPrompt, splitStoryText, backgroundImages } from './App.js'
 
 const ParentPage = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -27,6 +27,8 @@ const ParentPage = () => {
     { name: 'Scroll 3', src: 'story3.png' }
   ]);
   const [loadingStates, setLoadingStates] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const narrativeSkills = [
     '角色塑造', '情节构建', '场景描述', '对话创作', '情感表达'
@@ -95,8 +97,12 @@ const ParentPage = () => {
       setStoryText(lessonText);
       console.log("获取初始文本：\n" + lessonText)
     } else if (stage === 2) {
-      handleInitImage();
-      handleInitElement();
+      setIsGenerating(true);
+      setIsLoading(true);
+      await handleInitImage();
+      await handleInitElement();
+      setIsLoading(false);
+      setIsGenerating(false);
     }
     setStage(prevStage => prevStage + 1);
   };
@@ -127,7 +133,6 @@ const ParentPage = () => {
   };
 
   const handleInitImage = async () => {
-    // 初始化图片加载
     if(splitStoryJson === undefined || splitStoryJson === null) return;
     console.log("extract image prompt");
     const ch1 = await extractBackground(splitStoryJson.part1);
@@ -137,19 +142,22 @@ const ParentPage = () => {
     console.log("extract:\n1:" + ch1 + "\n2:" + ch2 + "\n3:" + ch3 + "\n4:" + ch4);
     const bgPrompt = [ch1, ch2, ch3, ch4];
     extractBackgroundPrompt._extractBackgroundPrompt = [ch1,ch2,ch3,ch4];
+    
+    const newScenes = [...scenes];
     for(let i = 0; i < 4; i++) {
       console.log(extractBackgroundPrompt._extractBackgroundPrompt[i]);
       const response = await generateImage(`Generate a scene for ${bgPrompt[i]}`);
       scensUrl._scensUrl[i] = response.image_url
-      const newScenes = [...scenes];
       newScenes[i] = response.image_url;
-      setScenes(newScenes);
     }
+    setScenes(newScenes);
   }
 
   useEffect(() => {
     console.log('scenes changed');
     console.log(scenes);
+    // Update the global backgroundImages variable
+    backgroundImages.splice(0, backgroundImages.length, ...scenes);
   }, [scenes]);
 
   const handleInitElement = async () => {
@@ -158,13 +166,14 @@ const ParentPage = () => {
     console.log("extract:\n" + character);
     const characters = character.split('|');
     characterPrompt._characterPrompt = [];
+    
+    const newElements = [...elements];
     for(let i = 0; i < characters.length; i++) {
-      characterPrompt._characterPrompt.append(characters[i]);
+      characterPrompt._characterPrompt.push(characters[i]);
       const response = await generateImage(`Generate an element for ${characters[i]}`);
-      const newElements = [...elements];
       newElements[i] = { name: characters[i], src: response.image_url };
-      setElements(newElements);
     }
+    setElements(newElements);
   }
 
   const handleImageClick = async (index, type) => {
@@ -279,99 +288,67 @@ const ParentPage = () => {
                 <Button onClick={handlePreviousStage} style={{ width: '180px' }}>
                   上一阶段
                 </Button>
-                <Button onClick={handleNextStage} style={{ width: '180px' }}>
-                  下一阶段
+                <Button 
+                  onClick={handleNextStage} 
+                  style={{ width: '180px' }} 
+                  disabled={isGenerating}
+                >
+                  {isGenerating ? '正在生成中...' : '下一阶段'}
                 </Button>
               </div>
             </>
           ) : (
             <>
-              <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 80px)', marginBottom: '20px', paddingTop: '10px', paddingBottom: '30px' }}>
-                <h3 style={{ textAlign: 'center', marginBottom: '15px' }}>场景</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: '15px', flex: '1', justifyItems: 'center', alignItems: 'center', border: '2px solid #ccc', padding: '15px', borderRadius: '10px' }}>
-                  {scenes.map((src, index) => (
-                    <div 
-                      key={index} 
-                      style={{ 
-                        position: 'relative', 
-                        width: '90%', 
-                        height: '90%',
-                        overflow: 'hidden',
-                        border: '2px solid transparent',
-                        transition: 'border-color 0.3s ease-in-out'
-                      }}
-                      onClick={() => handleImageClick(index, 'scene')}
-                      onMouseEnter={(e) => e.currentTarget.style.borderColor = '#DDA0DD'}
-                      onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}
-                    >
-                      <img 
-                        src={src} 
-                        alt={`Scene ${index + 1}`} 
-                        style={{ 
-                          width: '100%', 
-                          height: '100%', 
-                          objectFit: 'cover'
-                        }} 
+              {isLoading ? (
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 'calc(100vh - 120px)'
+                }}>
+                  <svg width="100" height="100" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#DDA0DD" strokeWidth="8" strokeDasharray="62.83 62.83">
+                      <animateTransform
+                        attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="0 50 50"
+                        to="360 50 50"
+                        dur="1s"
+                        repeatCount="indefinite"
                       />
-                      {loadingStates[`scene-${index}`] && (
-                        <div 
-                          style={{
-                            position: 'absolute',
-                            top: '0',
-                            left: '0',
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <svg width="50" height="50" viewBox="0 0 50 50">
-                            <circle cx="25" cy="25" r="20" fill="none" stroke="black" strokeWidth="3" strokeDasharray="31.4 31.4">
-                              <animateTransform
-                                attributeName="transform"
-                                attributeType="XML"
-                                type="rotate"
-                                from="0 25 25"
-                                to="360 25 25"
-                                dur="1s"
-                                repeatCount="indefinite"
-                              />
-                            </circle>
-                          </svg>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                    </circle>
+                  </svg>
                 </div>
-                <h3 style={{ textAlign: 'center', marginTop: '20px', marginBottom: '15px' }}>元素</h3>
-                <div style={{ border: '2px solid #ccc', borderRadius: '10px', padding: '15px', marginTop: '20px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'flex-start', overflowX: 'auto', flex: '0 0 60px' }}>
-                    {elements.map((image, index) => (
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 80px)', marginBottom: '20px', paddingTop: '10px', paddingBottom: '30px' }}>
+                  <h3 style={{ textAlign: 'center', marginBottom: '15px' }}>场景</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: '15px', flex: '1', justifyItems: 'center', alignItems: 'center', border: '2px solid #ccc', padding: '15px', borderRadius: '10px' }}>
+                    {scenes.map((src, index) => (
                       <div 
-                        key={index}
+                        key={index} 
                         style={{ 
                           position: 'relative', 
-                          height: '100%',
-                          flex: '0 0 auto',
+                          width: '90%', 
+                          height: '90%',
                           overflow: 'hidden',
                           border: '2px solid transparent',
-                          transition: 'border-color 0.3s ease-in-out',
-                          marginRight: '10px'
+                          transition: 'border-color 0.3s ease-in-out'
                         }}
-                        onClick={() => handleImageClick(index, 'element')}
+                        onClick={() => handleImageClick(index, 'scene')}
                         onMouseEnter={(e) => e.currentTarget.style.borderColor = '#DDA0DD'}
                         onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}
                       >
                         <img 
-                          src={image.src} 
-                          alt={image.name} 
+                          src={src} 
+                          alt={`Scene ${index + 1}`} 
                           style={{ 
-                            height: '100%'
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'cover'
                           }} 
                         />
-                        {loadingStates[`element-${index}`] && (
+                        {loadingStates[`scene-${index}`] && (
                           <div 
                             style={{
                               position: 'absolute',
@@ -385,14 +362,14 @@ const ParentPage = () => {
                               alignItems: 'center'
                             }}
                           >
-                            <svg width="30" height="30" viewBox="0 0 30 30">
-                              <circle cx="15" cy="15" r="12" fill="none" stroke="black" strokeWidth="2" strokeDasharray="18.84 18.84">
+                            <svg width="50" height="50" viewBox="0 0 50 50">
+                              <circle cx="25" cy="25" r="20" fill="none" stroke="black" strokeWidth="3" strokeDasharray="31.4 31.4">
                                 <animateTransform
                                   attributeName="transform"
                                   attributeType="XML"
                                   type="rotate"
-                                  from="0 15 15"
-                                  to="360 15 15"
+                                  from="0 25 25"
+                                  to="360 25 25"
                                   dur="1s"
                                   repeatCount="indefinite"
                                 />
@@ -403,19 +380,78 @@ const ParentPage = () => {
                       </div>
                     ))}
                   </div>
+                  <h3 style={{ textAlign: 'center', marginTop: '20px', marginBottom: '15px' }}>元素</h3>
+                  <div style={{ border: '2px solid #ccc', borderRadius: '10px', padding: '15px', marginTop: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', overflowX: 'auto', flex: '0 0 60px' }}>
+                      {elements.map((image, index) => (
+                        <div 
+                          key={index}
+                          style={{ 
+                            position: 'relative', 
+                            height: '100%',
+                            flex: '0 0 auto',
+                            overflow: 'hidden',
+                            border: '2px solid transparent',
+                            transition: 'border-color 0.3s ease-in-out',
+                            marginRight: '10px'
+                          }}
+                          onClick={() => handleImageClick(index, 'element')}
+                          onMouseEnter={(e) => e.currentTarget.style.borderColor = '#DDA0DD'}
+                          onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}
+                        >
+                          <img 
+                            src={image.src} 
+                            alt={image.name} 
+                            style={{ 
+                              height: '100%'
+                            }} 
+                          />
+                          {loadingStates[`element-${index}`] && (
+                            <div 
+                              style={{
+                                position: 'absolute',
+                                top: '0',
+                                left: '0',
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                              }}
+                            >
+                              <svg width="30" height="30" viewBox="0 0 30 30">
+                                <circle cx="15" cy="15" r="12" fill="none" stroke="black" strokeWidth="2" strokeDasharray="18.84 18.84">
+                                  <animateTransform
+                                    attributeName="transform"
+                                    attributeType="XML"
+                                    type="rotate"
+                                    from="0 15 15"
+                                    to="360 15 15"
+                                    dur="1s"
+                                    repeatCount="indefinite"
+                                  />
+                                </circle>
+                              </svg>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'center', color: '#666', fontSize: '14px', margin: '20px 0 10px' }}>
+                    点击图片可以重新生成
+                  </div>
+                  <div className="d-flex justify-content-between" style={{ width: '400px', margin: '0 auto' }}>
+                    <Button onClick={handlePreviousStage} style={{ width: '180px' }}>
+                      上一阶段
+                    </Button>
+                    <Button onClick={handleNextStep} style={{ width: '180px' }}>
+                      下一步
+                    </Button>
+                  </div>
                 </div>
-                <div style={{ textAlign: 'center', color: '#666', fontSize: '14px', margin: '20px 0 10px' }}>
-                  点击图片可以重新生成
-                </div>
-                <div className="d-flex justify-content-between" style={{ width: '400px', margin: '0 auto' }}>
-                  <Button onClick={handlePreviousStage} style={{ width: '180px' }}>
-                    上一阶段
-                  </Button>
-                  <Button onClick={handleNextStep} style={{ width: '180px' }}>
-                    下一步
-                  </Button>
-                </div>
-              </div>
+              )}
             </>
           )}
         </Col>
