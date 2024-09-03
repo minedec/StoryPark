@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, ProgressBar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { generateImage, generateOutline, splitStory, extractBackground, extractCharacter } from './util';
-import { extractBackgroundPrompt, scensUrl, characterPrompt, splitStoryText, backgroundImages } from './App.js'
+import { extractBackgroundPrompt, scensUrl, characterPrompt, splitStoryText, backgroundImages, scenesPromptGlobal } from './App.js'
 
 const ParentPage = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -37,6 +37,13 @@ const ParentPage = () => {
   const keywords = [
     '兔子', '雪人', '猴子', '小鸟', '变形金刚'
   ];
+
+  const [scenesPrompt, setScenesPrompt] = useState([
+    'a',
+    'b',
+    'c',
+    'd'
+  ]);
 
   extractBackgroundPrompt._extractBackgroundPrompt = [];
   characterPrompt._characterPrompt = [];
@@ -129,7 +136,9 @@ const ParentPage = () => {
   };
 
   const handleAdaptStory = async () => {
-    handleGenerate();
+    setIsGenerating(true);
+    await handleGenerate();
+    setIsGenerating(false);
   };
 
   const handleInitImage = async () => {
@@ -141,8 +150,19 @@ const ParentPage = () => {
     const ch4 = await extractBackground(splitStoryJson.part4);
     console.log("extract:\n1:" + ch1 + "\n2:" + ch2 + "\n3:" + ch3 + "\n4:" + ch4);
     const bgPrompt = [ch1, ch2, ch3, ch4];
-    extractBackgroundPrompt._extractBackgroundPrompt = [ch1,ch2,ch3,ch4];
-    
+    extractBackgroundPrompt._extractBackgroundPrompt = [];
+    extractBackgroundPrompt._extractBackgroundPrompt.push(ch1);
+    extractBackgroundPrompt._extractBackgroundPrompt.push(ch2);
+    extractBackgroundPrompt._extractBackgroundPrompt.push(ch3);
+    extractBackgroundPrompt._extractBackgroundPrompt.push(ch4);
+
+    const newScenesPrompt = [...scenesPrompt];
+    newScenesPrompt[0] = ch1;
+    newScenesPrompt[1] = ch2;
+    newScenesPrompt[2] = ch3;
+    newScenesPrompt[3] = ch4;
+    setScenesPrompt(newScenesPrompt);
+
     const newScenes = [...scenes];
     for(let i = 0; i < 4; i++) {
       console.log(extractBackgroundPrompt._extractBackgroundPrompt[i]);
@@ -152,6 +172,11 @@ const ParentPage = () => {
     }
     setScenes(newScenes);
   }
+
+  useEffect(() => {
+    scenesPromptGlobal.splice(0, scenesPromptGlobal.length, ...scenesPrompt);
+    console.log("gloabl scenes prompt"+ scenesPromptGlobal);
+  }, [scenesPrompt]);
 
   useEffect(() => {
     console.log('scenes changed');
@@ -182,7 +207,7 @@ const ParentPage = () => {
     try {
       if (type === 'scene') {
         const newScenes = [...scenes];
-        const response = await generateImage(`Generate a scene for ${extractBackgroundPrompt._extractBackgroundPrompt[index]}`);
+        const response = await generateImage(`Generate a scene for ${scenesPromptGlobal[index]}`);
         newScenes[index] = response.image_url;
         scensUrl._scensUrl[index] = response.image_url;
         setScenes(newScenes);
@@ -272,8 +297,8 @@ const ParentPage = () => {
                 </Form>
               </div>
               <div style={{ width: '100%', padding: '4px', marginBottom: '10px' }}>
-                <Button onClick={handleAdaptStory} style={{ width: '100%' }}>
-                  改编故事
+                <Button onClick={handleAdaptStory} style={{ width: '100%' }} disabled={isGenerating}>
+                  {isGenerating? '正在生成中...':'改编故事'}
                 </Button>
               </div>
               <div style={{ width: '100%', padding: '4px' }}>

@@ -3,5 +3,5 @@ Keywords: {keyword}
 Story: {story_text}
 Target: {target}
 其中story是故事输入，target是故事的教育目标，keyword是故事中需要出现的角色元素
-你需要生成200字的故事大纲，也就是summary，每一段中只出现一个角色且描述它的行为。
+你需要生成200字，3-4句的故事大纲，也就是summary，每一段中只出现一个角色且描述它的行为。
 请用中文回答，直接返回生成内容，不要写任何多余的文字。

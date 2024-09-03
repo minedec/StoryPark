@@ -133,8 +133,8 @@ const PaintPage = () => {
         //   width = img.width / 4;
         //   height = img.height / 4;
         // }
-        width = img.width / 4;
-        height = img.height / 4;
+        width = img.width / 3;
+        height = img.height / 3;
         ctx.drawImage(imgElement, img.x - width / 2, img.y - height / 2, width, height);
       };
     });

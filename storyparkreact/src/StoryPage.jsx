@@ -582,7 +582,7 @@ export default function StoryPage() {
                 + "\n" + tempData._tempData.interact);
               setStatusMessage('后台故事生成完毕，绘图完成后再次点击绘图按钮结束...');
             }
-          } else if(window.StoryState.chapterIndex >= 3) {
+          } else if(userm._userm !== '' && window.StoryState.chapterIndex >= 3) {
             window.StoryState.chapterIndex += 1;
             storyStateChange();
           }
@@ -718,7 +718,7 @@ export default function StoryPage() {
           {/* <Button onClick={handleResume}>继续</Button> */}
           <Col>
             <Row>
-              <Button onClick={handleReplayCurrentChapter} >重新生成</Button>
+              {/* <Button onClick={handleReplayCurrentChapter} >重新生成</Button> */}
             </Row>
             <Row>
             <Col xs={6}>

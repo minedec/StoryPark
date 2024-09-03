@@ -18,6 +18,13 @@ export let backgroundImages = [
   '1-3.png'
 ];
 
+export let scenesPromptGlobal = [
+  'a',
+  'b',
+  'c',
+  'd'
+];
+
 let appData1 = {};
 
 Object.defineProperty(appData1, 'userm', {
