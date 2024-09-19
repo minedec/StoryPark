@@ -56,7 +56,8 @@ class StoryState:
     self.story_text = ""  # 课文字符串
     self.story_summary = ""  # 故事梗概字符串
     self.story_elements = []  # 故事元素字符串数组
-    self.zhipu_client = ZhipuAI(api_key="6c709502dd4342fcd6999456f1219f0c.l2WvWtqI6PgZi70J")
+    # self.zhipu_client = ZhipuAI(api_key="6c709502dd4342fcd6999456f1219f0c.l2WvWtqI6PgZi70J")
+    self.zhipu_client = ZhipuAI(api_key="9b4843ceb4821f8837bd4a75b9f9b773.QgVL0ElT5a1saCih")
   
 story_state = StoryState()
 
